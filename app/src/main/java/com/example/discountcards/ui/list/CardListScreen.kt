@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -123,7 +125,11 @@ fun CardListScreen(
                     .fillMaxSize()
                     .weight(1f)
             ) {
-                if (uiState.cards.isEmpty()) {
+                if (uiState.isLoading && uiState.cards.isEmpty()) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                } else if (uiState.cards.isEmpty()) {
                     EmptyState(
                         isSearching = uiState.searchQuery.isNotBlank(),
                         onAddCardClick = onAddCardClick
@@ -138,7 +144,8 @@ fun CardListScreen(
                     ) {
                         items(
                             items = uiState.cards,
-                            key = { card -> card.id }
+                            key = { card -> card.id },
+                            contentType = { "discount_card" }
                         ) { card ->
                             CardListItem(
                                 card = card,

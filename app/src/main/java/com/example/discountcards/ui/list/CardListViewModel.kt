@@ -65,7 +65,7 @@ class CardListViewModel(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = CardListUiState()
+        initialValue = CardListUiState(isLoading = true)
     )
 
     fun onSearchQueryChange(newQuery: String) {

@@ -2,6 +2,7 @@ package com.example.discountcards.util
 
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.util.LruCache
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
@@ -21,6 +22,35 @@ object BarcodeGenerator {
         "PDF_417",
         "AZTEC",
     )
+
+    private val barcodeCache = LruCache<String, Bitmap>(100)
+
+    fun generateBarcodeCached(
+        content: String,
+        format: String,
+        width: Int = 600,
+        height: Int = 300,
+        foregroundColor: Int = Color.BLACK,
+        backgroundColor: Int = Color.WHITE
+    ): Bitmap? {
+        val cacheKey = "${format}_${content}_${width}x${height}_${foregroundColor}_${backgroundColor}"
+        synchronized(barcodeCache) {
+            barcodeCache.get(cacheKey)?.let { return it }
+        }
+        val bitmap = generateBarcode(content, format, width, height, foregroundColor, backgroundColor)
+        if (bitmap != null) {
+            synchronized(barcodeCache) {
+                barcodeCache.put(cacheKey, bitmap)
+            }
+        }
+        return bitmap
+    }
+
+    fun clearCache() {
+        synchronized(barcodeCache) {
+            barcodeCache.evictAll()
+        }
+    }
 
     fun generateBarcode(
         content: String,

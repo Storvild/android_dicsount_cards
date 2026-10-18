@@ -49,10 +49,10 @@ fun CardListItem(
 ) {
     val cardColor = Color(card.cardColor)
 
-    // Asynchronously generate thumbnail for card preview
+    // Asynchronously generate thumbnail for card preview with caching
     val thumbnailState = produceState<Bitmap?>(initialValue = null, card.cardNumber, card.barcodeFormat) {
         value = withContext(Dispatchers.Default) {
-            BarcodeGenerator.generateBarcode(
+            BarcodeGenerator.generateBarcodeCached(
                 content = card.cardNumber,
                 format = card.barcodeFormat,
                 width = 240,
