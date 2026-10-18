@@ -1,3 +1,105 @@
 <resources>
     <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">Скидочные карты</string>
+    <string name="add_card_title">Добавление карты</string>
+    <string name="edit_card_title">Редактирование карты</string>
+    <string name="card_details_title">Карточка</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">Поиск по магазину или примечанию…</string>
+    <string name="search_icon_desc">Поиск</string>
+    <string name="clear_search_desc">Очистить поиск</string>
+    <string name="menu_options_desc">Меню опций</string>
+    <string name="export_json_action">Экспорт в JSON-файл</string>
+    <string name="import_json_action">Импорт из JSON-файла</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">Список карточек пуст</string>
+    <string name="empty_search_title">Ничего не найдено</string>
+    <string name="empty_subtitle">Добавьте скидочные карты ваших любимых магазинов, чтобы они всегда были под рукой.</string>
+    <string name="empty_search_subtitle">Попробуйте изменить поисковый запрос или добавьте новую карточку.</string>
+    <string name="add_first_card">Добавить карточку</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">Примечания:</string>
+    <string name="copy_card_number">Скопировать номер</string>
+    <string name="copied_to_clipboard">Скопировано в буфер обмена</string>
+    <string name="barcode_error">Ошибка генерации штрихкода</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">Название магазина *</string>
+    <string name="store_name_placeholder">Например: Пятёрочка, Перекрёсток, Золотое Яблоко</string>
+    <string name="clear_store_name">Очистить название магазина</string>
+    <string name="card_number_label">Номер карты / Штрихкод *</string>
+    <string name="card_number_placeholder">Введите номер или сканируйте штрихкод</string>
+    <string name="clear_card_number">Очистить номер карты</string>
+    <string name="pick_gallery_desc">Выбрать штрихкод из галереи</string>
+    <string name="scan_camera_desc">Сканировать штрихкод камерой</string>
+    <string name="format_label">Формат штрихкода</string>
+    <string name="card_color_label">Цвет карты</string>
+    <string name="category_icon_label">Иконка категории</string>
+    <string name="note_label">Примечание (опционально)</string>
+    <string name="note_placeholder">Например: скидка 5%, бонусная карта</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="add_card_button">Добавить карту</string>
+
+    <!-- Categories -->
+    <string name="cat_store">Магазин</string>
+    <string name="cat_grocery">Продукты</string>
+    <string name="cat_pharmacy">Аптека</string>
+    <string name="cat_fashion">Одежда</string>
+    <string name="cat_dining">Рестораны</string>
+    <string name="cat_fuel">Заправка</string>
+    <string name="cat_tickets">Билеты</string>
+    <string name="cat_gift">Подарки</string>
+    <string name="cat_sports">Спорт</string>
+    <string name="cat_other">Другое</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">Удалить</string>
+    <string name="cancel_button">Отмена</string>
+    <string name="edit_button">Редактировать</string>
+    <string name="back_button">Назад</string>
+    <string name="continue_button">Продолжить</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">Удалить карточку?</string>
+    <string name="delete_card_message">Вы уверены, что хотите удалить эту скидочную карту? Это действие нельзя отменить.</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">Экспорт карточек</string>
+    <string name="export_copy">Копировать JSON</string>
+    <string name="import_title">Импорт карточек</string>
+    <string name="import_hint">Вставьте JSON-данные карточек сюда…</string>
+    <string name="import_button">Импортировать</string>
+    <string name="export_success">Карточки успешно экспортированы</string>
+    <string name="export_failed">Ошибка экспорта: %1$s</string>
+    <string name="import_mode_title">Режим импорта</string>
+    <string name="import_mode_message">Как вы хотите импортировать карточки из файла?</string>
+    <string name="import_mode_merge">Добавить к текущим</string>
+    <string name="import_mode_merge_desc">Сохранить текущие карты и добавить новые из файла</string>
+    <string name="import_mode_overwrite">Перезаписать всё</string>
+    <string name="import_mode_overwrite_desc">Удалить все существующие карты и загрузить только из файла</string>
+    <string name="import_success">Успешно импортировано карточек: %1$d</string>
+    <string name="import_failed">Ошибка импорта: неверный формат файла</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">Сканирование штрихкода</string>
+    <string name="toggle_torch">Включить/выключить вспышку</string>
+    <string name="scanner_instruction">Поместите штрихкод в рамку</string>
+    <string name="camera_permission_title">Требуется доступ к камере</string>
+    <string name="camera_permission_desc">Доступ к камере необходим для сканирования штрихкодов с физических карт.</string>
+    <string name="grant_permission">Предоставить доступ</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">Введите название магазина</string>
+    <string name="error_card_number_empty">Введите номер карты или сканируйте штрихкод</string>
+    <string name="error_barcode_not_found">Штрихкод на изображении не найден</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">Название магазина</string>
+    <string name="barcode_preview_desc">Предпросмотр штрихкода</string>
+    <string name="card_number_default">Номер карты</string>
 </resources>

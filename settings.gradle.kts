@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Discount Cards"
+rootProject.name = "DiscountCards"
 include(":app")
  
