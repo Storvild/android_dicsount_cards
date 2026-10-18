@@ -101,6 +101,8 @@ fun CameraBarcodeScannerDialog(
         var camera by remember { mutableStateOf<Camera?>(null) }
         var isTorchOn by remember { mutableStateOf(false) }
         var isScanned by remember { mutableStateOf(false) }
+        val analysisExecutor = remember { Executors.newSingleThreadExecutor() }
+        val barcodeScanner = remember { BarcodeScanning.getClient() }
 
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -124,9 +126,6 @@ fun CameraBarcodeScannerDialog(
                                 val imageAnalysis = ImageAnalysis.Builder()
                                     .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                                     .build()
-
-                                val barcodeScanner = BarcodeScanning.getClient()
-                                val analysisExecutor = Executors.newSingleThreadExecutor()
 
                                 imageAnalysis.setAnalyzer(analysisExecutor) { imageProxy ->
                                     @Suppress("UnsafeOptInUsageError")
@@ -307,8 +306,10 @@ fun CameraBarcodeScannerDialog(
 
         DisposableEffect(Unit) {
             onDispose {
-                // Ensure torch is off when exiting
+                // Ensure torch is off when exiting and release resources
                 runCatching { camera?.cameraControl?.enableTorch(false) }
+                runCatching { barcodeScanner.close() }
+                runCatching { analysisExecutor.shutdown() }
             }
         }
     }

@@ -45,6 +45,7 @@ class AddEditCardViewModel(
                         note = card.note,
                         cardColor = card.cardColor,
                         iconName = card.iconName.ifBlank { "shopping_bag" },
+                        createdAt = card.createdAt,
                         isLoading = false,
                         isEditMode = true
                     )
@@ -168,6 +169,7 @@ class AddEditCardViewModel(
                 note = currentState.note.trim(),
                 cardColor = currentState.cardColor,
                 iconName = currentState.iconName,
+                createdAt = currentState.createdAt ?: System.currentTimeMillis(),
                 updatedAt = System.currentTimeMillis()
             )
 

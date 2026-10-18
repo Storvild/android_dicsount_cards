@@ -24,11 +24,18 @@ import com.example.discountcards.ui.detail.CardDetailViewModel
 import com.example.discountcards.ui.list.CardListScreen
 import com.example.discountcards.ui.list.CardListViewModel
 import com.example.discountcards.ui.theme.DiscountCardsTheme
+import java.util.UUID
 
 sealed interface Destination {
     data object CardList : Destination
-    data class CardDetail(val cardId: Long) : Destination
-    data class AddEditCard(val cardId: Long? = null) : Destination
+    data class CardDetail(
+        val cardId: Long,
+        val key: String = UUID.randomUUID().toString(),
+    ) : Destination
+    data class AddEditCard(
+        val cardId: Long? = null,
+        val key: String = UUID.randomUUID().toString(),
+    ) : Destination
 }
 
 class MainActivity : ComponentActivity() {
@@ -79,7 +86,7 @@ fun DiscountCardsNavigation() {
         is Destination.CardDetail -> {
             val cardId = currentDestination.cardId
             val viewModel: CardDetailViewModel = viewModel(
-                key = "card_detail_$cardId",
+                key = "card_detail_${currentDestination.key}",
                 factory = CardDetailViewModelFactory(repository, cardId)
             )
             CardDetailScreen(
@@ -97,7 +104,7 @@ fun DiscountCardsNavigation() {
         is Destination.AddEditCard -> {
             val cardId = currentDestination.cardId
             val viewModel: AddEditCardViewModel = viewModel(
-                key = "add_edit_card_${cardId ?: "new"}",
+                key = "add_edit_card_${currentDestination.key}",
                 factory = AddEditCardViewModelFactory(repository, cardId)
             )
             AddEditCardScreen(
