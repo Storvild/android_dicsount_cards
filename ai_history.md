@@ -217,3 +217,29 @@ Agent:
 5. **Оптимизация R8 ([app/build.gradle.kts](file:///E:/virtualenvs/discount_cards/DiscountCards/app/build.gradle.kts)):** включены `isMinifyEnabled = true` и `isShrinkResources = true` для Release-сборок.
 
 Все 23 юнит-теста прошли успешно (`app:testDebugUnitTest`), и проект собирается без ошибок. Подробности см. в [walkthrough](file:///C:/Users/Vadim_S/AppData/Local/Google/AndroidStudio2026.2.1/projects/discountcards.e9625bb0/.artifacts/84e48d7f-3c58-4449-9e58-14f2b18e209e/walkthrough.artifact.md).
+
+
+
+---  
+
+You:  
+Измени иконку программы на E:\virtualenvs\discount_cards\Icons\icon1.png
+
+Agent:  
+Готово. Я сменил иконку приложения на ваш файл.
+
+Что было сделано:
+- Скопировал `E:\virtualenvs\discount_cards\Icons\icon1.png` (270×270) в [drawable-nodpi/app_icon.png](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/drawable-nodpi/app_icon.png).
+- В [AndroidManifest.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/AndroidManifest.xml#L15-L17) заменил `android:icon` и `android:roundIcon` на `@drawable/app_icon` (было `@mipmap/ic_launcher` / `@mipmap/ic_launcher_round`).
+
+Почему именно так: иконка у вас — обычная квадратная PNG-картинка, а старые `ic_launcher` — адаптивные (адаптивные иконки обрезает картинку по внутреннему «безопасному» кругу/скруглению, из-за чего ваш рисунок отображался бы маленьким фрагментом). Поэтому я подал PNG напрямую как `android:icon`, чтобы он показывался целиком.
+
+Проверки:
+- Сборка `app:assembleDebug` прошла успешно — ресурс `@drawable/app_icon` корректно подхватывается.
+- Синхронизация Gradle прошла без ошибок.
+
+Остальное — по вашей надобности:
+- Иконки в `mipmap-*` (`ic_launcher*`) и векторы `ic_launcher_foreground`/`ic_launcher_background` я оставил как есть (они больше не используются как иконка приложения, но не мешают). Если хотите — могу их удалить.
+- Эмулятор сейчас в состоянии `offline` (видимо перезагружается), поэтому поставить приложение на устройство и визуально проверить иконку на экране не удалось. Когда эмулятор поднимется — просто запустите приложение как обычно, иконка уже обновится (нужна пересборка/установка).
+
+Хотите, чтобы я также обновил иконку на `@mipmap`-варианте (для старых версий Android) или удалил ненужные старые ресурсы?
