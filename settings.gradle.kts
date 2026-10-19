@@ -17,6 +17,14 @@ plugins {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        maven {
+            name = "localOffline"
+            url = uri("E:/local-maven-repo")
+            content {
+                includeGroup("androidx.compose.material3.adaptive")
+                includeGroup("androidx.lifecycle")
+            }
+        }
         google()
         mavenCentral()
     }
