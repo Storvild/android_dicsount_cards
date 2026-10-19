@@ -112,6 +112,21 @@
     <string name="import_success">Успешно импортировано карточек: %1$d</string>
     <string name="import_failed">Ошибка импорта: неверный формат файла</string>
 
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">Отметить все</string>
+    <string name="deselect_all">Снять все</string>
+    <string name="invert_selection">Инвертировать</string>
+    <string name="selected_count">Выбрано: %1$d из %2$d</string>
+    <string name="duplicate_badge">Уже есть в базе</string>
+    <string name="duplicate_strategy_title">При совпадении имён:</string>
+    <string name="duplicate_strategy_update">Обновлять существующие</string>
+    <string name="duplicate_strategy_add_new">Добавлять как новые</string>
+    <string name="duplicate_strategy_skip">Пропускать дубликаты</string>
+    <string name="export_selected_button">Экспортировать (%1$d)</string>
+    <string name="import_selected_button">Импортировать (%1$d)</string>
+    <string name="export_selection_title">Выбор карточек для экспорта</string>
+    <string name="import_selection_title">Выбор карточек для импорта</string>
+
     <!-- Camera Scanner -->
     <string name="scan_barcode_title">Сканирование штрихкода</string>
     <string name="toggle_torch">Включить/выключить вспышку</string>

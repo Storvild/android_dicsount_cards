@@ -8,12 +8,14 @@ import com.example.discountcards.data.local.entity.DiscountCard
 import com.example.discountcards.data.repository.CardRepository
 import com.example.discountcards.data.repository.SortOrder
 import com.example.discountcards.data.repository.UserPreferencesRepository
+import com.example.discountcards.util.DuplicateStrategy
 import com.example.discountcards.util.ImportMode
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -30,7 +32,19 @@ class CardListViewModel(
     private val userMessage = MutableStateFlow<String?>(null)
     private val exportedJson = MutableStateFlow<String?>(null)
     private val pendingImportUri = MutableStateFlow<Uri?>(null)
-    private val showImportModeDialog = MutableStateFlow(false)
+
+    // Export selection
+    private val showExportSelectionDialog = MutableStateFlow(false)
+    private val exportSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
+    private val selectedExportCardIds = MutableStateFlow<Set<Long>>(emptySet())
+
+    // Import selection
+    private val showImportSelectionDialog = MutableStateFlow(false)
+    private val importSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
+    private val selectedImportIndexes = MutableStateFlow<Set<Int>>(emptySet())
+    private val existingStoreNames = MutableStateFlow<Set<String>>(emptySet())
+    private val importMode = MutableStateFlow(ImportMode.MERGE)
+    private val duplicateStrategy = MutableStateFlow(DuplicateStrategy.UPDATE_EXISTING)
 
     private val sortOrderFlow = preferencesRepository?.userPreferencesFlow?.map { it.sortOrder }
         ?: MutableStateFlow(SortOrder.ALPHABETICAL)
@@ -46,30 +60,42 @@ class CardListViewModel(
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     val uiState: StateFlow<CardListUiState> = combine(
         searchQuery,
         cardsFlow,
         userMessage,
         exportedJson,
         pendingImportUri,
-        showImportModeDialog
-    ) { flows ->
-        val query = flows[0] as String
-        val cards = flows[1] as List<DiscountCard>
-        val msg = flows[2] as String?
-        val json = flows[3] as String?
-        val uri = flows[4] as Uri?
-        val showDialog = flows[5] as Boolean
-
+        showExportSelectionDialog,
+        exportSelectionCards,
+        selectedExportCardIds,
+        showImportSelectionDialog,
+        importSelectionCards,
+        selectedImportIndexes,
+        existingStoreNames,
+        importMode,
+        duplicateStrategy
+    ) { args: Array<Any?> ->
+        @Suppress("UNCHECKED_CAST")
         CardListUiState(
-            searchQuery = query,
-            cards = cards,
+            searchQuery = args[0] as String,
+            cards = args[1] as List<DiscountCard>,
             isLoading = false,
-            userMessage = msg,
-            exportedJson = json,
-            pendingImportUri = uri,
-            showImportModeDialog = showDialog
+            userMessage = args[2] as String?,
+            exportedJson = args[3] as String?,
+            pendingImportUri = args[4] as Uri?,
+            showImportModeDialog = false,
+
+            showExportSelectionDialog = args[5] as Boolean,
+            exportSelectionCards = args[6] as List<DiscountCard>,
+            selectedExportCardIds = args[7] as Set<Long>,
+
+            showImportSelectionDialog = args[8] as Boolean,
+            importSelectionCards = args[9] as List<DiscountCard>,
+            selectedImportIndexes = args[10] as Set<Int>,
+            existingStoreNames = args[11] as Set<String>,
+            importMode = args[12] as ImportMode,
+            duplicateStrategy = args[13] as DuplicateStrategy
         )
     }.stateIn(
         scope = viewModelScope,
@@ -91,10 +117,60 @@ class CardListViewModel(
         }
     }
 
-    fun exportCards() {
+    // Export Selection Methods
+    fun prepareExportSelection() {
+        viewModelScope.launch {
+            val allCards = repository.getAllCards().first()
+            if (allCards.isEmpty()) {
+                userMessage.value = "EXPORT_FAILED:No cards to export"
+                return@launch
+            }
+            exportSelectionCards.value = allCards
+            selectedExportCardIds.value = allCards.map { it.id }.toSet()
+            showExportSelectionDialog.value = true
+        }
+    }
+
+    fun toggleExportCardSelection(cardId: Long) {
+        val current = selectedExportCardIds.value
+        selectedExportCardIds.value = if (current.contains(cardId)) {
+            current - cardId
+        } else {
+            current + cardId
+        }
+    }
+
+    fun selectAllExportCards() {
+        selectedExportCardIds.value = exportSelectionCards.value.map { it.id }.toSet()
+    }
+
+    fun deselectAllExportCards() {
+        selectedExportCardIds.value = emptySet()
+    }
+
+    fun invertExportCardSelection() {
+        val allIds = exportSelectionCards.value.map { it.id }.toSet()
+        selectedExportCardIds.value = allIds - selectedExportCardIds.value
+    }
+
+    fun cancelExportSelection() {
+        showExportSelectionDialog.value = false
+        exportSelectionCards.value = emptyList()
+        selectedExportCardIds.value = emptySet()
+    }
+
+    fun confirmExportToText() {
         viewModelScope.launch {
             try {
-                val json = repository.exportToJson()
+                val selectedCards = exportSelectionCards.value.filter {
+                    selectedExportCardIds.value.contains(it.id)
+                }
+                if (selectedCards.isEmpty()) {
+                    userMessage.value = "EXPORT_FAILED:No cards selected"
+                    return@launch
+                }
+                val json = repository.exportToJson(selectedCards)
+                cancelExportSelection()
                 exportedJson.value = json
             } catch (e: Exception) {
                 userMessage.value = "EXPORT_FAILED:${e.localizedMessage ?: "Error"}"
@@ -102,11 +178,19 @@ class CardListViewModel(
         }
     }
 
-    fun exportToUri(contentResolver: ContentResolver, uri: Uri) {
+    fun confirmExportToUri(contentResolver: ContentResolver, uri: Uri) {
         viewModelScope.launch {
-            val result = repository.exportToUri(contentResolver, uri)
+            val selectedCards = exportSelectionCards.value.filter {
+                selectedExportCardIds.value.contains(it.id)
+            }
+            if (selectedCards.isEmpty()) {
+                userMessage.value = "EXPORT_FAILED:No cards selected"
+                return@launch
+            }
+            val result = repository.exportToUri(contentResolver, uri, selectedCards)
             result.fold(
                 onSuccess = {
+                    cancelExportSelection()
                     userMessage.value = "EXPORT_SUCCESS"
                 },
                 onFailure = { error ->
@@ -116,18 +200,142 @@ class CardListViewModel(
         }
     }
 
-    fun onImportFileSelected(uri: Uri) {
-        pendingImportUri.value = uri
-        showImportModeDialog.value = true
+    fun exportCards() {
+        prepareExportSelection()
     }
 
-    fun confirmImportFromUri(contentResolver: ContentResolver, mode: ImportMode) {
-        val uri = pendingImportUri.value ?: run {
-            showImportModeDialog.value = false
-            return
-        }
+    fun exportToUri(contentResolver: ContentResolver, uri: Uri) {
         viewModelScope.launch {
-            val result = repository.importFromUri(contentResolver, uri, mode)
+            val selectedCards = exportSelectionCards.value.filter {
+                selectedExportCardIds.value.contains(it.id)
+            }
+            val cardsToExport = if (selectedCards.isNotEmpty()) selectedCards else null
+            val result = repository.exportToUri(contentResolver, uri, cardsToExport)
+            result.fold(
+                onSuccess = {
+                    cancelExportSelection()
+                    userMessage.value = "EXPORT_SUCCESS"
+                },
+                onFailure = { error ->
+                    userMessage.value = "EXPORT_FAILED:${error.localizedMessage ?: "Error"}"
+                }
+            )
+        }
+    }
+
+    // Import Selection Methods
+    fun onImportFileSelected(uri: Uri, contentResolver: ContentResolver) {
+        viewModelScope.launch {
+            val result = repository.readJsonCardsFromUri(contentResolver, uri)
+            result.fold(
+                onSuccess = { cards ->
+                    if (cards.isEmpty()) {
+                        userMessage.value = "IMPORT_FAILED:Empty file"
+                        return@fold
+                    }
+                    val existing = repository.getAllCards().first()
+                    existingStoreNames.value = existing.map { it.storeName.trim().lowercase() }.toSet()
+                    pendingImportUri.value = uri
+                    importSelectionCards.value = cards
+                    selectedImportIndexes.value = cards.indices.toSet()
+                    importMode.value = ImportMode.MERGE
+                    duplicateStrategy.value = DuplicateStrategy.UPDATE_EXISTING
+                    showImportSelectionDialog.value = true
+                },
+                onFailure = { error ->
+                    userMessage.value = "IMPORT_FAILED:${error.localizedMessage ?: "Invalid format"}"
+                }
+            )
+        }
+    }
+
+    fun onImportTextEntered(jsonString: String) {
+        viewModelScope.launch {
+            val result = repository.parseJsonCards(jsonString)
+            result.fold(
+                onSuccess = { cards ->
+                    if (cards.isEmpty()) {
+                        userMessage.value = "IMPORT_FAILED:Empty JSON"
+                        return@fold
+                    }
+                    val existing = repository.getAllCards().first()
+                    existingStoreNames.value = existing.map { it.storeName.trim().lowercase() }.toSet()
+                    importSelectionCards.value = cards
+                    selectedImportIndexes.value = cards.indices.toSet()
+                    importMode.value = ImportMode.MERGE
+                    duplicateStrategy.value = DuplicateStrategy.UPDATE_EXISTING
+                    showImportSelectionDialog.value = true
+                },
+                onFailure = { error ->
+                    userMessage.value = "IMPORT_FAILED:${error.localizedMessage ?: "Invalid format"}"
+                }
+            )
+        }
+    }
+
+    fun toggleImportCardSelection(index: Int) {
+        val current = selectedImportIndexes.value
+        selectedImportIndexes.value = if (current.contains(index)) {
+            current - index
+        } else {
+            current + index
+        }
+    }
+
+    fun selectAllImportCards() {
+        selectedImportIndexes.value = importSelectionCards.value.indices.toSet()
+    }
+
+    fun deselectAllImportCards() {
+        selectedImportIndexes.value = emptySet()
+    }
+
+    fun invertImportCardSelection() {
+        val allIndices = importSelectionCards.value.indices.toSet()
+        selectedImportIndexes.value = allIndices - selectedImportIndexes.value
+    }
+
+    fun setImportMode(mode: ImportMode) {
+        importMode.value = mode
+    }
+
+    fun setDuplicateStrategy(strategy: DuplicateStrategy) {
+        duplicateStrategy.value = strategy
+    }
+
+    fun cancelImportSelection() {
+        showImportSelectionDialog.value = false
+        pendingImportUri.value = null
+        importSelectionCards.value = emptyList()
+        selectedImportIndexes.value = emptySet()
+        existingStoreNames.value = emptySet()
+    }
+
+    fun confirmImportSelected() {
+        viewModelScope.launch {
+            val selectedCards = importSelectionCards.value.filterIndexed { index, _ ->
+                selectedImportIndexes.value.contains(index)
+            }
+            if (selectedCards.isEmpty()) {
+                userMessage.value = "IMPORT_FAILED:No cards selected"
+                return@launch
+            }
+            val result = repository.importSelectedCards(selectedCards, importMode.value, duplicateStrategy.value)
+            result.fold(
+                onSuccess = { count ->
+                    userMessage.value = "IMPORT_SUCCESS:$count"
+                    cancelImportSelection()
+                },
+                onFailure = { error ->
+                    userMessage.value = "IMPORT_FAILED:${error.localizedMessage ?: "Invalid format"}"
+                }
+            )
+        }
+    }
+
+    fun importCards(jsonString: String, mode: ImportMode = ImportMode.MERGE) {
+        viewModelScope.launch {
+            val result = repository.importFromJson(jsonString, mode, DuplicateStrategy.UPDATE_EXISTING)
             result.fold(
                 onSuccess = { count ->
                     userMessage.value = "IMPORT_SUCCESS:$count"
@@ -136,35 +344,15 @@ class CardListViewModel(
                     userMessage.value = "IMPORT_FAILED:${error.localizedMessage ?: "Invalid format"}"
                 }
             )
-            pendingImportUri.value = null
-            showImportModeDialog.value = false
         }
-    }
-
-    fun cancelImport() {
-        pendingImportUri.value = null
-        showImportModeDialog.value = false
     }
 
     fun clearExportedJson() {
         exportedJson.value = null
     }
 
-    fun importCards(jsonString: String, mode: ImportMode = ImportMode.MERGE) {
-        viewModelScope.launch {
-            val result = repository.importFromJson(jsonString, mode)
-            result.fold(
-                onSuccess = { count ->
-                    userMessage.value = "IMPORT_SUCCESS:$count"
-                },
-                onFailure = { error ->
-                    userMessage.value = "IMPORT_FAILED:${error.localizedMessage ?: "Invalid format"}"
-                }
-            )
-        }
-    }
-
     fun clearUserMessage() {
         userMessage.value = null
     }
 }
+

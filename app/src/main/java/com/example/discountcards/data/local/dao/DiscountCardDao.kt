@@ -21,6 +21,9 @@ interface DiscountCardDao {
     @Query("SELECT * FROM discount_cards ORDER BY isFavorite DESC, storeName ASC")
     fun getAllCards(): Flow<List<DiscountCard>>
 
+    @Query("SELECT * FROM discount_cards ORDER BY storeName ASC")
+    suspend fun getAllCardsDirect(): List<DiscountCard>
+
     @Query("SELECT * FROM discount_cards WHERE storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%' ORDER BY isFavorite DESC, storeName ASC")
     fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>>
 

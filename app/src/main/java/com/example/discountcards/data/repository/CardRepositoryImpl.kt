@@ -5,6 +5,7 @@ import android.net.Uri
 import com.example.discountcards.data.local.dao.DiscountCardDao
 import com.example.discountcards.data.local.entity.DiscountCard
 import com.example.discountcards.util.BackupManager
+import com.example.discountcards.util.DuplicateStrategy
 import com.example.discountcards.util.ImportMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -52,38 +53,114 @@ class CardRepositoryImpl(
 
     override suspend fun insertAll(cards: List<DiscountCard>) = dao.insertAll(cards)
 
-    override suspend fun exportToJson(): String {
-        val cards = dao.getAllCards().first()
+    override suspend fun exportToJson(cardsToExport: List<DiscountCard>?): String {
+        val cards = cardsToExport ?: dao.getAllCards().first()
         return backupManager.serialize(cards)
     }
 
-    override suspend fun importFromJson(jsonString: String, mode: ImportMode): Result<Int> {
+    override suspend fun importFromJson(
+        jsonString: String,
+        mode: ImportMode,
+        duplicateStrategy: DuplicateStrategy
+    ): Result<Int> {
         return runCatching {
             val cards = backupManager.deserialize(jsonString).getOrThrow()
-            performImport(cards, mode)
+            performImport(cards, mode, duplicateStrategy)
         }
     }
 
-    override suspend fun exportToUri(contentResolver: ContentResolver, uri: Uri): Result<Unit> {
+    override suspend fun exportToUri(
+        contentResolver: ContentResolver,
+        uri: Uri,
+        cardsToExport: List<DiscountCard>?
+    ): Result<Unit> {
         return runCatching {
-            val cards = dao.getAllCards().first()
+            val cards = cardsToExport ?: dao.getAllCards().first()
             backupManager.writeToUri(contentResolver, uri, cards).getOrThrow()
         }
     }
 
-    override suspend fun importFromUri(contentResolver: ContentResolver, uri: Uri, mode: ImportMode): Result<Int> {
+    override suspend fun importFromUri(
+        contentResolver: ContentResolver,
+        uri: Uri,
+        mode: ImportMode,
+        duplicateStrategy: DuplicateStrategy
+    ): Result<Int> {
         return runCatching {
             val cards = backupManager.readFromUri(contentResolver, uri).getOrThrow()
-            performImport(cards, mode)
+            performImport(cards, mode, duplicateStrategy)
         }
     }
 
-    private suspend fun performImport(cards: List<DiscountCard>, mode: ImportMode): Int {
+    override suspend fun importSelectedCards(
+        cards: List<DiscountCard>,
+        mode: ImportMode,
+        duplicateStrategy: DuplicateStrategy
+    ): Result<Int> {
+        return runCatching {
+            performImport(cards, mode, duplicateStrategy)
+        }
+    }
+
+    override suspend fun parseJsonCards(jsonString: String): Result<List<DiscountCard>> {
+        return backupManager.deserialize(jsonString)
+    }
+
+    override suspend fun readJsonCardsFromUri(contentResolver: ContentResolver, uri: Uri): Result<List<DiscountCard>> {
+        return backupManager.readFromUri(contentResolver, uri)
+    }
+
+    private suspend fun performImport(
+        cards: List<DiscountCard>,
+        mode: ImportMode,
+        duplicateStrategy: DuplicateStrategy
+    ): Int {
+        if (cards.isEmpty()) return 0
+
         if (mode == ImportMode.OVERWRITE) {
             dao.deleteAll()
+            val cardsToInsert = cards.map { it.copy(id = 0) }
+            dao.insertAll(cardsToInsert)
+            return cardsToInsert.size
         }
-        val cardsToInsert = cards.map { it.copy(id = 0) }
-        dao.insertAll(cardsToInsert)
-        return cardsToInsert.size
+
+        // MERGE mode logic
+        val existingCards = dao.getAllCardsDirect()
+        val existingCardsByName = existingCards.associateBy { it.storeName.trim().lowercase() }
+
+        var count = 0
+        cards.forEach { importedCard ->
+            val key = importedCard.storeName.trim().lowercase()
+            val existingCard = existingCardsByName[key]
+
+            if (existingCard != null) {
+                when (duplicateStrategy) {
+                    DuplicateStrategy.UPDATE_EXISTING -> {
+                        val updatedCard = existingCard.copy(
+                            cardNumber = importedCard.cardNumber,
+                            barcodeFormat = importedCard.barcodeFormat,
+                            note = importedCard.note,
+                            cardColor = importedCard.cardColor,
+                            iconName = importedCard.iconName,
+                            updatedAt = System.currentTimeMillis()
+                        )
+                        dao.updateCard(updatedCard)
+                        count++
+                    }
+                    DuplicateStrategy.ADD_AS_NEW -> {
+                        dao.insertCard(importedCard.copy(id = 0))
+                        count++
+                    }
+                    DuplicateStrategy.SKIP -> {
+                        // skip duplicate card
+                    }
+                }
+            } else {
+                dao.insertCard(importedCard.copy(id = 0))
+                count++
+            }
+        }
+        return count
     }
 }
+

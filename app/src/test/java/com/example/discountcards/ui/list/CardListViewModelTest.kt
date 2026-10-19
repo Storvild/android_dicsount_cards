@@ -40,6 +40,8 @@ class CardListViewModelTest {
 
         override fun getAllCards(): Flow<List<DiscountCard>> = getAllCardsAlphabetical()
 
+        override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
+
         override fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>> {
             return flowOf(cards.filter {
                 it.storeName.contains(query, ignoreCase = true) ||
@@ -160,6 +162,9 @@ class CardListViewModelTest {
         viewModel.exportCards()
         advanceUntilIdle()
 
+        viewModel.confirmExportToText()
+        advanceUntilIdle()
+
         val exportedJson = viewModel.uiState.value.exportedJson
         assertNotNull(exportedJson)
 
@@ -187,4 +192,47 @@ class CardListViewModelTest {
         assertEquals("IMPORT_SUCCESS:1", msg)
         assertEquals(2, dao.cards.size)
     }
+
+    @Test
+    fun testExportSelectionControls() = runTest {
+        val dao = FakeDao()
+        dao.cards.add(DiscountCard(id = 1, storeName = "Lenta", cardNumber = "111", barcodeFormat = "EAN_13"))
+        dao.cards.add(DiscountCard(id = 2, storeName = "Auchan", cardNumber = "222", barcodeFormat = "QR_CODE"))
+
+        val repository = CardRepositoryImpl(dao)
+        val viewModel = CardListViewModel(repository)
+
+        backgroundScope.launch { viewModel.uiState.collect {} }
+        advanceUntilIdle()
+
+        viewModel.prepareExportSelection()
+        advanceUntilIdle()
+
+        var state = viewModel.uiState.value
+        assertEquals(true, state.showExportSelectionDialog)
+        assertEquals(2, state.selectedExportCardIds.size)
+
+        viewModel.deselectAllExportCards()
+        advanceUntilIdle()
+        state = viewModel.uiState.value
+        assertEquals(0, state.selectedExportCardIds.size)
+
+        viewModel.selectAllExportCards()
+        advanceUntilIdle()
+        state = viewModel.uiState.value
+        assertEquals(2, state.selectedExportCardIds.size)
+
+        viewModel.toggleExportCardSelection(1L)
+        advanceUntilIdle()
+        state = viewModel.uiState.value
+        assertEquals(1, state.selectedExportCardIds.size)
+        assertEquals(true, state.selectedExportCardIds.contains(2L))
+
+        viewModel.invertExportCardSelection()
+        advanceUntilIdle()
+        state = viewModel.uiState.value
+        assertEquals(1, state.selectedExportCardIds.size)
+        assertEquals(true, state.selectedExportCardIds.contains(1L))
+    }
+
 }

@@ -26,6 +26,8 @@ class CardRepositoryImplTest {
 
         override fun getAllCards(): Flow<List<DiscountCard>> = getAllCardsAlphabetical()
 
+        override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
+
         override fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>> {
             return flowOf(cards.filter { it.storeName.contains(query, ignoreCase = true) || it.cardNumber.contains(query, ignoreCase = true) }
                 .sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenBy { it.storeName }))
@@ -156,4 +158,49 @@ class CardRepositoryImplTest {
         val result = repository.importFromJson("invalid json data", ImportMode.MERGE)
         assertTrue("Importing invalid JSON should return failure", result.isFailure)
     }
+
+    @Test
+    fun testImportDuplicateStrategyUpdateExisting() = runTest {
+        val dao = FakeDiscountCardDao()
+        val repository = CardRepositoryImpl(dao)
+
+        val existingCard = DiscountCard(id = 1, storeName = "Lenta", cardNumber = "111111", barcodeFormat = "EAN_13", note = "Old note")
+        dao.insertCard(existingCard)
+
+        val importedCard = DiscountCard(id = 0, storeName = "Lenta", cardNumber = "999999", barcodeFormat = "QR_CODE", note = "Updated note")
+
+        val result = repository.importSelectedCards(
+            cards = listOf(importedCard),
+            mode = ImportMode.MERGE,
+            duplicateStrategy = com.example.discountcards.util.DuplicateStrategy.UPDATE_EXISTING
+        )
+
+        assertTrue(result.isSuccess)
+        assertEquals(1, dao.cards.size)
+        assertEquals(1L, dao.cards[0].id)
+        assertEquals("999999", dao.cards[0].cardNumber)
+        assertEquals("Updated note", dao.cards[0].note)
+    }
+
+    @Test
+    fun testImportDuplicateStrategySkip() = runTest {
+        val dao = FakeDiscountCardDao()
+        val repository = CardRepositoryImpl(dao)
+
+        val existingCard = DiscountCard(id = 1, storeName = "Lenta", cardNumber = "111111", barcodeFormat = "EAN_13")
+        dao.insertCard(existingCard)
+
+        val importedCard = DiscountCard(id = 0, storeName = "Lenta", cardNumber = "999999", barcodeFormat = "QR_CODE")
+
+        val result = repository.importSelectedCards(
+            cards = listOf(importedCard),
+            mode = ImportMode.MERGE,
+            duplicateStrategy = com.example.discountcards.util.DuplicateStrategy.SKIP
+        )
+
+        assertTrue(result.isSuccess)
+        assertEquals(1, dao.cards.size)
+        assertEquals("111111", dao.cards[0].cardNumber)
+    }
+
 }

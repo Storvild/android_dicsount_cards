@@ -40,6 +40,8 @@ class CardDetailViewModelTest {
 
         override fun getAllCards(): Flow<List<DiscountCard>> = getAllCardsAlphabetical()
 
+        override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
+
         override fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>> = flowOf(cards)
 
         override fun searchCardsByFrequency(query: String): Flow<List<DiscountCard>> = flowOf(cards)

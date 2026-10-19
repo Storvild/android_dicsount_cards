@@ -38,8 +38,9 @@ import com.example.discountcards.data.repository.ThemeMode
 import com.example.discountcards.ui.list.components.CardListItem
 import com.example.discountcards.ui.list.components.EmptyState
 import com.example.discountcards.ui.list.components.ExportDialog
+import com.example.discountcards.ui.list.components.ExportSelectionDialog
 import com.example.discountcards.ui.list.components.ImportDialog
-import com.example.discountcards.ui.list.components.ImportModeDialog
+import com.example.discountcards.ui.list.components.ImportSelectionDialog
 import com.example.discountcards.ui.list.components.SearchBarComponent
 
 @Composable
@@ -65,7 +66,7 @@ fun CardListScreen(
         contract = ActivityResultContracts.CreateDocument("application/json")
     ) { uri ->
         if (uri != null) {
-            viewModel.exportToUri(context.contentResolver, uri)
+            viewModel.confirmExportToUri(context.contentResolver, uri)
         }
     }
 
@@ -73,7 +74,7 @@ fun CardListScreen(
         contract = ActivityResultContracts.OpenDocument()
     ) { uri ->
         if (uri != null) {
-            viewModel.onImportFileSelected(uri)
+            viewModel.onImportFileSelected(uri, context.contentResolver)
         }
     }
 
@@ -123,7 +124,7 @@ fun CardListScreen(
                 query = uiState.searchQuery,
                 onQueryChange = viewModel::onSearchQueryChange,
                 onClearQuery = viewModel::onClearSearch,
-                onExportClick = { exportLauncher.launch("discount_cards_backup.json") },
+                onExportClick = { viewModel.prepareExportSelection() },
                 onImportClick = { importLauncher.launch(arrayOf("application/json", "*/*")) },
                 currentThemeMode = currentThemeMode,
                 onThemeModeSelected = onThemeModeSelected,
@@ -171,17 +172,40 @@ fun CardListScreen(
         }
     }
 
-    // SAF Import Mode Dialog (Merge vs Overwrite)
-    if (uiState.showImportModeDialog && uiState.pendingImportUri != null) {
-        ImportModeDialog(
-            onDismiss = viewModel::cancelImport,
-            onConfirm = { mode ->
-                viewModel.confirmImportFromUri(context.contentResolver, mode)
-            }
+    // Export Selection Dialog
+    if (uiState.showExportSelectionDialog) {
+        ExportSelectionDialog(
+            cards = uiState.exportSelectionCards,
+            selectedCardIds = uiState.selectedExportCardIds,
+            onToggleCard = viewModel::toggleExportCardSelection,
+            onSelectAll = viewModel::selectAllExportCards,
+            onDeselectAll = viewModel::deselectAllExportCards,
+            onInvert = viewModel::invertExportCardSelection,
+            onConfirm = { exportLauncher.launch("discount_cards_backup.json") },
+            onDismiss = viewModel::cancelExportSelection
         )
     }
 
-    // Fallback Export Dialog if text export used
+    // Import Selection Dialog
+    if (uiState.showImportSelectionDialog) {
+        ImportSelectionDialog(
+            cards = uiState.importSelectionCards,
+            selectedIndexes = uiState.selectedImportIndexes,
+            existingStoreNames = uiState.existingStoreNames,
+            importMode = uiState.importMode,
+            duplicateStrategy = uiState.duplicateStrategy,
+            onToggleCard = viewModel::toggleImportCardSelection,
+            onSelectAll = viewModel::selectAllImportCards,
+            onDeselectAll = viewModel::deselectAllImportCards,
+            onInvert = viewModel::invertImportCardSelection,
+            onModeChanged = viewModel::setImportMode,
+            onDuplicateStrategyChanged = viewModel::setDuplicateStrategy,
+            onConfirm = viewModel::confirmImportSelected,
+            onDismiss = viewModel::cancelImportSelection
+        )
+    }
+
+    // Fallback Text Export Dialog
     uiState.exportedJson?.let { json ->
         ExportDialog(
             jsonText = json,
@@ -193,9 +217,10 @@ fun CardListScreen(
     if (showTextImportDialog) {
         ImportDialog(
             onDismiss = { showTextImportDialog = false },
-            onImport = { json, mode ->
-                viewModel.importCards(json, mode)
+            onImport = { json ->
+                viewModel.onImportTextEntered(json)
             }
         )
     }
 }
+

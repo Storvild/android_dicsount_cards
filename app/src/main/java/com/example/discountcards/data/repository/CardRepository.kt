@@ -3,6 +3,7 @@ package com.example.discountcards.data.repository
 import android.content.ContentResolver
 import android.net.Uri
 import com.example.discountcards.data.local.entity.DiscountCard
+import com.example.discountcards.util.DuplicateStrategy
 import com.example.discountcards.util.ImportMode
 import kotlinx.coroutines.flow.Flow
 
@@ -20,8 +21,29 @@ interface CardRepository {
     suspend fun deleteAll()
     suspend fun insertAll(cards: List<DiscountCard>)
 
-    suspend fun exportToJson(): String
-    suspend fun importFromJson(jsonString: String, mode: ImportMode = ImportMode.MERGE): Result<Int>
-    suspend fun exportToUri(contentResolver: ContentResolver, uri: Uri): Result<Unit>
-    suspend fun importFromUri(contentResolver: ContentResolver, uri: Uri, mode: ImportMode): Result<Int>
+    suspend fun exportToJson(cardsToExport: List<DiscountCard>? = null): String
+    suspend fun importFromJson(
+        jsonString: String,
+        mode: ImportMode = ImportMode.MERGE,
+        duplicateStrategy: DuplicateStrategy = DuplicateStrategy.UPDATE_EXISTING
+    ): Result<Int>
+    suspend fun exportToUri(
+        contentResolver: ContentResolver,
+        uri: Uri,
+        cardsToExport: List<DiscountCard>? = null
+    ): Result<Unit>
+    suspend fun importFromUri(
+        contentResolver: ContentResolver,
+        uri: Uri,
+        mode: ImportMode = ImportMode.MERGE,
+        duplicateStrategy: DuplicateStrategy = DuplicateStrategy.UPDATE_EXISTING
+    ): Result<Int>
+    suspend fun importSelectedCards(
+        cards: List<DiscountCard>,
+        mode: ImportMode = ImportMode.MERGE,
+        duplicateStrategy: DuplicateStrategy = DuplicateStrategy.UPDATE_EXISTING
+    ): Result<Int>
+    suspend fun parseJsonCards(jsonString: String): Result<List<DiscountCard>>
+    suspend fun readJsonCardsFromUri(contentResolver: ContentResolver, uri: Uri): Result<List<DiscountCard>>
 }
+
