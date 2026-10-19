@@ -16,15 +16,45 @@ class CardRepositoryImplTest {
         val cards = mutableListOf<DiscountCard>()
         private var nextId = 1L
 
-        override fun getAllCards(): Flow<List<DiscountCard>> = flowOf(cards.toList())
-
-        override fun searchCards(query: String): Flow<List<DiscountCard>> {
-            return flowOf(cards.filter { it.storeName.contains(query, ignoreCase = true) || it.cardNumber.contains(query, ignoreCase = true) })
+        override fun getAllCardsAlphabetical(): Flow<List<DiscountCard>> {
+            return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenBy { it.storeName }))
         }
+
+        override fun getAllCardsByFrequency(): Flow<List<DiscountCard>> {
+            return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName }))
+        }
+
+        override fun getAllCards(): Flow<List<DiscountCard>> = getAllCardsAlphabetical()
+
+        override fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>> {
+            return flowOf(cards.filter { it.storeName.contains(query, ignoreCase = true) || it.cardNumber.contains(query, ignoreCase = true) }
+                .sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenBy { it.storeName }))
+        }
+
+        override fun searchCardsByFrequency(query: String): Flow<List<DiscountCard>> {
+            return flowOf(cards.filter { it.storeName.contains(query, ignoreCase = true) || it.cardNumber.contains(query, ignoreCase = true) }
+                .sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName }))
+        }
+
+        override fun searchCards(query: String): Flow<List<DiscountCard>> = searchCardsAlphabetical(query)
 
         override fun getCardById(id: Long): Flow<DiscountCard?> = flowOf(cards.find { it.id == id })
 
         override suspend fun getCardByIdDirect(id: Long): DiscountCard? = cards.find { it.id == id }
+
+        override suspend fun updateFavorite(id: Long, isFavorite: Boolean, updatedAt: Long) {
+            val index = cards.indexOfFirst { it.id == id }
+            if (index != -1) {
+                cards[index] = cards[index].copy(isFavorite = isFavorite, updatedAt = updatedAt)
+            }
+        }
+
+        override suspend fun incrementUsageCount(id: Long) {
+            val index = cards.indexOfFirst { it.id == id }
+            if (index != -1) {
+                cards[index] = cards[index].copy(usageCount = cards[index].usageCount + 1)
+            }
+        }
 
         override suspend fun insertCard(card: DiscountCard): Long {
             val insertedId = if (card.id == 0L) nextId++ else card.id

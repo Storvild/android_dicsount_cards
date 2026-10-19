@@ -14,13 +14,31 @@ class CardRepositoryImpl(
     private val backupManager: BackupManager = BackupManager()
 ) : CardRepository {
 
-    override fun getAllCards(): Flow<List<DiscountCard>> = dao.getAllCards()
+    override fun getAllCards(sortOrder: SortOrder): Flow<List<DiscountCard>> {
+        return when (sortOrder) {
+            SortOrder.ALPHABETICAL -> dao.getAllCardsAlphabetical()
+            SortOrder.FREQUENCY -> dao.getAllCardsByFrequency()
+        }
+    }
 
-    override fun searchCards(query: String): Flow<List<DiscountCard>> = dao.searchCards(query)
+    override fun searchCards(query: String, sortOrder: SortOrder): Flow<List<DiscountCard>> {
+        return when (sortOrder) {
+            SortOrder.ALPHABETICAL -> dao.searchCardsAlphabetical(query)
+            SortOrder.FREQUENCY -> dao.searchCardsByFrequency(query)
+        }
+    }
 
     override fun getCardById(id: Long): Flow<DiscountCard?> = dao.getCardById(id)
 
     override suspend fun getCardByIdDirect(id: Long): DiscountCard? = dao.getCardByIdDirect(id)
+
+    override suspend fun toggleFavorite(id: Long, isFavorite: Boolean) {
+        dao.updateFavorite(id, isFavorite)
+    }
+
+    override suspend fun incrementUsageCount(id: Long) {
+        dao.incrementUsageCount(id)
+    }
 
     override suspend fun insertCard(card: DiscountCard): Long = dao.insertCard(card)
 

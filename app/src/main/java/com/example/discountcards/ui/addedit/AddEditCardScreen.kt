@@ -23,10 +23,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Notes
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.CreditCard
 import androidx.compose.material.icons.outlined.Image
+import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.QrCodeScanner
+import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
@@ -41,6 +44,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -68,6 +72,7 @@ import com.example.discountcards.ui.addedit.components.ColorPicker
 import com.example.discountcards.ui.addedit.components.FormatSelector
 import com.example.discountcards.ui.addedit.components.IconPicker
 import com.example.discountcards.ui.addedit.components.getCategoryIconByName
+import com.example.discountcards.ui.addedit.components.getFormatDisplayName
 import com.example.discountcards.util.BarcodeGenerator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -278,6 +283,31 @@ fun AddEditCardScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
 
+                // Favorite Switch
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                            contentDescription = null,
+                            tint = if (uiState.isFavorite) Color(0xFFFFB300) else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = stringResource(R.string.favorite_label),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                    Switch(
+                        checked = uiState.isFavorite,
+                        onCheckedChange = viewModel::onFavoriteChanged
+                    )
+                }
+
                 // Color Picker
                 ColorPicker(
                     selectedColorInt = uiState.cardColor,
@@ -367,10 +397,11 @@ private fun CardPreviewHeader(
 ) {
     val cardColor = Color(cardColorInt)
     val categoryIcon = getCategoryIconByName(iconName)
+    val isPhoneFormat = barcodeFormat.equals("PHONE", ignoreCase = true)
 
     val thumbnailState = produceState<Bitmap?>(initialValue = null, cardNumber, barcodeFormat) {
         value = withContext(Dispatchers.Default) {
-            if (cardNumber.isNotBlank()) {
+            if (cardNumber.isNotBlank() && !isPhoneFormat) {
                 BarcodeGenerator.generateBarcode(
                     content = cardNumber,
                     format = barcodeFormat,
@@ -435,7 +466,7 @@ private fun CardPreviewHeader(
                         )
 
                         Text(
-                            text = barcodeFormat.replace("_", " "),
+                            text = getFormatDisplayName(barcodeFormat),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -444,7 +475,7 @@ private fun CardPreviewHeader(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Barcode Preview Box
+                // Barcode or Phone Preview Box
                 Surface(
                     shape = RoundedCornerShape(12.dp),
                     color = Color.White,
@@ -456,25 +487,45 @@ private fun CardPreviewHeader(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier.padding(8.dp)
                     ) {
-                        val thumbnail = thumbnailState.value
-                        if (thumbnail != null) {
-                            Image(
-                                bitmap = thumbnail.asImageBitmap(),
-                                contentDescription = stringResource(R.string.barcode_preview_desc),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(52.dp)
-                            )
+                        if (isPhoneFormat) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Phone,
+                                    contentDescription = null,
+                                    tint = Color.Black,
+                                    modifier = Modifier.size(22.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = cardNumber.ifBlank { "+7 (999) 000-00-00" },
+                                    style = MaterialTheme.typography.bodyLarge.copy(
+                                        fontFamily = FontFamily.Monospace,
+                                        fontWeight = FontWeight.Bold
+                                    ),
+                                    color = Color.Black
+                                )
+                            }
                         } else {
-                            Text(
-                                text = cardNumber.ifBlank { "•••• •••• ••••" },
-                                style = MaterialTheme.typography.bodyLarge.copy(
-                                    fontFamily = FontFamily.Monospace,
-                                    letterSpacing = 2.sp
-                                ),
-                                color = Color.Gray,
-                                fontWeight = FontWeight.SemiBold
-                            )
+                            val thumbnail = thumbnailState.value
+                            if (thumbnail != null) {
+                                Image(
+                                    bitmap = thumbnail.asImageBitmap(),
+                                    contentDescription = stringResource(R.string.barcode_preview_desc),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(52.dp)
+                                )
+                            } else {
+                                Text(
+                                    text = cardNumber.ifBlank { "•••• •••• ••••" },
+                                    style = MaterialTheme.typography.bodyLarge.copy(
+                                        fontFamily = FontFamily.Monospace,
+                                        letterSpacing = 2.sp
+                                    ),
+                                    color = Color.Gray,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
                         }
                     }
                 }

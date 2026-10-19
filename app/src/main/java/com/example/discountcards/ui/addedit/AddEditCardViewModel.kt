@@ -45,6 +45,7 @@ class AddEditCardViewModel(
                         note = card.note,
                         cardColor = card.cardColor,
                         iconName = card.iconName.ifBlank { "shopping_bag" },
+                        isFavorite = card.isFavorite,
                         createdAt = card.createdAt,
                         isLoading = false,
                         isEditMode = true
@@ -93,6 +94,10 @@ class AddEditCardViewModel(
 
     fun onIconNameChanged(iconName: String) {
         _uiState.update { it.copy(iconName = iconName) }
+    }
+
+    fun onFavoriteChanged(isFavorite: Boolean) {
+        _uiState.update { it.copy(isFavorite = isFavorite) }
     }
 
     fun openCameraScanner() {
@@ -169,6 +174,7 @@ class AddEditCardViewModel(
                 note = currentState.note.trim(),
                 cardColor = currentState.cardColor,
                 iconName = currentState.iconName,
+                isFavorite = currentState.isFavorite,
                 createdAt = currentState.createdAt ?: System.currentTimeMillis(),
                 updatedAt = System.currentTimeMillis()
             )

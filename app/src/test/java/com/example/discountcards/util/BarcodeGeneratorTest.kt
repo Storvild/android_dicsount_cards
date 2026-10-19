@@ -1,6 +1,7 @@
 package com.example.discountcards.util
 
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -9,8 +10,13 @@ class BarcodeGeneratorTest {
     @Test
     fun testParseSupportedFormats() {
         for (formatName in BarcodeGenerator.SUPPORTED_FORMATS) {
-            val parsed = BarcodeGenerator.parseFormat(formatName)
-            assertNotNull("Format $formatName should be parseable", parsed)
+            if (formatName == "PHONE") {
+                val parsed = BarcodeGenerator.parseFormat(formatName)
+                assertNull("PHONE format should not parse to ZXing BarcodeFormat", parsed)
+            } else {
+                val parsed = BarcodeGenerator.parseFormat(formatName)
+                assertNotNull("Format $formatName should be parseable", parsed)
+            }
         }
     }
 
@@ -35,6 +41,12 @@ class BarcodeGeneratorTest {
             assertTrue("Width should be > 0", matrix!!.width > 0)
             assertTrue("Height should be > 0", matrix.height > 0)
         }
+    }
+
+    @Test
+    fun testPhoneFormatFailsEncoding() {
+        val result = BarcodeGenerator.encodeToBitMatrixResult("+79990000000", "PHONE")
+        assertTrue("PHONE format should fail bit matrix encoding as it is displayed as text", result.isFailure)
     }
 
     @Test

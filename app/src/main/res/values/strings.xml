@@ -6,14 +6,41 @@
     <string name="add_card_title">Добавление карты</string>
     <string name="edit_card_title">Редактирование карты</string>
     <string name="card_details_title">Карточка</string>
+    <string name="settings_title">Настройки</string>
 
     <!-- Search & Menu -->
     <string name="search_placeholder">Поиск по магазину или примечанию…</string>
     <string name="search_icon_desc">Поиск</string>
     <string name="clear_search_desc">Очистить поиск</string>
     <string name="menu_options_desc">Меню опций</string>
+    <string name="menu_file">Файл</string>
+    <string name="menu_appearance">Оформление</string>
+    <string name="menu_sort">Сортировка</string>
+    <string name="menu_settings">Настройки</string>
     <string name="export_json_action">Экспорт в JSON-файл</string>
     <string name="import_json_action">Импорт из JSON-файла</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">Системная тема</string>
+    <string name="theme_light">Светлая тема</string>
+    <string name="theme_dark">Темная тема</string>
+    <string name="theme_dialog_title">Выберите оформление</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">По алфавиту</string>
+    <string name="sort_frequency">По частоте использования</string>
+    <string name="sort_dialog_title">Сортировка карт</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">Яркость при открытии карточки</string>
+    <string name="brightness_no_change">0% — без изменений</string>
+    <string name="brightness_percent">%1$d%%</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">Избранное</string>
+    <string name="favorite_toggle_desc">Переключить избранное</string>
+    <string name="format_phone">Телефон</string>
+    <string name="phone_discount_label">Скидка по номеру телефона</string>
 
     <!-- Empty States -->
     <string name="empty_title">Список карточек пуст</string>
@@ -32,7 +59,7 @@
     <string name="store_name_label">Название магазина *</string>
     <string name="store_name_placeholder">Например: Пятёрочка, Перекрёсток, Золотое Яблоко</string>
     <string name="clear_store_name">Очистить название магазина</string>
-    <string name="card_number_label">Номер карты / Штрихкод *</string>
+    <string name="card_number_label">Номер карты / Штрихкод / Телефон *</string>
     <string name="card_number_placeholder">Введите номер или сканируйте штрихкод</string>
     <string name="clear_card_number">Очистить номер карты</string>
     <string name="pick_gallery_desc">Выбрать штрихкод из галереи</string>

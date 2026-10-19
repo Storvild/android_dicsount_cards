@@ -24,6 +24,15 @@ import androidx.compose.ui.unit.dp
 import com.example.discountcards.R
 import com.example.discountcards.util.BarcodeGenerator
 
+@Composable
+fun getFormatDisplayName(format: String): String {
+    return if (format.equals("PHONE", ignoreCase = true)) {
+        stringResource(R.string.format_phone)
+    } else {
+        format.replace("_", " ")
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormatSelector(
@@ -49,7 +58,7 @@ fun FormatSelector(
             modifier = Modifier.fillMaxWidth()
         ) {
             OutlinedTextField(
-                value = selectedFormat.replace("_", " "),
+                value = getFormatDisplayName(selectedFormat),
                 onValueChange = {},
                 readOnly = true,
                 label = { Text(stringResource(R.string.format_label)) },
@@ -70,7 +79,7 @@ fun FormatSelector(
                     DropdownMenuItem(
                         text = {
                             Text(
-                                text = format.replace("_", " "),
+                                text = getFormatDisplayName(format),
                                 fontWeight = if (format == selectedFormat) FontWeight.Bold else FontWeight.Normal
                             )
                         },

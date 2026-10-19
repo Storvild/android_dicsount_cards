@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.discountcards.data.local.AppDatabase
 import com.example.discountcards.data.repository.CardRepository
 import com.example.discountcards.data.repository.CardRepositoryImpl
+import com.example.discountcards.data.repository.UserPreferencesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
@@ -17,6 +18,10 @@ class DiscountCardsApp : Application() {
 
     val repository: CardRepository by lazy {
         CardRepositoryImpl(database.discountCardDao())
+    }
+
+    val preferencesRepository: UserPreferencesRepository by lazy {
+        UserPreferencesRepository(this)
     }
 
     override fun onCreate() {

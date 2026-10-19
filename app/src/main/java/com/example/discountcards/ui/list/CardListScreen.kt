@@ -33,6 +33,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.discountcards.R
+import com.example.discountcards.data.repository.SortOrder
+import com.example.discountcards.data.repository.ThemeMode
 import com.example.discountcards.ui.list.components.CardListItem
 import com.example.discountcards.ui.list.components.EmptyState
 import com.example.discountcards.ui.list.components.ExportDialog
@@ -45,7 +47,12 @@ fun CardListScreen(
     viewModel: CardListViewModel,
     onCardClick: (Long) -> Unit,
     onAddCardClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onSettingsClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    currentThemeMode: ThemeMode = ThemeMode.SYSTEM,
+    onThemeModeSelected: (ThemeMode) -> Unit = {},
+    currentSortOrder: SortOrder = SortOrder.ALPHABETICAL,
+    onSortOrderSelected: (SortOrder) -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -117,7 +124,12 @@ fun CardListScreen(
                 onQueryChange = viewModel::onSearchQueryChange,
                 onClearQuery = viewModel::onClearSearch,
                 onExportClick = { exportLauncher.launch("discount_cards_backup.json") },
-                onImportClick = { importLauncher.launch(arrayOf("application/json", "*/*")) }
+                onImportClick = { importLauncher.launch(arrayOf("application/json", "*/*")) },
+                currentThemeMode = currentThemeMode,
+                onThemeModeSelected = onThemeModeSelected,
+                currentSortOrder = currentSortOrder,
+                onSortOrderSelected = onSortOrderSelected,
+                onSettingsClick = onSettingsClick
             )
 
             Box(
@@ -149,7 +161,8 @@ fun CardListScreen(
                         ) { card ->
                             CardListItem(
                                 card = card,
-                                onClick = { onCardClick(card.id) }
+                                onClick = { onCardClick(card.id) },
+                                onFavoriteToggle = { viewModel.toggleFavorite(card.id, card.isFavorite) }
                             )
                         }
                     }

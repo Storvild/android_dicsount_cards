@@ -15,6 +15,8 @@ data class DiscountCard(
     val note: String = "",
     val cardColor: Int = 0xFF1E88E5.toInt(),
     val iconName: String = "",
+    val isFavorite: Boolean = false,
+    val usageCount: Int = 0,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

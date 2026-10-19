@@ -18,8 +18,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Note
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -57,13 +59,17 @@ fun CardDetailScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
-    // Auto max screen brightness when screen is active
-    DisposableEffect(Unit) {
+    // Set screen brightness according to user preference (0% = no change, >0% = percentage)
+    DisposableEffect(uiState.brightnessPercent) {
         val activity = context as? Activity
         val window = activity?.window
         window?.let { w ->
             val params = w.attributes
-            params.screenBrightness = 1.0f
+            if (uiState.brightnessPercent <= 0) {
+                params.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+            } else {
+                params.screenBrightness = (uiState.brightnessPercent / 100f).coerceIn(0.01f, 1.0f)
+            }
             w.attributes = params
         }
 
@@ -106,6 +112,14 @@ fun CardDetailScreen(
                 },
                 actions = {
                     if (card != null) {
+                        // Favorite Star Toggle
+                        IconButton(onClick = viewModel::toggleFavorite) {
+                            Icon(
+                                imageVector = if (card.isFavorite) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                                contentDescription = stringResource(R.string.favorite_toggle_desc),
+                                tint = if (card.isFavorite) Color(0xFFFFB300) else MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                         IconButton(onClick = { onEditClick(card.id) }) {
                             Icon(
                                 imageVector = Icons.Outlined.Edit,

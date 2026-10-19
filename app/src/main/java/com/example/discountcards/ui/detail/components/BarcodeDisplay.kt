@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ContentCopy
+import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -38,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.discountcards.R
+import com.example.discountcards.ui.addedit.components.getFormatDisplayName
 
 @Composable
 fun BarcodeDisplay(
@@ -48,8 +50,9 @@ fun BarcodeDisplay(
 ) {
     val context = LocalContext.current
     val resources = context.resources
+    val isPhoneFormat = barcodeFormat.equals("PHONE", ignoreCase = true)
 
-    // Barcode container is ALWAYS white background with dark text so scanners can read it in dark theme
+    // Barcode/Phone container is ALWAYS white background with dark text so scanners/cashiers can read it in dark theme
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
@@ -71,7 +74,7 @@ fun BarcodeDisplay(
                 onClick = {},
                 label = {
                     Text(
-                        text = barcodeFormat.replace("_", " "),
+                        text = getFormatDisplayName(barcodeFormat),
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -79,8 +82,43 @@ fun BarcodeDisplay(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Barcode Bitmap Container
-            if (bitmap != null) {
+            if (isPhoneFormat) {
+                // Phone Display Box instead of Barcode Bitmap
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Phone,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(48.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Text(
+                        text = stringResource(R.string.phone_discount_label),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.DarkGray
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = cardNumber,
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 1.5.sp
+                        ),
+                        color = Color.Black
+                    )
+                }
+            } else if (bitmap != null) {
                 val isQr = barcodeFormat.contains("QR", ignoreCase = true) || barcodeFormat.contains("AZTEC", ignoreCase = true)
                 Image(
                     bitmap = bitmap.asImageBitmap(),
@@ -112,7 +150,7 @@ fun BarcodeDisplay(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = formatSpacedCardNumber(cardNumber),
+                    text = if (isPhoneFormat) cardNumber else formatSpacedCardNumber(cardNumber),
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontFamily = FontFamily.Monospace,
                         fontWeight = FontWeight.Bold,

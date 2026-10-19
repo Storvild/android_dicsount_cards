@@ -186,3 +186,6 @@ lifecycleViewmodelNavigation3 = "2.11.1"
 
 
 
+Device Manager
+Medium Phone API 37.0
+Android 17.0 ("CinnamonBun") | x86_64

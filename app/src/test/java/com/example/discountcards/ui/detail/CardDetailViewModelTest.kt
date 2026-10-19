@@ -30,13 +30,39 @@ class CardDetailViewModelTest {
     private class FakeDao : DiscountCardDao {
         val cards = mutableListOf<DiscountCard>()
 
-        override fun getAllCards(): Flow<List<DiscountCard>> = flowOf(cards.toList())
+        override fun getAllCardsAlphabetical(): Flow<List<DiscountCard>> {
+            return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenBy { it.storeName }))
+        }
+
+        override fun getAllCardsByFrequency(): Flow<List<DiscountCard>> {
+            return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName }))
+        }
+
+        override fun getAllCards(): Flow<List<DiscountCard>> = getAllCardsAlphabetical()
+
+        override fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>> = flowOf(cards)
+
+        override fun searchCardsByFrequency(query: String): Flow<List<DiscountCard>> = flowOf(cards)
 
         override fun searchCards(query: String): Flow<List<DiscountCard>> = flowOf(cards)
 
         override fun getCardById(id: Long): Flow<DiscountCard?> = flowOf(cards.find { it.id == id })
 
         override suspend fun getCardByIdDirect(id: Long): DiscountCard? = cards.find { it.id == id }
+
+        override suspend fun updateFavorite(id: Long, isFavorite: Boolean, updatedAt: Long) {
+            val index = cards.indexOfFirst { it.id == id }
+            if (index != -1) {
+                cards[index] = cards[index].copy(isFavorite = isFavorite, updatedAt = updatedAt)
+            }
+        }
+
+        override suspend fun incrementUsageCount(id: Long) {
+            val index = cards.indexOfFirst { it.id == id }
+            if (index != -1) {
+                cards[index] = cards[index].copy(usageCount = cards[index].usageCount + 1)
+            }
+        }
 
         override suspend fun insertCard(card: DiscountCard): Long {
             cards.add(card)
@@ -103,6 +129,7 @@ class CardDetailViewModelTest {
         assertNotNull(state.card)
         assertEquals("Spar", state.card?.storeName)
         assertEquals("1234567890128", state.card?.cardNumber)
+        assertEquals(1, dao.cards.first().usageCount)
     }
 
     @Test

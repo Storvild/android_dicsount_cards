@@ -21,6 +21,7 @@ object BarcodeGenerator {
         "CODE_39",
         "PDF_417",
         "AZTEC",
+        "PHONE"
     )
 
     private val barcodeCache = LruCache<String, Bitmap>(100)
@@ -94,6 +95,10 @@ object BarcodeGenerator {
             return Result.failure(IllegalArgumentException("Content cannot be empty"))
         }
 
+        if (format.equals("PHONE", ignoreCase = true)) {
+            return Result.failure(IllegalArgumentException("PHONE format uses text view"))
+        }
+
         val zxingFormat = parseFormat(format)
             ?: return Result.failure(IllegalArgumentException("Unsupported barcode format: $format"))
 
@@ -142,6 +147,7 @@ object BarcodeGenerator {
             "CODE_39", "CODE39" -> BarcodeFormat.CODE_39
             "PDF_417", "PDF417", "PDF_417_STANDARD" -> BarcodeFormat.PDF_417
             "AZTEC" -> BarcodeFormat.AZTEC
+            "PHONE" -> null
             else -> try {
                 BarcodeFormat.valueOf(formatStr.uppercase().trim())
             } catch (_: Exception) {

@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.discountcards.data.local.entity.DiscountCard
 import com.example.discountcards.data.repository.CardRepository
+import com.example.discountcards.data.repository.SortOrder
+import com.example.discountcards.data.repository.UserPreferencesRepository
 import com.example.discountcards.util.ImportMode
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,12 +15,14 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CardListViewModel(
-    private val repository: CardRepository
+    private val repository: CardRepository,
+    private val preferencesRepository: UserPreferencesRepository? = null
 ) : ViewModel() {
 
     private val searchQuery = MutableStateFlow("")
@@ -28,12 +32,17 @@ class CardListViewModel(
     private val pendingImportUri = MutableStateFlow<Uri?>(null)
     private val showImportModeDialog = MutableStateFlow(false)
 
-    private val cardsFlow = searchQuery.flatMapLatest { query ->
+    private val sortOrderFlow = preferencesRepository?.userPreferencesFlow?.map { it.sortOrder }
+        ?: MutableStateFlow(SortOrder.ALPHABETICAL)
+
+    private val cardsFlow = combine(searchQuery, sortOrderFlow) { query, sortOrder ->
+        Pair(query, sortOrder)
+    }.flatMapLatest { (query, sortOrder) ->
         isLoading.value = true
         if (query.isBlank()) {
-            repository.getAllCards()
+            repository.getAllCards(sortOrder)
         } else {
-            repository.searchCards(query)
+            repository.searchCards(query, sortOrder)
         }
     }
 
@@ -74,6 +83,12 @@ class CardListViewModel(
 
     fun onClearSearch() {
         searchQuery.value = ""
+    }
+
+    fun toggleFavorite(cardId: Long, currentFavorite: Boolean) {
+        viewModelScope.launch {
+            repository.toggleFavorite(cardId, !currentFavorite)
+        }
     }
 
     fun exportCards() {

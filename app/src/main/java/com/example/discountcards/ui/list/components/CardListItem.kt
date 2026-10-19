@@ -16,11 +16,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.CreditCard
+import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.QrCode
+import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,12 +35,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.discountcards.R
 import com.example.discountcards.data.local.entity.DiscountCard
+import com.example.discountcards.ui.addedit.components.getFormatDisplayName
 import com.example.discountcards.util.BarcodeGenerator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -45,19 +52,25 @@ import kotlinx.coroutines.withContext
 fun CardListItem(
     card: DiscountCard,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFavoriteToggle: (() -> Unit)? = null
 ) {
     val cardColor = Color(card.cardColor)
+    val isPhoneFormat = card.barcodeFormat.equals("PHONE", ignoreCase = true)
 
     // Asynchronously generate thumbnail for card preview with caching
     val thumbnailState = produceState<Bitmap?>(initialValue = null, card.cardNumber, card.barcodeFormat) {
         value = withContext(Dispatchers.Default) {
-            BarcodeGenerator.generateBarcodeCached(
-                content = card.cardNumber,
-                format = card.barcodeFormat,
-                width = 240,
-                height = 80
-            )
+            if (isPhoneFormat) {
+                null
+            } else {
+                BarcodeGenerator.generateBarcodeCached(
+                    content = card.cardNumber,
+                    format = card.barcodeFormat,
+                    width = 240,
+                    height = 80
+                )
+            }
         }
     }
 
@@ -102,10 +115,10 @@ fun CardListItem(
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Icon(
-                                    imageVector = if (card.barcodeFormat.contains("QR", ignoreCase = true)) {
-                                        Icons.Outlined.QrCode
-                                    } else {
-                                        Icons.Outlined.CreditCard
+                                    imageVector = when {
+                                        isPhoneFormat -> Icons.Outlined.Phone
+                                        card.barcodeFormat.contains("QR", ignoreCase = true) -> Icons.Outlined.QrCode
+                                        else -> Icons.Outlined.CreditCard
                                     },
                                     contentDescription = null,
                                     tint = cardColor,
@@ -116,7 +129,7 @@ fun CardListItem(
 
                         Spacer(modifier = Modifier.width(12.dp))
 
-                        Column {
+                        Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = card.storeName,
                                 style = MaterialTheme.typography.titleMedium,
@@ -127,9 +140,20 @@ fun CardListItem(
                             )
 
                             Text(
-                                text = card.barcodeFormat.replace("_", " "),
+                                text = getFormatDisplayName(card.barcodeFormat),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+
+                    // Favorite Star Toggle Icon
+                    if (onFavoriteToggle != null) {
+                        IconButton(onClick = onFavoriteToggle) {
+                            Icon(
+                                imageVector = if (card.isFavorite) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                                contentDescription = stringResource(R.string.favorite_toggle_desc),
+                                tint = if (card.isFavorite) Color(0xFFFFB300) else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -137,7 +161,7 @@ fun CardListItem(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Barcode Thumbnail Preview or Placeholder
+                // Barcode or Phone Preview
                 Surface(
                     shape = RoundedCornerShape(10.dp),
                     color = Color.White,
@@ -150,25 +174,45 @@ fun CardListItem(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                     ) {
-                        val thumbnail = thumbnailState.value
-                        if (thumbnail != null) {
-                            Image(
-                                bitmap = thumbnail.asImageBitmap(),
-                                contentDescription = "Barcode preview for ${card.storeName}",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(48.dp)
-                            )
+                        if (isPhoneFormat) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Phone,
+                                    contentDescription = null,
+                                    tint = Color.Black,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = card.cardNumber,
+                                    style = MaterialTheme.typography.bodyLarge.copy(
+                                        fontFamily = FontFamily.Monospace,
+                                        fontWeight = FontWeight.Bold
+                                    ),
+                                    color = Color.Black
+                                )
+                            }
                         } else {
-                            Text(
-                                text = card.cardNumber,
-                                style = MaterialTheme.typography.bodyMedium.copy(
-                                    fontFamily = FontFamily.Monospace,
-                                    letterSpacing = 2.sp
-                                ),
-                                color = Color.Black,
-                                fontWeight = FontWeight.SemiBold
-                            )
+                            val thumbnail = thumbnailState.value
+                            if (thumbnail != null) {
+                                Image(
+                                    bitmap = thumbnail.asImageBitmap(),
+                                    contentDescription = "Barcode preview for ${card.storeName}",
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(48.dp)
+                                )
+                            } else {
+                                Text(
+                                    text = card.cardNumber,
+                                    style = MaterialTheme.typography.bodyMedium.copy(
+                                        fontFamily = FontFamily.Monospace,
+                                        letterSpacing = 2.sp
+                                    ),
+                                    color = Color.Black,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
                         }
                     }
                 }
