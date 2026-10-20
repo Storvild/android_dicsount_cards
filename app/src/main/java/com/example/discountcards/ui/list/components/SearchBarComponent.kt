@@ -142,38 +142,6 @@ fun SearchBarComponent(
                     }
                 )
 
-                // 2. Поделиться
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.share_json_action)) },
-                    onClick = {
-                        menuExpanded = false
-                        fileSubmenuExpanded = false
-                        onShareClick()
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Outlined.Share,
-                            contentDescription = null
-                        )
-                    }
-                )
-
-                // 3. Добавить карточку
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.add_card_action)) },
-                    onClick = {
-                        menuExpanded = false
-                        fileSubmenuExpanded = false
-                        onAddCardClick()
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Outlined.Add,
-                            contentDescription = null
-                        )
-                    }
-                )
-
                 if (fileSubmenuExpanded) {
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.export_json_action)) },
@@ -221,6 +189,38 @@ fun SearchBarComponent(
                         }
                     )
                 }
+
+                // Поделиться
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.share_json_action)) },
+                    onClick = {
+                        menuExpanded = false
+                        fileSubmenuExpanded = false
+                        onShareClick()
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Share,
+                            contentDescription = null
+                        )
+                    }
+                )
+
+                // Добавить карточку
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.add_card_action)) },
+                    onClick = {
+                        menuExpanded = false
+                        fileSubmenuExpanded = false
+                        onAddCardClick()
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Add,
+                            contentDescription = null
+                        )
+                    }
+                )
 
                 // 3. Оформление (единый пункт меню выбора темы)
                 DropdownMenuItem(
