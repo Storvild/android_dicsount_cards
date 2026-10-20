@@ -2,6 +2,7 @@ package com.example.discountcards.ui.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.discountcards.data.repository.AppLanguage
 import com.example.discountcards.data.repository.SortOrder
 import com.example.discountcards.data.repository.ThemeMode
 import com.example.discountcards.data.repository.UserPreferences
@@ -45,4 +46,16 @@ class SettingsViewModel(
             preferencesRepository.updateShowAddButton(show)
         }
     }
+
+    fun setAppLanguage(language: AppLanguage) {
+        viewModelScope.launch {
+            preferencesRepository.updateAppLanguage(language)
+        }
+    }
+
+    /**
+     * Returns the current app language from SharedPreferences (synchronous read).
+     * Used to display the correct label in the ExposedDropdownMenu on recomposition.
+     */
+    fun getSyncAppLanguage(): AppLanguage = preferencesRepository.getAppLanguageSynchronously()
 }

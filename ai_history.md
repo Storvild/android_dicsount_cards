@@ -475,3 +475,34 @@ Key translation choices:
 - **Categories** — translated to standard English retail categories (Groceries, Pharmacy, Fashion, etc.)
 - **All format strings** (`%1$d`, `%1$s`) preserved as-is so formatting works correctly
 
+---
+
+
+## Что было исправлено
+
+### 1. Проблема: язык не переключался после перезапуска
+
+**Причина:** В `updateAppLanguage()` значение сначала писалось в DataStore (асинхронно), а затем в SharedPreferences. Когда `onLanguageChange()` вызывал `recreate()`, актиvity уничтожалась и пересоздавалась **до** того, как DataStore успевал сохранить значение. При пересоздании `attachBaseContext` читал SharedPreferences, где значение ещё не было сохранено → оставалось значение по умолчанию (SYSTEM → английский).
+
+**Исправление** в [UserPreferencesRepository.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/repository/UserPreferencesRepository.kt#L108-L113):
+
+```diff
+ suspend fun updateAppLanguage(language: AppLanguage) {
+-    context.dataStore.edit { preferences ->
+-        preferences[PreferencesKeys.APP_LANGUAGE] = language.ordinal
+-    }
+     sharedPreferences.edit().putInt("app_language", language.ordinal).apply()
++    context.dataStore.edit { preferences ->
++        preferences[PreferencesKeys.APP_LANGUAGE] = language.ordinal
++    }
+ }
+```
+
+Теперь SharedPreferences пишется **синхронно** (`.apply()`), **до** того как DataStore начнёт асинхронную запись. При `recreate()` `attachBaseContext` уже читает актуальное значение.
+
+### 2. Комбо-бокс для выбора языка
+
+В [SettingsScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/settings/SettingsScreen.kt#L117-L175) секция языка уже была реализована через `ExposedDropdownMenuBox` с `OutlinedTextField` и `DropdownMenu`. Я убедился, что всё работает корректно:
+- `ExposedDropdownMenuBox` + `OutlinedTextField` (read-only) с якорем `ExposedDropdownMenuAnchorType.PrimaryNotEditable`
+- `DropdownMenu` с тремя вариантами (Системный / English / Русский)
+- При выборе языка закрывается меню, вызывается `viewModel.setAppLanguage()` и `onLanguageChange()` → `recreate()`

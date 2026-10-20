@@ -1,5 +1,6 @@
 package com.example.discountcards
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.discountcards.data.repository.AppLanguage
 import com.example.discountcards.data.repository.ThemeMode
 import com.example.discountcards.data.repository.UserPreferences
 import com.example.discountcards.ui.AddEditCardViewModelFactory
@@ -51,6 +53,29 @@ sealed interface Destination {
 }
 
 class MainActivity : ComponentActivity() {
+    private val desiredLanguage: AppLanguage
+        get() = (applicationContext as DiscountCardsApp)
+            .preferencesRepository.getAppLanguageSynchronously()
+
+    override fun attachBaseContext(newBase: Context) {
+        val app = newBase.applicationContext as DiscountCardsApp
+        val localizedContext = app.preferencesRepository.getLocalizedContext(newBase)
+        super.attachBaseContext(localizedContext)
+    }
+
+    // Safety net: if the activity is recreated without a new process (e.g. via
+    // recreate() or configuration change), attachBaseContext is not called
+    // again, so the old locale could linger. Recreate once more if the stored
+    // language changed while this process was alive.
+    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val newLang = (applicationContext as DiscountCardsApp)
+            .preferencesRepository.getAppLanguageSynchronously()
+        if (newLang != desiredLanguage && !isChangingConfigurations) {
+            recreate()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -73,7 +98,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DiscountCardsNavigation()
+                    DiscountCardsNavigation(
+                        onLanguageChange = { recreate() }
+                    )
                 }
             }
         }
@@ -81,7 +108,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun DiscountCardsNavigation() {
+fun DiscountCardsNavigation(
+    onLanguageChange: () -> Unit = {}
+) {
     val context = LocalContext.current
     val app = context.applicationContext as DiscountCardsApp
     val repository = app.repository
@@ -176,6 +205,10 @@ fun DiscountCardsNavigation() {
                     if (backStack.size > 1) {
                         backStack.removeAt(backStack.lastIndex)
                     }
+                },
+                onLanguageChange = { language ->
+                    // Recreate the activity to apply the new locale via attachBaseContext
+                    onLanguageChange()
                 }
             )
         }

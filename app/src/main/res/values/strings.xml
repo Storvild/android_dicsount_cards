@@ -171,4 +171,10 @@
     <!-- Settings: Show Add Button -->
     <string name="show_add_button_label">Кнопка «Добавить»</string>
     <string name="show_add_button_description">Показывать кнопку «Добавить» на главном экране</string>
+
+    <!-- Language -->
+    <string name="language_setting_label">Язык</string>
+    <string name="language_system">Системный</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
 </resources>
