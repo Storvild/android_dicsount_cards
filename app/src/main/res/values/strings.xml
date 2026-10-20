@@ -79,6 +79,10 @@
     <string name="format_label">Формат штрихкода</string>
     <string name="card_color_label">Цвет карты</string>
     <string name="category_icon_label">Иконка категории</string>
+    <string name="cvc_label">Код CVC</string>
+    <string name="cvc_placeholder">Например: 123</string>
+    <string name="show_cvc">Показать CVC</string>
+    <string name="hide_cvc">Скрыть CVC</string>
     <string name="note_label">Примечание (опционально)</string>
     <string name="note_placeholder">Например: скидка 5%, бонусная карта</string>
     <string name="save_changes">Сохранить изменения</string>

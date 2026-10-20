@@ -10,5 +10,6 @@ data class CardDetailUiState(
     val brightnessPercent: Int = 100,
     val isDeleteDialogVisible: Boolean = false,
     val isDeleted: Boolean = false,
+    val isCvcVisible: Boolean = false,
     val error: String? = null
 )

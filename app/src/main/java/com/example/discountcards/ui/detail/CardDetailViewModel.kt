@@ -106,6 +106,10 @@ class CardDetailViewModel(
         _uiState.update { it.copy(isDeleteDialogVisible = false) }
     }
 
+    fun toggleCvcVisibility() {
+        _uiState.update { it.copy(isCvcVisible = !it.isCvcVisible) }
+    }
+
     fun deleteCard() {
         viewModelScope.launch {
             repository.deleteCardById(cardId)

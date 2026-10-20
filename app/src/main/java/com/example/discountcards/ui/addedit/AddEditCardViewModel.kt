@@ -42,6 +42,7 @@ class AddEditCardViewModel(
                         storeName = card.storeName,
                         cardNumber = card.cardNumber,
                         barcodeFormat = card.barcodeFormat,
+                        cvc = card.cvc,
                         note = card.note,
                         cardColor = card.cardColor,
                         iconName = card.iconName.ifBlank { "shopping_bag" },
@@ -82,6 +83,10 @@ class AddEditCardViewModel(
 
     fun onBarcodeFormatChanged(format: String) {
         _uiState.update { it.copy(barcodeFormat = format) }
+    }
+
+    fun onCvcChanged(cvc: String) {
+        _uiState.update { it.copy(cvc = cvc) }
     }
 
     fun onNoteChanged(note: String) {
@@ -175,6 +180,7 @@ class AddEditCardViewModel(
                 cardColor = currentState.cardColor,
                 iconName = currentState.iconName,
                 isFavorite = currentState.isFavorite,
+                cvc = currentState.cvc,
                 createdAt = currentState.createdAt ?: System.currentTimeMillis(),
                 updatedAt = System.currentTimeMillis()
             )

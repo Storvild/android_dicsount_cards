@@ -322,6 +322,22 @@ fun AddEditCardScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
 
+                // CVC Input (only shown in edit mode)
+                if (uiState.isEditMode) {
+                    OutlinedTextField(
+                        value = uiState.cvc,
+                        onValueChange = viewModel::onCvcChanged,
+                        label = { Text(stringResource(R.string.cvc_label)) },
+                        placeholder = { Text(stringResource(R.string.cvc_placeholder)) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = androidx.compose.ui.text.input.KeyboardType.Number,
+                            imeAction = ImeAction.Next
+                        ),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
                 // Note Input Field
                 OutlinedTextField(
                     value = uiState.note,

@@ -10,6 +10,7 @@ data class AddEditCardUiState(
     val note: String = "",
     val cardColor: Int = 0xFF1E88E5.toInt(), // Default Ocean Blue
     val iconName: String = "shopping_bag",
+    val cvc: String = "",
     val isFavorite: Boolean = false,
     val createdAt: Long? = null,
     val isLoading: Boolean = false,

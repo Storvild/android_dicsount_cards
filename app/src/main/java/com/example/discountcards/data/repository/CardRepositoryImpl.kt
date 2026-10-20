@@ -139,6 +139,7 @@ class CardRepositoryImpl(
                         val updatedCard = existingCard.copy(
                             cardNumber = importedCard.cardNumber,
                             barcodeFormat = importedCard.barcodeFormat,
+                            cvc = importedCard.cvc,
                             note = importedCard.note,
                             cardColor = importedCard.cardColor,
                             iconName = importedCard.iconName,

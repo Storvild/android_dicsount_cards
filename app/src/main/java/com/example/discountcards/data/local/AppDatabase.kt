@@ -16,9 +16,15 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
     }
 }
 
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE discount_cards ADD COLUMN cvc TEXT NOT NULL DEFAULT ''")
+    }
+}
+
 @Database(
     entities = [DiscountCard::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -36,8 +42,8 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "discount_cards_database"
                 )
-                .addMigrations(MIGRATION_1_2)
-                .fallbackToDestructiveMigrationOnDowngrade(false)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .fallbackToDestructiveMigration(dropAllTables = true)
                 .build()
                 INSTANCE = instance
                 instance
