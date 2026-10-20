@@ -47,6 +47,7 @@ class AddEditCardViewModel(
                         cardColor = card.cardColor,
                         iconName = card.iconName.ifBlank { "shopping_bag" },
                         isFavorite = card.isFavorite,
+                        usageCount = card.usageCount,
                         createdAt = card.createdAt,
                         isLoading = false,
                         isEditMode = true

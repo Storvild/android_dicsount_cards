@@ -353,6 +353,17 @@ fun AddEditCardScreen(
                     maxLines = 4
                 )
 
+                // Read-only usage counter (only in edit mode)
+                if (uiState.isEditMode) {
+                    Text(
+                        text = context.resources.getString(
+                            R.string.shown_count_label, uiState.usageCount
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Submit / Save Button

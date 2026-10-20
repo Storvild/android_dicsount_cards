@@ -12,6 +12,7 @@ data class AddEditCardUiState(
     val iconName: String = "shopping_bag",
     val cvc: String = "",
     val isFavorite: Boolean = false,
+    val usageCount: Int = 0,
     val createdAt: Long? = null,
     val isLoading: Boolean = false,
     val isSaving: Boolean = false,

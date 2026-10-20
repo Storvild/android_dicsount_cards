@@ -86,6 +86,7 @@
     <string name="hide_cvc">Скрыть CVC</string>
     <string name="note_label">Примечание (опционально)</string>
     <string name="note_placeholder">Например: скидка 5%, бонусная карта</string>
+    <string name="shown_count_label">Показано %1$d раз</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="add_card_button">Добавить карту</string>
 
