@@ -19,6 +19,11 @@ data class CardListUiState(
     val exportSelectionCards: List<DiscountCard> = emptyList(),
     val selectedExportCardIds: Set<Long> = emptySet(),
 
+    // Share selection dialog state
+    val showShareSelectionDialog: Boolean = false,
+    val shareSelectionCards: List<DiscountCard> = emptyList(),
+    val selectedShareCardIds: Set<Long> = emptySet(),
+
     // Delete selection dialog state
     val showDeleteSelectionDialog: Boolean = false,
     val deleteSelectionCards: List<DiscountCard> = emptyList(),

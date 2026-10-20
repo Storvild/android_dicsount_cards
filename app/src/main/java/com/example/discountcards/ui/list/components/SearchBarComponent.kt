@@ -18,6 +18,7 @@ import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.Upload
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
@@ -51,6 +52,7 @@ fun SearchBarComponent(
     onQueryChange: (String) -> Unit,
     onClearQuery: () -> Unit,
     onExportClick: () -> Unit,
+    onShareClick: () -> Unit = {},
     onImportClick: () -> Unit,
     onDeleteClick: () -> Unit = {},
     modifier: Modifier = Modifier,
@@ -132,6 +134,22 @@ fun SearchBarComponent(
                     }
                 )
 
+                // 2. Поделиться
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.share_json_action)) },
+                    onClick = {
+                        menuExpanded = false
+                        fileSubmenuExpanded = false
+                        onShareClick()
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Share,
+                            contentDescription = null
+                        )
+                    }
+                )
+
                 if (fileSubmenuExpanded) {
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.export_json_action)) },
@@ -180,7 +198,7 @@ fun SearchBarComponent(
                     )
                 }
 
-                // 2. Оформление (единый пункт меню выбора темы)
+                // 3. Оформление (единый пункт меню выбора темы)
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.menu_appearance)) },
                     onClick = {
@@ -195,7 +213,7 @@ fun SearchBarComponent(
                     }
                 )
 
-                // 3. Сортировка
+                // 4. Сортировка
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.menu_sort)) },
                     onClick = {
@@ -210,7 +228,7 @@ fun SearchBarComponent(
                     }
                 )
 
-                // 4. Настройки
+                // 5. Настройки
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.menu_settings)) },
                     onClick = {

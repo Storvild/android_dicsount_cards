@@ -18,6 +18,7 @@
     <string name="menu_sort">Сортировка</string>
     <string name="menu_settings">Настройки</string>
     <string name="export_json_action">Экспорт в JSON-файл</string>
+    <string name="share_json_action">Поделиться…</string>
     <string name="import_json_action">Импорт из JSON-файла</string>
     <string name="delete_cards_action">Удаление карточек…</string>
     <string name="delete_selection_title">Выбор карточек для удаления</string>
@@ -130,6 +131,9 @@
     <string name="export_selected_button">Экспортировать (%1$d)</string>
     <string name="import_selected_button">Импортировать (%1$d)</string>
     <string name="export_selection_title">Выбор карточек для экспорта</string>
+    <string name="share_selection_title">Выбор карточек для отправки</string>
+    <string name="share_success">Файл готов к отправке</string>
+    <string name="share_selected_button">Отправить (%1$d)</string>
     <string name="import_selection_title">Выбор карточек для импорта</string>
 
     <!-- Camera Scanner -->

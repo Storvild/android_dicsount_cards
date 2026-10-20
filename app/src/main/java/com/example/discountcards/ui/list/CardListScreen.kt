@@ -40,6 +40,7 @@ import com.example.discountcards.ui.list.components.EmptyState
 import com.example.discountcards.ui.list.components.ExportDialog
 import com.example.discountcards.ui.list.components.DeleteSelectionDialog
 import com.example.discountcards.ui.list.components.ExportSelectionDialog
+import com.example.discountcards.ui.list.components.ShareSelectionDialog
 import com.example.discountcards.ui.list.components.ImportDialog
 import com.example.discountcards.ui.list.components.ImportSelectionDialog
 import com.example.discountcards.ui.list.components.SearchBarComponent
@@ -134,6 +135,7 @@ fun CardListScreen(
                 onQueryChange = viewModel::onSearchQueryChange,
                 onClearQuery = viewModel::onClearSearch,
                 onExportClick = { viewModel.prepareExportSelection() },
+                onShareClick = { viewModel.prepareShareSelection() },
                 onImportClick = { importLauncher.launch(arrayOf("application/json", "*/*")) },
                 onDeleteClick = { viewModel.prepareDeleteSelection() },
                 currentThemeMode = currentThemeMode,
@@ -193,6 +195,20 @@ fun CardListScreen(
             onInvert = viewModel::invertExportCardSelection,
             onConfirm = { exportLauncher.launch("discount_cards_backup.json") },
             onDismiss = viewModel::cancelExportSelection
+        )
+    }
+
+    // Share Selection Dialog
+    if (uiState.showShareSelectionDialog) {
+        ShareSelectionDialog(
+            cards = uiState.shareSelectionCards,
+            selectedCardIds = uiState.selectedShareCardIds,
+            onToggleCard = viewModel::toggleShareCardSelection,
+            onSelectAll = viewModel::selectAllShareCards,
+            onDeselectAll = viewModel::deselectAllShareCards,
+            onInvert = viewModel::invertShareCardSelection,
+            onConfirm = { viewModel.shareExportCards(context) },
+            onDismiss = viewModel::cancelShareSelection
         )
     }
 

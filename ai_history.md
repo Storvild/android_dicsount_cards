@@ -347,3 +347,25 @@ Agent:
 6. **[CardListScreen.kt](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt)** — подключена кнопка, отображение диалога, обработка toast-уведомлений об успехе/ошибке удаления
 
 При подтверждении выделенные карточки удаляются из базы данных, и показывается toast «Удалено карточек: N».
+
+---
+
+You:  
+В меню добавить Файл/Поделиться... Откроется окно как при экспорте с помощью которого можно отправить json файл другому человеку
+
+**Новый пункт меню «Файл → Поделиться…»** добавлен. При нажатии открывается диалог выбора карточек (аналогичный экспорту), после подтверждения JSON-файл передаётся через системный `Share Intent`, и пользователь может отправить его через мессенджер, email, или любое другое приложение.
+
+**Изменённые файлы:**
+
+| Файл | Что сделано |
+|---|---|
+| [strings.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml) | Добавлены строки: `share_json_action`, `share_selection_title`, `share_selected_button` |
+| [file_paths.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/xml/file_paths.xml) | Новый файл — пути для FileProvider |
+| [AndroidManifest.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/AndroidManifest.xml) | Добавлен `<provider>` FileProvider |
+| [CardListUiState.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListUiState.kt) | Новые поля: `showShareSelectionDialog`, `shareSelectionCards`, `selectedShareCardIds` |
+| [CardListViewModel.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListViewModel.kt) | Методы: `prepareShareSelection`, `toggleShareCardSelection`, `selectAllShareCards`, `deselectAllShareCards`, `invertShareCardSelection`, `cancelShareSelection`, `shareExportCards` |
+| [SearchBarComponent.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt) | Новый параметр `onShareClick` + пункт меню «Поделиться…» с иконкой Share |
+| [CardListScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt) | Передача `onShareClick` + отображение `ShareSelectionDialog` |
+| [ImportExportDialogs.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/ImportExportDialogs.kt) | Новый composable `ShareSelectionDialog` |
+
+

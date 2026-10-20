@@ -38,6 +38,11 @@ class CardListViewModel(
     private val exportSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
     private val selectedExportCardIds = MutableStateFlow<Set<Long>>(emptySet())
 
+    // Share selection
+    private val showShareSelectionDialog = MutableStateFlow(false)
+    private val shareSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
+    private val selectedShareCardIds = MutableStateFlow<Set<Long>>(emptySet())
+
     // Delete selection
     private val showDeleteSelectionDialog = MutableStateFlow(false)
     private val deleteSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
@@ -74,6 +79,9 @@ class CardListViewModel(
         showExportSelectionDialog,
         exportSelectionCards,
         selectedExportCardIds,
+        showShareSelectionDialog,
+        shareSelectionCards,
+        selectedShareCardIds,
         showDeleteSelectionDialog,
         deleteSelectionCards,
         selectedDeleteCardIds,
@@ -98,16 +106,20 @@ class CardListViewModel(
             exportSelectionCards = args[6] as List<DiscountCard>,
             selectedExportCardIds = args[7] as Set<Long>,
 
-            showDeleteSelectionDialog = args[8] as Boolean,
-            deleteSelectionCards = args[9] as List<DiscountCard>,
-            selectedDeleteCardIds = args[10] as Set<Long>,
+            showShareSelectionDialog = args[8] as Boolean,
+            shareSelectionCards = args[9] as List<DiscountCard>,
+            selectedShareCardIds = args[10] as Set<Long>,
 
-            showImportSelectionDialog = args[11] as Boolean,
-            importSelectionCards = args[12] as List<DiscountCard>,
-            selectedImportIndexes = args[13] as Set<Int>,
-            existingStoreNames = args[14] as Set<String>,
-            importMode = args[15] as ImportMode,
-            duplicateStrategy = args[16] as DuplicateStrategy
+            showDeleteSelectionDialog = args[11] as Boolean,
+            deleteSelectionCards = args[12] as List<DiscountCard>,
+            selectedDeleteCardIds = args[13] as Set<Long>,
+
+            showImportSelectionDialog = args[14] as Boolean,
+            importSelectionCards = args[15] as List<DiscountCard>,
+            selectedImportIndexes = args[16] as Set<Int>,
+            existingStoreNames = args[17] as Set<String>,
+            importMode = args[18] as ImportMode,
+            duplicateStrategy = args[19] as DuplicateStrategy
         )
     }.stateIn(
         scope = viewModelScope,
@@ -214,6 +226,82 @@ class CardListViewModel(
 
     fun exportCards() {
         prepareExportSelection()
+    }
+
+    // Share Selection Methods
+    fun prepareShareSelection() {
+        viewModelScope.launch {
+            val allCards = repository.getAllCards().first()
+            if (allCards.isEmpty()) {
+                userMessage.value = "EXPORT_FAILED:No cards to share"
+                return@launch
+            }
+            shareSelectionCards.value = allCards
+            selectedShareCardIds.value = allCards.map { it.id }.toSet()
+            showShareSelectionDialog.value = true
+        }
+    }
+
+    fun toggleShareCardSelection(cardId: Long) {
+        val current = selectedShareCardIds.value
+        selectedShareCardIds.value = if (current.contains(cardId)) {
+            current - cardId
+        } else {
+            current + cardId
+        }
+    }
+
+    fun selectAllShareCards() {
+        selectedShareCardIds.value = shareSelectionCards.value.map { it.id }.toSet()
+    }
+
+    fun deselectAllShareCards() {
+        selectedShareCardIds.value = emptySet()
+    }
+
+    fun invertShareCardSelection() {
+        val allIds = shareSelectionCards.value.map { it.id }.toSet()
+        selectedShareCardIds.value = allIds - selectedShareCardIds.value
+    }
+
+    fun cancelShareSelection() {
+        showShareSelectionDialog.value = false
+        shareSelectionCards.value = emptyList()
+        selectedShareCardIds.value = emptySet()
+    }
+
+    fun shareExportCards(context: android.content.Context) {
+        viewModelScope.launch {
+            val selectedCards = shareSelectionCards.value.filter {
+                selectedShareCardIds.value.contains(it.id)
+            }
+            if (selectedCards.isEmpty()) {
+                userMessage.value = "EXPORT_FAILED:No cards selected"
+                return@launch
+            }
+            try {
+                val json = repository.exportToJson(selectedCards)
+                cancelShareSelection()
+                // Write to a temp file and share via ACTION_SEND
+                val file = java.io.File(context.cacheDir, "discount_cards_share.json")
+                file.writeText(json)
+                val uri = androidx.core.content.FileProvider.getUriForFile(
+                    context,
+                    "${context.packageName}.fileprovider",
+                    file
+                )
+                val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                    type = "application/json"
+                    putExtra(android.content.Intent.EXTRA_STREAM, uri)
+                    addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                context.startActivity(
+                    android.content.Intent.createChooser(shareIntent, null)
+                )
+            } catch (e: Exception) {
+                userMessage.value = "EXPORT_FAILED:" + (e.localizedMessage ?: "Error")
+            }
+        }
     }
 
     fun exportToUri(contentResolver: ContentResolver, uri: Uri) {
