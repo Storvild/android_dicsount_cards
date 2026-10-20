@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">会员卡</string>
+    <string name="add_card_title">添加卡片</string>
+    <string name="edit_card_title">编辑卡片</string>
+    <string name="card_details_title">卡片详情</string>
+    <string name="settings_title">设置</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">按商店名称搜索…</string>
+    <string name="search_icon_desc">搜索</string>
+    <string name="clear_search_desc">清除搜索</string>
+    <string name="menu_options_desc">选项菜单</string>
+    <string name="menu_file">文件</string>
+    <string name="menu_appearance">外观</string>
+    <string name="menu_sort">排序</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_about">关于</string>
+    <string name="about_dialog_title">关于</string>
+    <string name="about_dialog_text">“Discount Cards”应用是存储和管理您喜爱的商店折扣卡/会员卡的好帮手。
+
+版本 1.0</string>
+    <string name="about_github_link">项目代码已开源至 GitHub: https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="export_json_action">导出为 JSON 文件</string>
+    <string name="share_json_action">分享…</string>
+    <string name="share_action">分享…</string>
+    <string name="add_card_action">添加卡片…</string>
+    <string name="import_json_action">从 JSON 文件导入</string>
+    <string name="delete_cards_action">删除卡片…</string>
+    <string name="delete_selection_title">选择要删除的卡片</string>
+    <string name="delete_selected_button">删除 (%1$d)</string>
+    <string name="delete_cards_success">已删除卡片: %1$d</string>
+    <string name="delete_cards_error">删除失败: %1$s</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">跟随系统</string>
+    <string name="theme_light">浅色模式</string>
+    <string name="theme_dark">深色模式</string>
+    <string name="theme_dialog_title">选择主题</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">按字母顺序</string>
+    <string name="sort_frequency">按使用频率</string>
+    <string name="sort_creation_date">按创建时间</string>
+    <string name="sort_dialog_title">卡片排序</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">打开卡片时的屏幕亮度</string>
+    <string name="brightness_no_change">0% — 不改变</string>
+    <string name="brightness_percent">%1$d%%</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">收藏</string>
+    <string name="favorite_toggle_desc">切换收藏状态</string>
+    <string name="format_phone">手机号码</string>
+    <string name="phone_discount_label">按手机号享受折扣</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">卡片列表为空</string>
+    <string name="empty_search_title">未找到相关结果</string>
+    <string name="empty_subtitle">添加您常用商店的会员卡，随时方便使用。</string>
+    <string name="empty_search_subtitle">请尝试更换搜索词或添加新卡片。</string>
+    <string name="add_first_card">添加卡片</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">备注:</string>
+    <string name="copy_card_number">复制卡号</string>
+    <string name="copied_to_clipboard">已复制到剪贴板</string>
+    <string name="barcode_error">条形码生成失败</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">商店名称 *</string>
+    <string name="store_name_placeholder">例如: 盒马鲜生、山姆会员店、屈臣氏</string>
+    <string name="clear_store_name">清除商店名称</string>
+    <string name="card_number_label">卡号 / 条形码 / 手机号 *</string>
+    <string name="card_number_placeholder">输入卡号或扫描条形码</string>
+    <string name="clear_card_number">清除卡号</string>
+    <string name="pick_gallery_desc">从相册选择条形码图片</string>
+    <string name="scan_camera_desc">使用相机扫描条形码</string>
+    <string name="format_label">条形码格式</string>
+    <string name="card_color_label">卡片颜色</string>
+    <string name="category_icon_label">分类图标</string>
+    <string name="cvc_label">CVC 安全码</string>
+    <string name="cvc_placeholder">例如: 123</string>
+    <string name="show_cvc">显示 CVC</string>
+    <string name="hide_cvc">隐藏 CVC</string>
+    <string name="note_label">备注 (可选)</string>
+    <string name="note_placeholder">例如: 95折、积分卡</string>
+    <string name="shown_count_label">使用次数: %1$d</string>
+    <string name="created_at_label">创建时间: %1$s</string>
+    <string name="save_changes">保存修改</string>
+    <string name="add_card_button">添加卡片</string>
+
+    <!-- Categories -->
+    <string name="cat_store">商店</string>
+    <string name="cat_grocery">生鲜超市</string>
+    <string name="cat_pharmacy">药店</string>
+    <string name="cat_fashion">服装</string>
+    <string name="cat_dining">餐饮</string>
+    <string name="cat_fuel">加油站</string>
+    <string name="cat_tickets">票务</string>
+    <string name="cat_gift">礼品</string>
+    <string name="cat_sports">运动</string>
+    <string name="cat_other">其他</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">删除</string>
+    <string name="cancel_button">取消</string>
+    <string name="edit_button">编辑</string>
+    <string name="back_button">返回</string>
+    <string name="continue_button">继续</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">删除卡片？</string>
+    <string name="delete_card_message">您确定要删除这张会员卡吗？此操作无法撤销。</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">导出卡片</string>
+    <string name="export_copy">复制 JSON</string>
+    <string name="import_title">导入卡片</string>
+    <string name="import_hint">在此粘贴卡片 JSON 数据…</string>
+    <string name="import_button">导入</string>
+    <string name="export_success">卡片导出成功</string>
+    <string name="export_failed">导出失败: %1$s</string>
+    <string name="import_mode_title">导入模式</string>
+    <string name="import_mode_message">您希望如何从文件导入卡片？</string>
+    <string name="import_mode_merge">与现有合并</string>
+    <string name="import_mode_merge_desc">保留现有卡片并添加文件中的新卡片</string>
+    <string name="import_mode_overwrite">覆盖全部</string>
+    <string name="import_mode_overwrite_desc">删除现有所有卡片，仅加载文件中的卡片</string>
+    <string name="import_success">成功导入卡片: %1$d 张</string>
+    <string name="import_failed">导入失败: 文件格式无效</string>
+
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">全选</string>
+    <string name="deselect_all">取消全选</string>
+    <string name="invert_selection">反选</string>
+    <string name="selected_count">已选择: %1$d / %2$d</string>
+    <string name="duplicate_badge">已在数据库中</string>
+    <string name="duplicate_strategy_title">名称重复时:</string>
+    <string name="duplicate_strategy_update">更新现有卡片</string>
+    <string name="duplicate_strategy_add_new">作为新卡片添加</string>
+    <string name="duplicate_strategy_skip">跳过重复卡片</string>
+    <string name="export_selected_button">导出 (%1$d)</string>
+    <string name="import_selected_button">导入 (%1$d)</string>
+    <string name="export_selection_title">选择要导出的卡片</string>
+    <string name="share_selection_title">选择要分享的卡片</string>
+    <string name="share_success">文件已准备好分享</string>
+    <string name="share_selected_button">分享 (%1$d)</string>
+    <string name="export_include_cvc_label">包含 CVC</string>
+    <string name="export_include_usage_count_label">包含使用次数</string>
+    <string name="import_selection_title">选择要导入的卡片</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">扫描条形码</string>
+    <string name="toggle_torch">开启/关闭闪光灯</string>
+    <string name="scanner_instruction">请将条形码对准框内</string>
+    <string name="camera_permission_title">需要相机权限</string>
+    <string name="camera_permission_desc">需要相机权限以扫描实体卡片上的条形码。</string>
+    <string name="grant_permission">授予权限</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">请输入商店名称</string>
+    <string name="error_card_number_empty">请输入卡号或扫描条形码</string>
+    <string name="error_barcode_not_found">未在图片中检测到条形码</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">商店名称</string>
+    <string name="barcode_preview_desc">条形码预览</string>
+    <string name="card_number_default">卡号</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">“添加”按钮</string>
+    <string name="show_add_button_description">在主屏幕上显示“添加”按钮</string>
+
+    <!-- Language -->
+    <string name="language_setting_label">语言</string>
+    <string name="language_system">跟随系统</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_chinese_simplified">简体中文</string>
+</resources>

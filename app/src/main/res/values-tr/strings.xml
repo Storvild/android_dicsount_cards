@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">İndirim Kartları</string>
+    <string name="add_card_title">Kart Ekle</string>
+    <string name="edit_card_title">Kartı Düzenle</string>
+    <string name="card_details_title">Kart Detayları</string>
+    <string name="settings_title">Ayarlar</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">Mağaza adına göre ara…</string>
+    <string name="search_icon_desc">Ara</string>
+    <string name="clear_search_desc">Aramayı temizle</string>
+    <string name="menu_options_desc">Seçenekler menüsü</string>
+    <string name="menu_file">Dosya</string>
+    <string name="menu_appearance">Görünüm</string>
+    <string name="menu_sort">Sırala</string>
+    <string name="menu_settings">Ayarlar</string>
+    <string name="menu_about">Hakkında</string>
+    <string name="about_dialog_title">Hakkında</string>
+    <string name="about_dialog_text">"Discount Cards" uygulaması, en sevdiğiniz mağazaların indirim kartlarını saklamanın pratik bir yoludur.
+
+Sürüm 1.0</string>
+    <string name="about_github_link">Proje GitHub\'da mevcuttur: https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="export_json_action">JSON dosyasına aktar</string>
+    <string name="share_json_action">Paylaş…</string>
+    <string name="share_action">Paylaş…</string>
+    <string name="add_card_action">Kart ekle…</string>
+    <string name="import_json_action">JSON dosyasından içe aktar</string>
+    <string name="delete_cards_action">Kartları sil…</string>
+    <string name="delete_selection_title">Silinecek kartları seçin</string>
+    <string name="delete_selected_button">Sil (%1$d)</string>
+    <string name="delete_cards_success">Silinen kart sayısı: %1$d</string>
+    <string name="delete_cards_error">Silme hatası: %1$s</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">Sistem teması</string>
+    <string name="theme_light">Açık tema</string>
+    <string name="theme_dark">Koyu tema</string>
+    <string name="theme_dialog_title">Tema seçin</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">Alfabetik</string>
+    <string name="sort_frequency">Kullanım sıklığına göre</string>
+    <string name="sort_creation_date">Oluşturma tarihine göre</string>
+    <string name="sort_dialog_title">Kartları sırala</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">Kart açıldığında parlaklık</string>
+    <string name="brightness_no_change">%0 — Değişiklik yok</string>
+    <string name="brightness_percent">%%%1$d</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">Favori</string>
+    <string name="favorite_toggle_desc">Favoriyi değiştir</string>
+    <string name="format_phone">Telefon numarası</string>
+    <string name="phone_discount_label">Telefon numarası ile indirim</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">Kart listesi boş</string>
+    <string name="empty_search_title">Sonuç bulunamadı</string>
+    <string name="empty_subtitle">En sevdiğiniz mağazaların indirim kartlarını ekleyin, her zaman elinizin altında olsun.</string>
+    <string name="empty_search_subtitle">Aramayı değiştirmeyi deneyin veya yeni bir kart ekleyin.</string>
+    <string name="add_first_card">Kart ekle</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">Notlar:</string>
+    <string name="copy_card_number">Numarayı kopyala</string>
+    <string name="copied_to_clipboard">Panoya kopyalandı</string>
+    <string name="barcode_error">Barkod oluşturma hatası</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">Mağaza adı *</string>
+    <string name="store_name_placeholder">Örn: Migros, Bim, Gratis</string>
+    <string name="clear_store_name">Mağaza adını temizle</string>
+    <string name="card_number_label">Kart numarası / Barkod / Telefon *</string>
+    <string name="card_number_placeholder">Numarayı girin veya barkodu tarayın</string>
+    <string name="clear_card_number">Kart numarasını temizle</string>
+    <string name="pick_gallery_desc">Galeriden barkod seç</string>
+    <string name="scan_camera_desc">Kamera ile barkod tara</string>
+    <string name="format_label">Barkod formatı</string>
+    <string name="card_color_label">Kart rengi</string>
+    <string name="category_icon_label">Kategori simgesi</string>
+    <string name="cvc_label">CVC kodu</string>
+    <string name="cvc_placeholder">Örn: 123</string>
+    <string name="show_cvc">CVC\'yi göster</string>
+    <string name="hide_cvc">CVC\'yi gizle</string>
+    <string name="note_label">Not (isteğe bağlı)</string>
+    <string name="note_placeholder">Örn: %5 indirim, bonus kart</string>
+    <string name="shown_count_label">Görüntülenme sayısı: %1$d</string>
+    <string name="created_at_label">Oluşturma tarihi: %1$s</string>
+    <string name="save_changes">Değişiklikleri kaydet</string>
+    <string name="add_card_button">Kart ekle</string>
+
+    <!-- Categories -->
+    <string name="cat_store">Mağaza</string>
+    <string name="cat_grocery">Market</string>
+    <string name="cat_pharmacy">Eczane</string>
+    <string name="cat_fashion">Giyim</string>
+    <string name="cat_dining">Restoran</string>
+    <string name="cat_fuel">Benzinlik</string>
+    <string name="cat_tickets">Biletler</string>
+    <string name="cat_gift">Hediye</string>
+    <string name="cat_sports">Spor</string>
+    <string name="cat_other">Diğer</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">Sil</string>
+    <string name="cancel_button">İptal</string>
+    <string name="edit_button">Düzenle</string>
+    <string name="back_button">Geri</string>
+    <string name="continue_button">Devam et</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">Kart silinsin mi?</string>
+    <string name="delete_card_message">Bu indirim kartını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">Kartları dışa aktar</string>
+    <string name="export_copy">JSON kopyala</string>
+    <string name="import_title">Kartları içe aktar</string>
+    <string name="import_hint">JSON kart verilerini buraya yapıştırın…</string>
+    <string name="import_button">İçe aktar</string>
+    <string name="export_success">Kartlar başarıyla dışa aktarıldı</string>
+    <string name="export_failed">Dışa aktarma hatası: %1$s</string>
+    <string name="import_mode_title">İçe aktarma modu</string>
+    <string name="import_mode_message">Kartları dosyadan nasıl içe aktarmak istersiniz?</string>
+    <string name="import_mode_merge">Mevcut olanlarla birleştir</string>
+    <string name="import_mode_merge_desc">Mevcut kartları koru ve dosyadan yenilerini ekle</string>
+    <string name="import_mode_overwrite">Tümünün üzerine yaz</string>
+    <string name="import_mode_overwrite_desc">Mevcut tüm kartları sil ve yalnızca dosyadan yükle</string>
+    <string name="import_success">Başarıyla içe aktarılan kart sayısı: %1$d</string>
+    <string name="import_failed">İçe aktarma hatası: Geçersiz dosya biçimi</string>
+
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">Tümünü seç</string>
+    <string name="deselect_all">Tüm seçimi kaldır</string>
+    <string name="invert_selection">Seçimi tersine çevir</string>
+    <string name="selected_count">Seçilen: %1$d / %2$d</string>
+    <string name="duplicate_badge">Veritabanında zaten var</string>
+    <string name="duplicate_strategy_title">İsim çakışmasında:</string>
+    <string name="duplicate_strategy_update">Mevcut olanları güncelle</string>
+    <string name="duplicate_strategy_add_new">Yeni olarak ekle</string>
+    <string name="duplicate_strategy_skip">Yinelenenleri atla</string>
+    <string name="export_selected_button">Dışa aktar (%1$d)</string>
+    <string name="import_selected_button">İçe aktar (%1$d)</string>
+    <string name="export_selection_title">Dışa aktarılacak kartları seçin</string>
+    <string name="share_selection_title">Paylaşılacak kartları seçin</string>
+    <string name="share_success">Dosya paylaşım için hazır</string>
+    <string name="share_selected_button">Paylaş (%1$d)</string>
+    <string name="export_include_cvc_label">CVC kodunu dahil et</string>
+    <string name="export_include_usage_count_label">Kullanım sayacını dahil et</string>
+    <string name="import_selection_title">İçe aktarılacak kartları seçin</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">Barkod tara</string>
+    <string name="toggle_torch">Flaşı aç/kapat</string>
+    <string name="scanner_instruction">Barkodu çerçeveye yerleştirin</string>
+    <string name="camera_permission_title">Kamera izni gerekli</string>
+    <string name="camera_permission_desc">Fiziksel kartlardan barkod taramak için kamera erişimi gereklidir.</string>
+    <string name="grant_permission">İzin ver</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">Lütfen mağaza adını girin</string>
+    <string name="error_card_number_empty">Lütfen kart numarasını girin veya barkodu tarayın</string>
+    <string name="error_barcode_not_found">Görselde barkod bulunamadı</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">Mağaza adı</string>
+    <string name="barcode_preview_desc">Barkod önizlemesi</string>
+    <string name="card_number_default">Kart numarası</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">„Ekle“ düğmesi</string>
+    <string name="show_add_button_description">Ana ekranda „Ekle“ düğmesini göster</string>
+
+    <!-- Language -->
+    <string name="language_setting_label">Dil</string>
+    <string name="language_system">Sistem</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_chinese_simplified">简体中文</string>
+</resources>

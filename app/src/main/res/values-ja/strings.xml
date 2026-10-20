@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">ポイントカード</string>
+    <string name="add_card_title">カードを追加</string>
+    <string name="edit_card_title">カードを編集</string>
+    <string name="card_details_title">カードの詳細</string>
+    <string name="settings_title">設定</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">店舗名で検索…</string>
+    <string name="search_icon_desc">検索</string>
+    <string name="clear_search_desc">検索をクリア</string>
+    <string name="menu_options_desc">オプションメニュー</string>
+    <string name="menu_file">ファイル</string>
+    <string name="menu_appearance">外観</string>
+    <string name="menu_sort">並べ替え</string>
+    <string name="menu_settings">設定</string>
+    <string name="menu_about">アプリについて</string>
+    <string name="about_dialog_title">アプリについて</string>
+    <string name="about_dialog_text">「Discount Cards」アプリは、お気に入りの店舗のポイントカードを整理・保存する便利ツールです。
+
+バージョン 1.0</string>
+    <string name="about_github_link">プロジェクトはGitHubで公開されています: https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="export_json_action">JSONファイルにエクスポート</string>
+    <string name="share_json_action">共有…</string>
+    <string name="share_action">共有…</string>
+    <string name="add_card_action">カードを追加…</string>
+    <string name="import_json_action">JSONファイルからインポート</string>
+    <string name="delete_cards_action">カードを削除…</string>
+    <string name="delete_selection_title">削除するカードを選択</string>
+    <string name="delete_selected_button">削除 (%1$d)</string>
+    <string name="delete_cards_success">削除されたカード: %1$d</string>
+    <string name="delete_cards_error">削除エラー: %1$s</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">システム設定に従う</string>
+    <string name="theme_light">ライトテーマ</string>
+    <string name="theme_dark">ダークテーマ</string>
+    <string name="theme_dialog_title">テーマを選択</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">五十音順</string>
+    <string name="sort_frequency">使用頻度順</string>
+    <string name="sort_creation_date">作成日順</string>
+    <string name="sort_dialog_title">カードの並べ替え</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">カード表示時の画面の明るさ</string>
+    <string name="brightness_no_change">0% — 変更なし</string>
+    <string name="brightness_percent">%1$d%%</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">お気に入り</string>
+    <string name="favorite_toggle_desc">お気に入りを切り替え</string>
+    <string name="format_phone">電話番号</string>
+    <string name="phone_discount_label">電話番号で割引</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">カードリストは空です</string>
+    <string name="empty_search_title">該当する結果が見つかりません</string>
+    <string name="empty_subtitle">よく使うお店のポイントカードを追加して、いつでも使えるようにしましょう。</string>
+    <string name="empty_search_subtitle">検索ワードを変更するか、新しいカードを追加してください。</string>
+    <string name="add_first_card">カードを追加</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">メモ:</string>
+    <string name="copy_card_number">番号をコピー</string>
+    <string name="copied_to_clipboard">クリップボードにコピーしました</string>
+    <string name="barcode_error">バーコード生成エラー</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">店舗名 *</string>
+    <string name="store_name_placeholder">例: セブン-イレブン、イオン、マツモトキヨシ</string>
+    <string name="clear_store_name">店舗名をクリア</string>
+    <string name="card_number_label">カード番号 / バーコード / 電話番号 *</string>
+    <string name="card_number_placeholder">番号を入力するかバーコードをスキャン</string>
+    <string name="clear_card_number">カード番号をクリア</string>
+    <string name="pick_gallery_desc">ギャラリーからバーコードを選択</string>
+    <string name="scan_camera_desc">カメラでバーコードをスキャン</string>
+    <string name="format_label">バーコードの形式</string>
+    <string name="card_color_label">カードの色</string>
+    <string name="category_icon_label">カテゴリーアイコン</string>
+    <string name="cvc_label">CVCコード</string>
+    <string name="cvc_placeholder">例: 123</string>
+    <string name="show_cvc">CVCを表示</string>
+    <string name="hide_cvc">CVCを非表示</string>
+    <string name="note_label">メモ (任意)</string>
+    <string name="note_placeholder">例: 5%オフ、ポイントカード</string>
+    <string name="shown_count_label">表示回数: %1$d</string>
+    <string name="created_at_label">作成日: %1$s</string>
+    <string name="save_changes">変更を保存</string>
+    <string name="add_card_button">カードを追加</string>
+
+    <!-- Categories -->
+    <string name="cat_store">店舗</string>
+    <string name="cat_grocery">食品・スーパー</string>
+    <string name="cat_pharmacy">薬局・ドラッグストア</string>
+    <string name="cat_fashion">ファッション</string>
+    <string name="cat_dining">レストラン・飲食</string>
+    <string name="cat_fuel">ガソリンスタンド</string>
+    <string name="cat_tickets">チケット</string>
+    <string name="cat_gift">ギフト</string>
+    <string name="cat_sports">スポーツ</string>
+    <string name="cat_other">その他</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">削除</string>
+    <string name="cancel_button">キャンセル</string>
+    <string name="edit_button">編集</string>
+    <string name="back_button">戻る</string>
+    <string name="continue_button">次へ</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">カードを削除しますか？</string>
+    <string name="delete_card_message">このポイントカードを削除してもよろしいですか？この操作は取り消せません。</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">カードのエクスポート</string>
+    <string name="export_copy">JSONをコピー</string>
+    <string name="import_title">カードのインポート</string>
+    <string name="import_hint">ここにJSONデータを貼り付けてください…</string>
+    <string name="import_button">インポート</string>
+    <string name="export_success">カードのエクスポートに成功しました</string>
+    <string name="export_failed">エクスポートエラー: %1$s</string>
+    <string name="import_mode_title">インポートモード</string>
+    <string name="import_mode_message">ファイルからカードをどのようにインポートしますか？</string>
+    <string name="import_mode_merge">既存のデータに追加</string>
+    <string name="import_mode_merge_desc">現在のカードを保持し、新しいカードを追加します</string>
+    <string name="import_mode_overwrite">すべて上書き</string>
+    <string name="import_mode_overwrite_desc">既存のカードをすべて削除し、ファイルの内容のみ読み込みます</string>
+    <string name="import_success">%1$d 枚のカードをインポートしました</string>
+    <string name="import_failed">インポートエラー: 無効なファイル形式です</string>
+
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">すべて選択</string>
+    <string name="deselect_all">選択を解除</string>
+    <string name="invert_selection">選択を反転</string>
+    <string name="selected_count">選択済み: %1$d / %2$d</string>
+    <string name="duplicate_badge">すでに存在します</string>
+    <string name="duplicate_strategy_title">名前が重複する場合:</string>
+    <string name="duplicate_strategy_update">既存のデータを更新</string>
+    <string name="duplicate_strategy_add_new">新規として追加</string>
+    <string name="duplicate_strategy_skip">重複をスキップ</string>
+    <string name="export_selected_button">エクスポート (%1$d)</string>
+    <string name="import_selected_button">インポート (%1$d)</string>
+    <string name="export_selection_title">エクスポートするカードを選択</string>
+    <string name="share_selection_title">共有するカードを選択</string>
+    <string name="share_success">ファイルの共有準備ができました</string>
+    <string name="share_selected_button">共有 (%1$d)</string>
+    <string name="export_include_cvc_label">CVCを含める</string>
+    <string name="export_include_usage_count_label">使用回数を含める</string>
+    <string name="import_selection_title">インポートするカードを選択</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">バーコードスキャン</string>
+    <string name="toggle_torch">フラッシュのオン/オフ</string>
+    <string name="scanner_instruction">枠内にバーコードを合わせてください</string>
+    <string name="camera_permission_title">カメラの権限が必要です</string>
+    <string name="camera_permission_desc">実物カードのバーコードをスキャンするにはカメラへのアクセスが必要です。</string>
+    <string name="grant_permission">権限を許可</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">店舗名を入力してください</string>
+    <string name="error_card_number_empty">カード番号を入力するかバーコードをスキャンしてください</string>
+    <string name="error_barcode_not_found">画像内にバーコードが見つかりませんでした</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">店舗名</string>
+    <string name="barcode_preview_desc">バーコードプレビュー</string>
+    <string name="card_number_default">カード番号</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">「追加」ボタン</string>
+    <string name="show_add_button_description">メイン画面に「追加」ボタンを表示する</string>
+
+    <!-- Language -->
+    <string name="language_setting_label">言語</string>
+    <string name="language_system">システム言語</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_chinese_simplified">简体中文</string>
+</resources>

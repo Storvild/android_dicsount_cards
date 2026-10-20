@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">Tarjetas de descuento</string>
+    <string name="add_card_title">Añadir tarjeta</string>
+    <string name="edit_card_title">Editar tarjeta</string>
+    <string name="card_details_title">Detalles de la tarjeta</string>
+    <string name="settings_title">Ajustes</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">Buscar por tienda…</string>
+    <string name="search_icon_desc">Buscar</string>
+    <string name="clear_search_desc">Limpiar búsqueda</string>
+    <string name="menu_options_desc">Menú de opciones</string>
+    <string name="menu_file">Archivo</string>
+    <string name="menu_appearance">Apariencia</string>
+    <string name="menu_sort">Ordenar</string>
+    <string name="menu_settings">Ajustes</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="about_dialog_title">Acerca de</string>
+    <string name="about_dialog_text">La aplicación Discount Cards es una forma cómoda de guardar las tarjetas de descuento de tus tiendas favoritas.
+
+Versión 1.0</string>
+    <string name="about_github_link">El proyecto está disponible en GitHub: https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="export_json_action">Exportar a archivo JSON</string>
+    <string name="share_json_action">Compartir…</string>
+    <string name="share_action">Compartir…</string>
+    <string name="add_card_action">Añadir tarjeta…</string>
+    <string name="import_json_action">Importar de archivo JSON</string>
+    <string name="delete_cards_action">Eliminar tarjetas…</string>
+    <string name="delete_selection_title">Seleccionar tarjetas para eliminar</string>
+    <string name="delete_selected_button">Eliminar (%1$d)</string>
+    <string name="delete_cards_success">Tarjetas eliminadas: %1$d</string>
+    <string name="delete_cards_error">Error al eliminar: %1$s</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">Tema del sistema</string>
+    <string name="theme_light">Tema claro</string>
+    <string name="theme_dark">Tema oscuro</string>
+    <string name="theme_dialog_title">Elegir tema</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">Alfabéticamente</string>
+    <string name="sort_frequency">Por frecuencia de uso</string>
+    <string name="sort_creation_date">Por fecha de creación</string>
+    <string name="sort_dialog_title">Ordenar tarjetas</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">Brillo al abrir la tarjeta</string>
+    <string name="brightness_no_change">0% — sin cambios</string>
+    <string name="brightness_percent">%1$d%%</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">Favorita</string>
+    <string name="favorite_toggle_desc">Cambiar favorita</string>
+    <string name="format_phone">Teléfono</string>
+    <string name="phone_discount_label">Descuento por número de teléfono</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">La lista de tarjetas está vacía</string>
+    <string name="empty_search_title">No se encontraron resultados</string>
+    <string name="empty_subtitle">Añade las tarjetas de descuento de tus tiendas favoritas para tenerlas siempre a mano.</string>
+    <string name="empty_search_subtitle">Intenta cambiar tu búsqueda o añade una nueva tarjeta.</string>
+    <string name="add_first_card">Añadir tarjeta</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">Notas:</string>
+    <string name="copy_card_number">Copiar número</string>
+    <string name="copied_to_clipboard">Copiado al portapapeles</string>
+    <string name="barcode_error">Error al generar el código de barras</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">Nombre de la tienda *</string>
+    <string name="store_name_placeholder">Ej: Mercadona, Carrefour, Zara</string>
+    <string name="clear_store_name">Borrar nombre de la tienda</string>
+    <string name="card_number_label">Número de tarjeta / Código de barras / Teléfono *</string>
+    <string name="card_number_placeholder">Introduce el número o escanea el código de barras</string>
+    <string name="clear_card_number">Borrar número de tarjeta</string>
+    <string name="pick_gallery_desc">Elegir código de barras de la galería</string>
+    <string name="scan_camera_desc">Escanear código de barras con la cámara</string>
+    <string name="format_label">Formato de código de barras</string>
+    <string name="card_color_label">Color de la tarjeta</string>
+    <string name="category_icon_label">Icono de categoría</string>
+    <string name="cvc_label">Código CVC</string>
+    <string name="cvc_placeholder">Ej: 123</string>
+    <string name="show_cvc">Mostrar CVC</string>
+    <string name="hide_cvc">Ocultar CVC</string>
+    <string name="note_label">Nota (opcional)</string>
+    <string name="note_placeholder">Ej: 5% de descuento, tarjeta de puntos</string>
+    <string name="shown_count_label">Veces mostrada: %1$d</string>
+    <string name="created_at_label">Fecha de creación: %1$s</string>
+    <string name="save_changes">Guardar cambios</string>
+    <string name="add_card_button">Añadir tarjeta</string>
+
+    <!-- Categories -->
+    <string name="cat_store">Tienda</string>
+    <string name="cat_grocery">Alimentación</string>
+    <string name="cat_pharmacy">Farmacia</string>
+    <string name="cat_fashion">Ropa</string>
+    <string name="cat_dining">Restaurantes</string>
+    <string name="cat_fuel">Gasolinera</string>
+    <string name="cat_tickets">Entradas</string>
+    <string name="cat_gift">Regalos</string>
+    <string name="cat_sports">Deportes</string>
+    <string name="cat_other">Otros</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">Eliminar</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="edit_button">Editar</string>
+    <string name="back_button">Atrás</string>
+    <string name="continue_button">Continuar</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">¿Eliminar tarjeta?</string>
+    <string name="delete_card_message">¿Seguro que quieres eliminar esta tarjeta de descuento? Esta acción no se puede deshacer.</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">Exportar tarjetas</string>
+    <string name="export_copy">Copiar JSON</string>
+    <string name="import_title">Importar tarjetas</string>
+    <string name="import_hint">Pega los datos JSON de las tarjetas aquí…</string>
+    <string name="import_button">Importar</string>
+    <string name="export_success">Tarjetas exportadas con éxito</string>
+    <string name="export_failed">Error al exportar: %1$s</string>
+    <string name="import_mode_title">Modo de importación</string>
+    <string name="import_mode_message">¿Cómo deseas importar las tarjetas desde el archivo?</string>
+    <string name="import_mode_merge">Combinar con las existentes</string>
+    <string name="import_mode_merge_desc">Conservar las tarjetas actuales y añadir las nuevas</string>
+    <string name="import_mode_overwrite">Sobrescribir todo</string>
+    <string name="import_mode_overwrite_desc">Eliminar todas las tarjetas existentes y cargar solo las del archivo</string>
+    <string name="import_success">Tarjetas importadas con éxito: %1$d</string>
+    <string name="import_failed">Error al importar: formato de archivo no válido</string>
+
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">Seleccionar todo</string>
+    <string name="deselect_all">Deseleccionar todo</string>
+    <string name="invert_selection">Invertir selección</string>
+    <string name="selected_count">Seleccionado: %1$d de %2$d</string>
+    <string name="duplicate_badge">Ya existe</string>
+    <string name="duplicate_strategy_title">En caso de conflicto de nombres:</string>
+    <string name="duplicate_strategy_update">Actualizar existentes</string>
+    <string name="duplicate_strategy_add_new">Añadir como nuevas</string>
+    <string name="duplicate_strategy_skip">Omitir duplicados</string>
+    <string name="export_selected_button">Exportar (%1$d)</string>
+    <string name="import_selected_button">Importar (%1$d)</string>
+    <string name="export_selection_title">Seleccionar tarjetas para exportar</string>
+    <string name="share_selection_title">Seleccionar tarjetas para compartir</string>
+    <string name="share_success">Archivo listo para compartir</string>
+    <string name="share_selected_button">Compartir (%1$d)</string>
+    <string name="export_include_cvc_label">Incluir código CVC</string>
+    <string name="export_include_usage_count_label">Incluir contador de uso</string>
+    <string name="import_selection_title">Seleccionar tarjetas para importar</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">Escanear código de barras</string>
+    <string name="toggle_torch">Activar/desactivar linterna</string>
+    <string name="scanner_instruction">Coloca el código de barras dentro del marco</string>
+    <string name="camera_permission_title">Permiso de cámara necesario</string>
+    <string name="camera_permission_desc">Se requiere acceso a la cámara para escanear códigos de barras de tarjetas físicas.</string>
+    <string name="grant_permission">Conceder permiso</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">Introduce el nombre de la tienda</string>
+    <string name="error_card_number_empty">Introduce el número de tarjeta o escanea un código de barras</string>
+    <string name="error_barcode_not_found">No se encontró ningún código de barras en la imagen</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">Nombre de la tienda</string>
+    <string name="barcode_preview_desc">Vista previa del código de barras</string>
+    <string name="card_number_default">Número de tarjeta</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">Botón «Añadir»</string>
+    <string name="show_add_button_description">Mostrar el botón «Añadir» en la pantalla principal</string>
+
+    <!-- Language -->
+    <string name="language_setting_label">Idioma</string>
+    <string name="language_system">Sistema</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_chinese_simplified">简体中文</string>
+</resources>

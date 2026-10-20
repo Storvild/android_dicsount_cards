@@ -122,6 +122,15 @@ fun SettingsScreen(
                         AppLanguage.SYSTEM -> stringResource(R.string.language_system)
                         AppLanguage.ENGLISH -> stringResource(R.string.language_english)
                         AppLanguage.RUSSIAN -> stringResource(R.string.language_russian)
+                        AppLanguage.FRENCH -> stringResource(R.string.language_french)
+                        AppLanguage.GERMAN -> stringResource(R.string.language_german)
+                        AppLanguage.JAPANESE -> stringResource(R.string.language_japanese)
+                        AppLanguage.SPANISH -> stringResource(R.string.language_spanish)
+                        AppLanguage.PORTUGUESE -> stringResource(R.string.language_portuguese)
+                        AppLanguage.HINDI -> stringResource(R.string.language_hindi)
+                        AppLanguage.ARABIC -> stringResource(R.string.language_arabic)
+                        AppLanguage.TURKISH -> stringResource(R.string.language_turkish)
+                        AppLanguage.CHINESE_SIMPLIFIED -> stringResource(R.string.language_chinese_simplified)
                     }
 
                     ExposedDropdownMenuBox(
@@ -146,30 +155,30 @@ fun SettingsScreen(
                             offset = DpOffset(0.dp, (-4).dp),
                             onDismissRequest = { expanded.value = false }
                         ) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.language_system)) },
-                                onClick = {
-                                    expanded.value = false
-                                    viewModel.setAppLanguage(AppLanguage.SYSTEM)
-                                    onLanguageChange(AppLanguage.SYSTEM)
-                                }
+                            val languages = listOf(
+                                AppLanguage.SYSTEM to R.string.language_system,
+                                AppLanguage.ENGLISH to R.string.language_english,
+                                AppLanguage.RUSSIAN to R.string.language_russian,
+                                AppLanguage.FRENCH to R.string.language_french,
+                                AppLanguage.GERMAN to R.string.language_german,
+                                AppLanguage.JAPANESE to R.string.language_japanese,
+                                AppLanguage.SPANISH to R.string.language_spanish,
+                                AppLanguage.PORTUGUESE to R.string.language_portuguese,
+                                AppLanguage.HINDI to R.string.language_hindi,
+                                AppLanguage.ARABIC to R.string.language_arabic,
+                                AppLanguage.TURKISH to R.string.language_turkish,
+                                AppLanguage.CHINESE_SIMPLIFIED to R.string.language_chinese_simplified
                             )
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.language_english)) },
-                                onClick = {
-                                    expanded.value = false
-                                    viewModel.setAppLanguage(AppLanguage.ENGLISH)
-                                    onLanguageChange(AppLanguage.ENGLISH)
-                                }
-                            )
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.language_russian)) },
-                                onClick = {
-                                    expanded.value = false
-                                    viewModel.setAppLanguage(AppLanguage.RUSSIAN)
-                                    onLanguageChange(AppLanguage.RUSSIAN)
-                                }
-                            )
+                            languages.forEach { (lang, stringRes) ->
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(stringRes)) },
+                                    onClick = {
+                                        expanded.value = false
+                                        viewModel.setAppLanguage(lang)
+                                        onLanguageChange(lang)
+                                    }
+                                )
+                            }
                         }
                     }
                 }

@@ -30,7 +30,16 @@ enum class SortOrder {
 enum class AppLanguage {
     SYSTEM,
     ENGLISH,
-    RUSSIAN;
+    RUSSIAN,
+    FRENCH,
+    GERMAN,
+    JAPANESE,
+    SPANISH,
+    PORTUGUESE,
+    HINDI,
+    ARABIC,
+    TURKISH,
+    CHINESE_SIMPLIFIED;
 
     companion object {
         fun fromOrdinal(ordinal: Int): AppLanguage =
@@ -119,6 +128,15 @@ class UserPreferencesRepository(private val context: Context) {
         val locale = when (language) {
             AppLanguage.ENGLISH -> Locale.ENGLISH
             AppLanguage.RUSSIAN -> Locale("ru")
+            AppLanguage.FRENCH -> Locale.FRENCH
+            AppLanguage.GERMAN -> Locale.GERMAN
+            AppLanguage.JAPANESE -> Locale.JAPANESE
+            AppLanguage.SPANISH -> Locale("es")
+            AppLanguage.PORTUGUESE -> Locale("pt")
+            AppLanguage.HINDI -> Locale("hi")
+            AppLanguage.ARABIC -> Locale("ar")
+            AppLanguage.TURKISH -> Locale("tr")
+            AppLanguage.CHINESE_SIMPLIFIED -> Locale.SIMPLIFIED_CHINESE
             AppLanguage.SYSTEM -> Locale.getDefault()
         }
         val config = Configuration(base.resources.configuration)

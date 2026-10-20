@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">Kundenkarten</string>
+    <string name="add_card_title">Karte hinzufügen</string>
+    <string name="edit_card_title">Karte bearbeiten</string>
+    <string name="card_details_title">Kartendetails</string>
+    <string name="settings_title">Einstellungen</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">Nach Geschäft suchen…</string>
+    <string name="search_icon_desc">Suchen</string>
+    <string name="clear_search_desc">Suche löschen</string>
+    <string name="menu_options_desc">Optionenmenü</string>
+    <string name="menu_file">Datei</string>
+    <string name="menu_appearance">Erscheinungsbild</string>
+    <string name="menu_sort">Sortieren</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_about">Über die App</string>
+    <string name="about_dialog_title">Über die App</string>
+    <string name="about_dialog_text">Die App „Discount Cards“ ist eine praktische Möglichkeit, Kundenkarten Ihrer Lieblingsgeschäfte aufzubewahren.
+
+Version 1.0</string>
+    <string name="about_github_link">Das Projekt ist auf GitHub verfügbar: https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="export_json_action">In JSON-Datei exportieren</string>
+    <string name="share_json_action">Teilen…</string>
+    <string name="share_action">Teilen…</string>
+    <string name="add_card_action">Karte hinzufügen…</string>
+    <string name="import_json_action">Aus JSON-Datei importieren</string>
+    <string name="delete_cards_action">Karten löschen…</string>
+    <string name="delete_selection_title">Zu löschende Karten auswählen</string>
+    <string name="delete_selected_button">Löschen (%1$d)</string>
+    <string name="delete_cards_success">Gelöschte Karten: %1$d</string>
+    <string name="delete_cards_error">Fehler beim Löschen: %1$s</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">Systemdesign</string>
+    <string name="theme_light">Helles Design</string>
+    <string name="theme_dark">Dunkles Design</string>
+    <string name="theme_dialog_title">Design auswählen</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">Alphabetisch</string>
+    <string name="sort_frequency">Nach Nutzungshäufigkeit</string>
+    <string name="sort_creation_date">Nach Erstellungsdatum</string>
+    <string name="sort_dialog_title">Karten sortieren</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">Helligkeit beim Öffnen der Karte</string>
+    <string name="brightness_no_change">0% — Keine Änderung</string>
+    <string name="brightness_percent">%1$d%%</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">Favorit</string>
+    <string name="favorite_toggle_desc">Favoriten umstellen</string>
+    <string name="format_phone">Telefonnummer</string>
+    <string name="phone_discount_label">Rabatt per Telefonnummer</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">Kartenliste ist leer</string>
+    <string name="empty_search_title">Nichts gefunden</string>
+    <string name="empty_subtitle">Fügen Sie Kundenkarten Ihrer Lieblingsgeschäfte hinzu, damit Sie sie immer zur Hand haben.</string>
+    <string name="empty_search_subtitle">Versuchen Sie Ihre Suche zu ändern oder fügen Sie eine neue Karte hinzu.</string>
+    <string name="add_first_card">Karte hinzufügen</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">Notizen:</string>
+    <string name="copy_card_number">Nummer kopieren</string>
+    <string name="copied_to_clipboard">In die Zwischenablage kopiert</string>
+    <string name="barcode_error">Fehler bei der Barcode-Generierung</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">Geschäftsname *</string>
+    <string name="store_name_placeholder">Z. B.: REWE, Edeka, dm</string>
+    <string name="clear_store_name">Geschäftsnamen löschen</string>
+    <string name="card_number_label">Kartennummer / Barcode / Telefon *</string>
+    <string name="card_number_placeholder">Nummer eingeben oder Barcode scannen</string>
+    <string name="clear_card_number">Kartennummer löschen</string>
+    <string name="pick_gallery_desc">Barcode aus Galerie auswählen</string>
+    <string name="scan_camera_desc">Barcode mit Kamera scannen</string>
+    <string name="format_label">Barcode-Format</string>
+    <string name="card_color_label">Kartenfarbe</string>
+    <string name="category_icon_label">Kategoriesymbol</string>
+    <string name="cvc_label">CVC-Code</string>
+    <string name="cvc_placeholder">Z. B.: 123</string>
+    <string name="show_cvc">CVC anzeigen</string>
+    <string name="hide_cvc">CVC ausblenden</string>
+    <string name="note_label">Notiz (optional)</string>
+    <string name="note_placeholder">Z. B.: 5% Rabatt, Bonuskarte</string>
+    <string name="shown_count_label">Anzahl der Aufrufe: %1$d</string>
+    <string name="created_at_label">Erstellungsdatum: %1$s</string>
+    <string name="save_changes">Änderungen speichern</string>
+    <string name="add_card_button">Karte hinzufügen</string>
+
+    <!-- Categories -->
+    <string name="cat_store">Geschäft</string>
+    <string name="cat_grocery">Lebensmittel</string>
+    <string name="cat_pharmacy">Apotheke</string>
+    <string name="cat_fashion">Kleidung</string>
+    <string name="cat_dining">Restaurants</string>
+    <string name="cat_fuel">Tankstelle</string>
+    <string name="cat_tickets">Tickets</string>
+    <string name="cat_gift">Geschenke</string>
+    <string name="cat_sports">Sport</string>
+    <string name="cat_other">Sonstiges</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">Löschen</string>
+    <string name="cancel_button">Abbrechen</string>
+    <string name="edit_button">Bearbeiten</string>
+    <string name="back_button">Zurück</string>
+    <string name="continue_button">Weiter</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">Karte löschen?</string>
+    <string name="delete_card_message">Möchten Sie diese Kundenkarte wirklich löschen? Dies kann nicht rückgängig gemacht werden.</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">Karten exportieren</string>
+    <string name="export_copy">JSON kopieren</string>
+    <string name="import_title">Karten importieren</string>
+    <string name="import_hint">JSON-Kartendaten hier einfügen…</string>
+    <string name="import_button">Importieren</string>
+    <string name="export_success">Karten erfolgreich exportiert</string>
+    <string name="export_failed">Exportfehler: %1$s</string>
+    <string name="import_mode_title">Importmodus</string>
+    <string name="import_mode_message">Wie möchten Sie die Karten aus der Datei importieren?</string>
+    <string name="import_mode_merge">Mit vorhandenen zusammenführen</string>
+    <string name="import_mode_merge_desc">Aktuelle Karten behalten und neue aus der Datei hinzufügen</string>
+    <string name="import_mode_overwrite">Alles überschreiben</string>
+    <string name="import_mode_overwrite_desc">Alle bestehenden Karten löschen und nur aus der Datei laden</string>
+    <string name="import_success">Karten erfolgreich importiert: %1$d</string>
+    <string name="import_failed">Importfehler: Ungültiges Dateiformat</string>
+
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">Alle auswählen</string>
+    <string name="deselect_all">Alle abwählen</string>
+    <string name="invert_selection">Auswahl umkehren</string>
+    <string name="selected_count">Ausgewählt: %1$d von %2$d</string>
+    <string name="duplicate_badge">Bereits vorhanden</string>
+    <string name="duplicate_strategy_title">Bei Namenskonflikten:</string>
+    <string name="duplicate_strategy_update">Bestehende aktualisieren</string>
+    <string name="duplicate_strategy_add_new">Als neu hinzufügen</string>
+    <string name="duplicate_strategy_skip">Duplikate überspringen</string>
+    <string name="export_selected_button">Exportieren (%1$d)</string>
+    <string name="import_selected_button">Importieren (%1$d)</string>
+    <string name="export_selection_title">Karten zum Exportieren auswählen</string>
+    <string name="share_selection_title">Karten zum Teilen auswählen</string>
+    <string name="share_success">Datei bereit zum Teilen</string>
+    <string name="share_selected_button">Teilen (%1$d)</string>
+    <string name="export_include_cvc_label">CVC-Code einschließen</string>
+    <string name="export_include_usage_count_label">Nutzungszähler einschließen</string>
+    <string name="import_selection_title">Karten zum Importieren auswählen</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">Barcode scannen</string>
+    <string name="toggle_torch">Blitz ein-/ausschalten</string>
+    <string name="scanner_instruction">Plazieren Sie den Barcode im Rahmen</string>
+    <string name="camera_permission_title">Kamerazugriff erforderlich</string>
+    <string name="camera_permission_desc">Kamerazugriff ist erforderlich, um Barcodes von physischen Karten zu scannen.</string>
+    <string name="grant_permission">Zugriff gewähren</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">Bitte Geschäftsnamen eingeben</string>
+    <string name="error_card_number_empty">Bitte Kartennummer eingeben oder Barcode scannen</string>
+    <string name="error_barcode_not_found">Kein Barcode auf dem Bild gefunden</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">Geschäftsname</string>
+    <string name="barcode_preview_desc">Barcode-Vorschau</string>
+    <string name="card_number_default">Kartennummer</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">„Hinzufügen“-Schaltfläche</string>
+    <string name="show_add_button_description">Schaltfläche „Hinzufügen“ auf dem Hauptbildschirm anzeigen</string>
+
+    <!-- Language -->
+    <string name="language_setting_label">Sprache</string>
+    <string name="language_system">System</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_chinese_simplified">简体中文</string>
+</resources>

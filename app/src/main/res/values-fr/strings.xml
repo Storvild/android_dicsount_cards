@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">Cartes de fidélité</string>
+    <string name="add_card_title">Ajouter une carte</string>
+    <string name="edit_card_title">Modifier la carte</string>
+    <string name="card_details_title">Détails de la carte</string>
+    <string name="settings_title">Paramètres</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">Rechercher par magasin…</string>
+    <string name="search_icon_desc">Rechercher</string>
+    <string name="clear_search_desc">Effacer la recherche</string>
+    <string name="menu_options_desc">Menu des options</string>
+    <string name="menu_file">Fichier</string>
+    <string name="menu_appearance">Apparence</string>
+    <string name="menu_sort">Trier</string>
+    <string name="menu_settings">Paramètres</string>
+    <string name="menu_about">À propos</string>
+    <string name="about_dialog_title">À propos</string>
+    <string name="about_dialog_text">L\'application Discount Cards est un moyen pratique de conserver les cartes de fidélité de vos magasins préférés.
+
+Version 1.0</string>
+    <string name="about_github_link">Le projet est disponible sur GitHub : https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="export_json_action">Exporter en fichier JSON</string>
+    <string name="share_json_action">Partager…</string>
+    <string name="share_action">Partager…</string>
+    <string name="add_card_action">Ajouter une carte…</string>
+    <string name="import_json_action">Importer depuis un fichier JSON</string>
+    <string name="delete_cards_action">Supprimer des cartes…</string>
+    <string name="delete_selection_title">Sélectionner les cartes à supprimer</string>
+    <string name="delete_selected_button">Supprimer (%1$d)</string>
+    <string name="delete_cards_success">Cartes supprimées : %1$d</string>
+    <string name="delete_cards_error">Erreur de suppression : %1$s</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">Thème du système</string>
+    <string name="theme_light">Thème clair</string>
+    <string name="theme_dark">Thème sombre</string>
+    <string name="theme_dialog_title">Choisir le thème</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">Par ordre alphabétique</string>
+    <string name="sort_frequency">Par fréquence d\'utilisation</string>
+    <string name="sort_creation_date">Par date de création</string>
+    <string name="sort_dialog_title">Trier les cartes</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">Luminosité lors de l\'ouverture de la carte</string>
+    <string name="brightness_no_change">0% — aucun changement</string>
+    <string name="brightness_percent">%1$d%%</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">Favori</string>
+    <string name="favorite_toggle_desc">Basculez les favoris</string>
+    <string name="format_phone">Téléphone</string>
+    <string name="phone_discount_label">Remise par numéro de téléphone</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">La liste de cartes est vide</string>
+    <string name="empty_search_title">Aucun résultat trouvé</string>
+    <string name="empty_subtitle">Ajoutez les cartes de fidélité de vos magasins préférés pour les avoir toujours à portée de main.</string>
+    <string name="empty_search_subtitle">Essayez de modifier votre recherche ou ajoutez une nouvelle carte.</string>
+    <string name="add_first_card">Ajouter une carte</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">Notes :</string>
+    <string name="copy_card_number">Copier le numéro</string>
+    <string name="copied_to_clipboard">Copié dans le presse-papiers</string>
+    <string name="barcode_error">Erreur de génération du code-barres</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">Nom du magasin *</string>
+    <string name="store_name_placeholder">Ex : Carrefour, Auchan, Sephora</string>
+    <string name="clear_store_name">Effacer le nom du magasin</string>
+    <string name="card_number_label">Numéro de carte / Code-barres / Téléphone *</string>
+    <string name="card_number_placeholder">Entrez le numéro ou scannez le code-barres</string>
+    <string name="clear_card_number">Effacer le numéro de carte</string>
+    <string name="pick_gallery_desc">Choisir le code-barres depuis la galerie</string>
+    <string name="scan_camera_desc">Scanner le code-barres avec l\'appareil photo</string>
+    <string name="format_label">Format du code-barres</string>
+    <string name="card_color_label">Couleur de la carte</string>
+    <string name="category_icon_label">Icône de catégorie</string>
+    <string name="cvc_label">Code CVC</string>
+    <string name="cvc_placeholder">Ex : 123</string>
+    <string name="show_cvc">Afficher le CVC</string>
+    <string name="hide_cvc">Masquer le CVC</string>
+    <string name="note_label">Note (optionnel)</string>
+    <string name="note_placeholder">Ex : 5% de remise, carte bonus</string>
+    <string name="shown_count_label">Nombre d\'affichages : %1$d</string>
+    <string name="created_at_label">Date de création : %1$s</string>
+    <string name="save_changes">Enregistrer les modifications</string>
+    <string name="add_card_button">Ajouter la carte</string>
+
+    <!-- Categories -->
+    <string name="cat_store">Magasin</string>
+    <string name="cat_grocery">Épicerie</string>
+    <string name="cat_pharmacy">Pharmacie</string>
+    <string name="cat_fashion">Mode</string>
+    <string name="cat_dining">Restaurants</string>
+    <string name="cat_fuel">Carburant</string>
+    <string name="cat_tickets">Billets</string>
+    <string name="cat_gift">Cadeaux</string>
+    <string name="cat_sports">Sports</string>
+    <string name="cat_other">Autre</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">Supprimer</string>
+    <string name="cancel_button">Annuler</string>
+    <string name="edit_button">Modifier</string>
+    <string name="back_button">Retour</string>
+    <string name="continue_button">Continuer</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">Supprimer la carte ?</string>
+    <string name="delete_card_message">Voulez-vous vraiment supprimer cette carte de fidélité ? Cette action est irréversible.</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">Exporter les cartes</string>
+    <string name="export_copy">Copier le JSON</string>
+    <string name="import_title">Importer les cartes</string>
+    <string name="import_hint">Collez les données JSON des cartes ici…</string>
+    <string name="import_button">Importer</string>
+    <string name="export_success">Cartes exportées avec succès</string>
+    <string name="export_failed">Échec de l\'exportation : %1$s</string>
+    <string name="import_mode_title">Mode d\'importation</string>
+    <string name="import_mode_message">Comment souhaitez-vous importer les cartes depuis le fichier ?</string>
+    <string name="import_mode_merge">Fusionner avec l\'existant</string>
+    <string name="import_mode_merge_desc">Conserver les cartes actuelles et ajouter les nouvelles</string>
+    <string name="import_mode_overwrite">Tout remplacer</string>
+    <string name="import_mode_overwrite_desc">Supprimer toutes les cartes existantes et charger uniquement le fichier</string>
+    <string name="import_success">Cartes importées avec succès : %1$d</string>
+    <string name="import_failed">Échec de l\'importation : format de fichier invalide</string>
+
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">Tout sélectionner</string>
+    <string name="deselect_all">Tout désélectionner</string>
+    <string name="invert_selection">Inverser la sélection</string>
+    <string name="selected_count">Sélectionné : %1$d sur %2$d</string>
+    <string name="duplicate_badge">Déjà dans la base</string>
+    <string name="duplicate_strategy_title">En cas de conflit de nom :</string>
+    <string name="duplicate_strategy_update">Mettre à jour l\'existant</string>
+    <string name="duplicate_strategy_add_new">Ajouter comme nouvelle carte</string>
+    <string name="duplicate_strategy_skip">Ignorer les doublons</string>
+    <string name="export_selected_button">Exporter (%1$d)</string>
+    <string name="import_selected_button">Importer (%1$d)</string>
+    <string name="export_selection_title">Sélectionner les cartes à exporter</string>
+    <string name="share_selection_title">Sélectionner les cartes à partager</string>
+    <string name="share_success">Fichier prêt à être partagé</string>
+    <string name="share_selected_button">Partager (%1$d)</string>
+    <string name="export_include_cvc_label">Inclure le CVC</string>
+    <string name="export_include_usage_count_label">Inclure le compteur d\'utilisation</string>
+    <string name="import_selection_title">Sélectionner les cartes à importer</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">Scanner le code-barres</string>
+    <string name="toggle_torch">Activer/désactiver le flash</string>
+    <string name="scanner_instruction">Placez le code-barres dans le cadre</string>
+    <string name="camera_permission_title">Autorisation de la caméra requise</string>
+    <string name="camera_permission_desc">L\'accès à la caméra est nécessaire pour scanner les codes-barres des cartes physiques.</string>
+    <string name="grant_permission">Accorder l\'autorisation</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">Veuillez entrer le nom du magasin</string>
+    <string name="error_card_number_empty">Veuillez entrer un numéro de carte ou scanner un code-barres</string>
+    <string name="error_barcode_not_found">Aucun code-barres trouvé dans l\'image</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">Nom du magasin</string>
+    <string name="barcode_preview_desc">Aperçu du code-barres</string>
+    <string name="card_number_default">Numéro de carte</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">Bouton « Ajouter »</string>
+    <string name="show_add_button_description">Afficher le bouton « Ajouter » sur l\'écran principal</string>
+
+    <!-- Language -->
+    <string name="language_setting_label">Langue</string>
+    <string name="language_system">Système</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_chinese_simplified">简体中文</string>
+</resources>

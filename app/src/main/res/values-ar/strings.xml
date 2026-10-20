@@ -1,0 +1,193 @@
+<resources>
+    <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">بطاقات الخصم</string>
+    <string name="add_card_title">إضافة بطاقة</string>
+    <string name="edit_card_title">تعديل البطاقة</string>
+    <string name="card_details_title">تفاصيل البطاقة</string>
+    <string name="settings_title">الإعدادات</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">البحث باسم المتجر…</string>
+    <string name="search_icon_desc">بحث</string>
+    <string name="clear_search_desc">مسح البحث</string>
+    <string name="menu_options_desc">قائمة الخيارات</string>
+    <string name="menu_file">ملف</string>
+    <string name="menu_appearance">المظهر</string>
+    <string name="menu_sort">فرز</string>
+    <string name="menu_settings">الإعدادات</string>
+    <string name="menu_about">حول التطبيق</string>
+    <string name="about_dialog_title">حول التطبيق</string>
+    <string name="about_dialog_text">تطبيق "Discount Cards" وسيلة مريحة لحفظ بطاقات الخصم الخاصة بمتاجركم المفضلة.
+
+الإصدار 1.0</string>
+    <string name="about_github_link">المشروع متاح على GitHub: https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="export_json_action">تصدير إلى ملف JSON</string>
+    <string name="share_json_action">مشاركة…</string>
+    <string name="share_action">مشاركة…</string>
+    <string name="add_card_action">إضافة بطاقة…</string>
+    <string name="import_json_action">استيراد من ملف JSON</string>
+    <string name="delete_cards_action">حذف البطاقات…</string>
+    <string name="delete_selection_title">تحديد البطاقات للحذف</string>
+    <string name="delete_selected_button">حذف (%1$d)</string>
+    <string name="delete_cards_success">البطاقات المحذوفة: %1$d</string>
+    <string name="delete_cards_error">خطأ أثناء الحذف: %1$s</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">حسب النظام</string>
+    <string name="theme_light">مظهر فاتح</string>
+    <string name="theme_dark">مظهر داكن</string>
+    <string name="theme_dialog_title">اختر المظهر</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">أبجدياً</string>
+    <string name="sort_frequency">حسب تكرار الاستخدام</string>
+    <string name="sort_creation_date">حسب تاريخ الإنشاء</string>
+    <string name="sort_dialog_title">فرز البطاقات</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">السطوع عند فتح البطاقة</string>
+    <string name="brightness_no_change">0% — بدون تغيير</string>
+    <string name="brightness_percent">%1$d%%</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">المفضلة</string>
+    <string name="favorite_toggle_desc">تبديل المفضلة</string>
+    <string name="format_phone">رقم الهاتف</string>
+    <string name="phone_discount_label">الخصم برقم الهاتف</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">قائمة البطاقات فارغة</string>
+    <string name="empty_search_title">لم يتم العثور على نتائج</string>
+
+    <string name="empty_subtitle">أضف بطاقات الخصم الخاصة بمتاجرك المفضلة لتكون دائماً في متناول يدك.</string>
+    <string name="empty_search_subtitle">جرب تغيير بحثك أو أضف بطاقة جديدة.</string>
+    <string name="add_first_card">إضافة بطاقة</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">ملاحظات:</string>
+    <string name="copy_card_number">نسخ الرقم</string>
+    <string name="copied_to_clipboard">تم النسخ إلى الحافظة</string>
+    <string name="barcode_error">خطأ في إنشاء الرمز شريطي</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">اسم المتجر *</string>
+    <string name="store_name_placeholder">مثال: كارفور، العثيم، بنده</string>
+    <string name="clear_store_name">مسح اسم المتجر</string>
+    <string name="card_number_label">رقم البطاقة / الرمز الشريطي / رقم الهاتف *</string>
+    <string name="card_number_placeholder">أدخل الرقم أو امسح الرمز الشريطي</string>
+    <string name="clear_card_number">مسح رقم البطاقة</string>
+    <string name="pick_gallery_desc">اختيار الرمز الشريطي من المعرض</string>
+    <string name="scan_camera_desc">مسح الرمز الشريطي بواسطة الكاميرا</string>
+    <string name="format_label">صيغة الرمز الشريطي</string>
+    <string name="card_color_label">لون البطاقة</string>
+    <string name="category_icon_label">أيقونة الفئة</string>
+    <string name="cvc_label">رمز CVC</string>
+    <string name="cvc_placeholder">مثال: 123</string>
+    <string name="show_cvc">إظهار CVC</string>
+    <string name="hide_cvc">إخفاء CVC</string>
+    <string name="note_label">ملاحظة (اختياري)</string>
+    <string name="note_placeholder">مثال: خصم 5%، بطاقة مكافآت</string>
+    <string name="shown_count_label">عدد مرات العرض: %1$d</string>
+    <string name="created_at_label">تاريخ الإنشاء: %1$s</string>
+    <string name="save_changes">حفظ التغييرات</string>
+    <string name="add_card_button">إضافة البطاقة</string>
+
+    <!-- Categories -->
+    <string name="cat_store">متجر</string>
+    <string name="cat_grocery">بقالة</string>
+    <string name="cat_pharmacy">صيدلية</string>
+    <string name="cat_fashion">ملابس</string>
+    <string name="cat_dining">مطاعم</string>
+    <string name="cat_fuel">محطة وقود</string>
+    <string name="cat_tickets">تذاكر</string>
+    <string name="cat_gift">هدايا</string>
+    <string name="cat_sports">رياضة</string>
+    <string name="cat_other">آخر</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">حذف</string>
+    <string name="cancel_button">إلغاء</string>
+    <string name="edit_button">تعديل</string>
+    <string name="back_button">رجوع</string>
+    <string name="continue_button">متابعة</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">حذف البطاقة؟</string>
+    <string name="delete_card_message">هل أنت تأكد من أنك تريد حذف بطاقة الخصم هذه؟ لا يمكن التراجع عن هذا الإجراء.</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">تصدير البطاقات</string>
+    <string name="export_copy">نسخ JSON</string>
+    <string name="import_title">استيراد البطاقات</string>
+    <string name="import_hint">الصق بيانات JSON للبطاقات هنا…</string>
+    <string name="import_button">استيراد</string>
+    <string name="export_success">تم تصدير البطاقات بنجاح</string>
+    <string name="export_failed">فشل التصدير: %1$s</string>
+    <string name="import_mode_title">وضع الاستيراد</string>
+    <string name="import_mode_message">كيف تريد استيراد البطاقات من الملف؟</string>
+    <string name="import_mode_merge">دمج مع الحالي</string>
+    <string name="import_mode_merge_desc">الاحتفاظ بالبطاقات الحالية وإضافة البطاقات الجديدة من الملف</string>
+    <string name="import_mode_overwrite">استبدال الكل</string>
+    <string name="import_mode_overwrite_desc">حذف جميع البطاقات الحالية وتحميل ملف الاستيراد فقط</string>
+    <string name="import_success">تم استيراد البطاقات بنجاح: %1$d</string>
+    <string name="import_failed">فشل الاستيراد: صيغة الملف غير صالحة</string>
+
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">تحديد الكل</string>
+    <string name="deselect_all">إلغاء تحديد الكل</string>
+    <string name="invert_selection">عكس التحديد</string>
+    <string name="selected_count">المحدد: %1$d من %2$d</string>
+    <string name="duplicate_badge">موجود مسبقاً</string>
+    <string name="duplicate_strategy_title">عند تطابق الأسماء:</string>
+    <string name="duplicate_strategy_update">تحديث البطاقات الحالية</string>
+    <string name="duplicate_strategy_add_new">إضافة كبطاقات جديدة</string>
+    <string name="duplicate_strategy_skip">تجاهل المكرر</string>
+    <string name="export_selected_button">تصدير (%1$d)</string>
+    <string name="import_selected_button">استيراد (%1$d)</string>
+    <string name="export_selection_title">تحديد البطاقات للتصدير</string>
+    <string name="share_selection_title">تحديد البطاقات للمشاركة</string>
+    <string name="share_success">الملف جاهز للمشاركة</string>
+    <string name="share_selected_button">مشاركة (%1$d)</string>
+    <string name="export_include_cvc_label">تضمين رمز CVC</string>
+    <string name="export_include_usage_count_label">تضمين عداد الاستخدام</string>
+    <string name="import_selection_title">تحديد البطاقات للاستيراد</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">مسح الرمز الشريطي</string>
+    <string name="toggle_torch">تشغيل/إيقاف الفلاش</string>
+    <string name="scanner_instruction">ضع الرمز الشريطي داخل الإطار</string>
+    <string name="camera_permission_title">إذن الكاميرا مطلوب</string>
+    <string name="camera_permission_desc">يلزم الوصول إلى الكاميرا لمسح الرموز الشريطية للبطاقات الفعلية.</string>
+    <string name="grant_permission">منح الإذن</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">يرجى إدخال اسم المتجر</string>
+    <string name="error_card_number_empty">يرجى إدخال رقم البطاقة أو مسح الرمز الشريطي</string>
+    <string name="error_barcode_not_found">لم يتم العثور على رمز شريطي في الصورة</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">اسم المتجر</string>
+    <string name="barcode_preview_desc">معاينة الرمز الشريطي</string>
+    <string name="card_number_default">رقم البطاقة</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">زر «إضافة»</string>
+    <string name="show_add_button_description">إظهار زر «إضافة» على الشاشة الرئيسية</string>
+
+    <!-- Language -->
+    <string name="language_setting_label">اللغة</string>
+    <string name="language_system">اللغة الافتراضية للنظام</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_chinese_simplified">简体中文</string>
+</resources>

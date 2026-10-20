@@ -1,0 +1,192 @@
+<resources>
+    <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">डिस्काउंट कार्ड</string>
+    <string name="add_card_title">कार्ड जोड़ें</string>
+    <string name="edit_card_title">कार्ड संपादित करें</string>
+    <string name="card_details_title">कार्ड विवरण</string>
+    <string name="settings_title">सेटिंग्स</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">स्टोर नाम से खोजें…</string>
+    <string name="search_icon_desc">खोजें</string>
+    <string name="clear_search_desc">खोज साफ़ करें</string>
+    <string name="menu_options_desc">विकल्प मेनू</string>
+    <string name="menu_file">फ़ाइल</string>
+    <string name="menu_appearance">रंग-रूप</string>
+    <string name="menu_sort">क्रमबद्ध करें</string>
+    <string name="menu_settings">सेटिंग्स</string>
+    <string name="menu_about">ऐप के बारे में</string>
+    <string name="about_dialog_title">ऐप के बारे में</string>
+    <string name="about_dialog_text">"Discount Cards" ऐप आपके पसंदीदा स्टोर के डिस्काउंट कार्ड रखने का सुविधाजनक तरीका है।
+
+संस्करण 1.0</string>
+    <string name="about_github_link">प्रोजेक्ट GitHub पर उपलब्ध है: https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="export_json_action">JSON फ़ाइल में निर्यात करें</string>
+    <string name="share_json_action">साझा करें…</string>
+    <string name="share_action">साझा करें…</string>
+    <string name="add_card_action">कार्ड जोड़ें…</string>
+    <string name="import_json_action">JSON फ़ाइल से आयात करें</string>
+    <string name="delete_cards_action">कार्ड हटाएं…</string>
+    <string name="delete_selection_title">हटाने के लिए कार्ड चुनें</string>
+    <string name="delete_selected_button">हटाएं (%1$d)</string>
+    <string name="delete_cards_success">हटाए गए कार्ड: %1$d</string>
+    <string name="delete_cards_error">हटाने में त्रुटि: %1$s</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">सिस्टम थीम</string>
+    <string name="theme_light">लाइट थीम</string>
+    <string name="theme_dark">डार्क थीम</string>
+    <string name="theme_dialog_title">थीम चुनें</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">वर्णानुक्रम अनुसार</string>
+    <string name="sort_frequency">उपयोग की आवृत्ति अनुसार</string>
+    <string name="sort_creation_date">बनाने की तिथि अनुसार</string>
+    <string name="sort_dialog_title">कार्ड क्रमबद्ध करें</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">कार्ड खोलते समय ब्राइटनेस</string>
+    <string name="brightness_no_change">0% — कोई बदलाव नहीं</string>
+    <string name="brightness_percent">%1$d%%</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">पसंदीदा</string>
+    <string name="favorite_toggle_desc">पसंदीदा स्विच करें</string>
+    <string name="format_phone">फ़ोन नंबर</string>
+    <string name="phone_discount_label">फ़ोन नंबर द्वारा छूट</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">कार्ड सूची खाली है</string>
+    <string name="empty_search_title">कोई परिणाम नहीं मिला</string>
+    <string name="empty_subtitle">अपने पसंदीदा स्टोर के डिस्काउंट कार्ड जोड़ें ताकि वे हमेशा आपके पास रहें।</string>
+    <string name="empty_search_subtitle">अपनी खोज बदलने का प्रयास करें या नया कार्ड जोड़ें।</string>
+    <string name="add_first_card">कार्ड जोड़ें</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">नोट्स:</string>
+    <string name="copy_card_number">नंबर कॉपी करें</string>
+    <string name="copied_to_clipboard">क्लिपबोर्ड पर कॉपी किया गया</string>
+    <string name="barcode_error">बारकोड जनरेशन त्रुटि</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">स्टोर का नाम *</string>
+    <string name="store_name_placeholder">उदा: Reliance, Big Bazaar, DMart</string>
+    <string name="clear_store_name">स्टोर नाम साफ़ करें</string>
+    <string name="card_number_label">कार्ड नंबर / बारकोड / फ़ोन नंबर *</string>
+    <string name="card_number_placeholder">नंबर दर्ज करें या बारकोड स्कैन करें</string>
+    <string name="clear_card_number">कार्ड नंबर साफ़ करें</string>
+    <string name="pick_gallery_desc">गैलरी से बारकोड चुनें</string>
+    <string name="scan_camera_desc">कैमरे से बारकोड स्कैन करें</string>
+    <string name="format_label">बारकोड प्रारूप</string>
+    <string name="card_color_label">कार्ड का रंग</string>
+    <string name="category_icon_label">श्रेणी आइकन</string>
+    <string name="cvc_label">CVC कोड</string>
+    <string name="cvc_placeholder">उदा: 123</string>
+    <string name="show_cvc">CVC दिखाएं</string>
+    <string name="hide_cvc">CVC छिपाएं</string>
+    <string name="note_label">नोट (वैकल्पिक)</string>
+    <string name="note_placeholder">उदा: 5% छूट, बोनस कार्ड</string>
+    <string name="shown_count_label">दिखाए जाने की संख्या: %1$d</string>
+    <string name="created_at_label">बनाने की तिथि: %1$s</string>
+    <string name="save_changes">बदलाव सहेजें</string>
+    <string name="add_card_button">कार्ड जोड़ें</string>
+
+    <!-- Categories -->
+    <string name="cat_store">स्टोर</string>
+    <string name="cat_grocery">किराना</string>
+    <string name="cat_pharmacy">दवाखाना</string>
+    <string name="cat_fashion">कपड़े</string>
+    <string name="cat_dining">रेस्तरां</string>
+    <string name="cat_fuel">पेट्रोल पंप</string>
+    <string name="cat_tickets">टिकट</string>
+    <string name="cat_gift">उपहार</string>
+    <string name="cat_sports">खेल</string>
+    <string name="cat_other">अन्य</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">हटाएं</string>
+    <string name="cancel_button">रद्द करें</string>
+    <string name="edit_button">संपादित करें</string>
+    <string name="back_button">पीछे</string>
+    <string name="continue_button">जारी रखें</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">कार्ड हटाएं?</string>
+    <string name="delete_card_message">क्या आप वाकई इस डिस्काउंट कार्ड को हटाना चाहते हैं? इसे वापस नहीं लाया जा सकता।</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">कार्ड निर्यात करें</string>
+    <string name="export_copy">JSON कॉपी करें</string>
+    <string name="import_title">कार्ड आयात करें</string>
+    <string name="import_hint">यहां कार्ड का JSON डेटा पेस्ट करें…</string>
+    <string name="import_button">आयात करें</string>
+    <string name="export_success">कार्ड सफलतापूर्वक निर्यात किए गए</string>
+    <string name="export_failed">निर्यात में त्रुटि: %1$s</string>
+    <string name="import_mode_title">आयात मोड</string>
+    <string name="import_mode_message">आप फ़ाइल से कार्ड कैसे आयात करना चाहते हैं?</string>
+    <string name="import_mode_merge">मौजूदा में मिलाएं</string>
+    <string name="import_mode_merge_desc">वर्तमान कार्ड रखें और फ़ाइल से नए जोड़ें</string>
+    <string name="import_mode_overwrite">सब कुछ बदलें</string>
+    <string name="import_mode_overwrite_desc">मौजूदा सभी कार्ड हटाएं और केवल फ़ाइल से लोड करें</string>
+    <string name="import_success">सफलतापूर्वक आयात किए गए कार्ड: %1$d</string>
+    <string name="import_failed">आयात त्रुटि: अमान्य फ़ाइल प्रारूप</string>
+
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">सभी चुनें</string>
+    <string name="deselect_all">सभी का चयन रद्द करें</string>
+    <string name="invert_selection">चयन उलटें</string>
+    <string name="selected_count">चुना गया: %2$d में से %1$d</string>
+    <string name="duplicate_badge">पहले से मौजूद है</string>
+    <string name="duplicate_strategy_title">नाम मेल खाने पर:</string>
+    <string name="duplicate_strategy_update">मौजूदा अपडेट करें</string>
+    <string name="duplicate_strategy_add_new">नए के रूप में जोड़ें</string>
+    <string name="duplicate_strategy_skip">डुप्लिकेट छोड़ें</string>
+    <string name="export_selected_button">निर्यात करें (%1$d)</string>
+    <string name="import_selected_button">आयात करें (%1$d)</string>
+    <string name="export_selection_title">निर्यात के लिए कार्ड चुनें</string>
+    <string name="share_selection_title">साझा करने के लिए कार्ड चुनें</string>
+    <string name="share_success">फ़ाइल साझा करने के लिए तैयार है</string>
+    <string name="share_selected_button">साझा करें (%1$d)</string>
+    <string name="export_include_cvc_label">CVC शामिल करें</string>
+    <string name="export_include_usage_count_label">उपयोग काउंटर शामिल करें</string>
+    <string name="import_selection_title">आयात के लिए कार्ड चुनें</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">बारकोड स्कैन करें</string>
+    <string name="toggle_torch">फ़्लैश ऑन/ऑफ़ करें</string>
+    <string name="scanner_instruction">बारकोड को फ़्रेम में रखें</string>
+    <string name="camera_permission_title">कैमरा अनुमति आवश्यक है</string>
+    <string name="camera_permission_desc">भौतिक कार्ड से बारकोड स्कैन करने के लिए कैमरा पहुंच आवश्यक है।</string>
+    <string name="grant_permission">अनुमति दें</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">कृपया स्टोर का नाम दर्ज करें</string>
+    <string name="error_card_number_empty">कृपया कार्ड नंबर दर्ज करें या बारकोड स्कैन करें</string>
+    <string name="error_barcode_not_found">इमेज में कोई बारकोड नहीं मिला</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">स्टोर का नाम</string>
+    <string name="barcode_preview_desc">बारकोड पूर्वावलोकन</string>
+    <string name="card_number_default">कार्ड नंबर</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">"जोड़ें" बटन</string>
+    <string name="show_add_button_description">मुख्य स्क्रीन पर "जोड़ें" बटन दिखाएं</string>
+
+    <!-- Language -->
+    <string name="language_setting_label">भाषा</string>
+    <string name="language_system">सिस्टम</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_french">Français</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_portuguese">Português</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_chinese_simplified">简体中文</string>
+</resources>
