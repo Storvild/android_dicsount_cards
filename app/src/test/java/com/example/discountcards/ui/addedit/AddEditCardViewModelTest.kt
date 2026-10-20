@@ -39,6 +39,8 @@ class AddEditCardViewModelTest {
             return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName }))
         }
 
+        override fun getAllCardsByCreationDate(): Flow<List<DiscountCard>> = flowOf(cards)
+
         override fun getAllCards(): Flow<List<DiscountCard>> = getAllCardsAlphabetical()
 
         override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
@@ -46,6 +48,8 @@ class AddEditCardViewModelTest {
         override fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>> = flowOf(cards)
 
         override fun searchCardsByFrequency(query: String): Flow<List<DiscountCard>> = flowOf(cards)
+
+        override fun searchCardsByCreationDate(query: String): Flow<List<DiscountCard>> = flowOf(cards)
 
         override fun searchCards(query: String): Flow<List<DiscountCard>> = flowOf(cards)
 
@@ -259,5 +263,34 @@ class AddEditCardViewModelTest {
         assertEquals("9988776655443", state.cardNumber)
         assertEquals("EAN_13", state.barcodeFormat)
         assertNotNull(state.userMessage)
+    }
+
+    @Test
+    fun testLoadExistingCardIncludesCreatedAt() = runTest {
+        val dao = FakeDao()
+        val expectedCreatedAt = 1700000000000L
+        dao.cards.add(
+            DiscountCard(
+                id = 15,
+                storeName = "Magnit",
+                cardNumber = "123123",
+                barcodeFormat = "EAN_13",
+                createdAt = expectedCreatedAt
+            )
+        )
+
+        val repository = CardRepositoryImpl(dao)
+        val viewModel = AddEditCardViewModel(
+            repository = repository,
+            cardId = 15,
+            ioDispatcher = testDispatcher
+        )
+
+        backgroundScope.launch { viewModel.uiState.collect {} }
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertTrue(state.isEditMode)
+        assertEquals(expectedCreatedAt, state.createdAt)
     }
 }

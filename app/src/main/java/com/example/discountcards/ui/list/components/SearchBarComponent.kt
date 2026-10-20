@@ -398,6 +398,11 @@ fun SortSelectionDialog(
                     selected = currentSortOrder == SortOrder.FREQUENCY,
                     onClick = { onSelect(SortOrder.FREQUENCY) }
                 )
+                ThemeOptionRow(
+                    title = stringResource(R.string.sort_creation_date),
+                    selected = currentSortOrder == SortOrder.CREATION_DATE,
+                    onClick = { onSelect(SortOrder.CREATION_DATE) }
+                )
             }
         },
         confirmButton = {

@@ -314,6 +314,12 @@ fun SettingsScreen(
                         selected = preferences.sortOrder == SortOrder.FREQUENCY,
                         onClick = { viewModel.setSortOrder(SortOrder.FREQUENCY) }
                     )
+
+                    ThemeOptionItem(
+                        title = stringResource(R.string.sort_creation_date),
+                        selected = preferences.sortOrder == SortOrder.CREATION_DATE,
+                        onClick = { viewModel.setSortOrder(SortOrder.CREATION_DATE) }
+                    )
                 }
             }
 

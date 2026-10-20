@@ -353,7 +353,7 @@ fun AddEditCardScreen(
                     maxLines = 4
                 )
 
-                // Read-only usage counter (only in edit mode)
+                // Read-only usage counter and creation date (only in edit mode)
                 if (uiState.isEditMode) {
                     Text(
                         text = context.resources.getString(
@@ -362,6 +362,23 @@ fun AddEditCardScreen(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+
+                    val createdAtMs = uiState.createdAt
+                    if (createdAtMs != null && createdAtMs > 0) {
+                        val dateFormat = remember {
+                            java.text.SimpleDateFormat("dd.MM.yyyy HH:mm", java.util.Locale.getDefault())
+                        }
+                        val formattedDate = remember(createdAtMs) {
+                            dateFormat.format(java.util.Date(createdAtMs))
+                        }
+                        Text(
+                            text = context.resources.getString(
+                                R.string.created_at_label, formattedDate
+                            ),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))

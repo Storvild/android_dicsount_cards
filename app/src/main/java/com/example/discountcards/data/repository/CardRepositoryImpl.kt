@@ -19,6 +19,7 @@ class CardRepositoryImpl(
         return when (sortOrder) {
             SortOrder.ALPHABETICAL -> dao.getAllCardsAlphabetical()
             SortOrder.FREQUENCY -> dao.getAllCardsByFrequency()
+            SortOrder.CREATION_DATE -> dao.getAllCardsByCreationDate()
         }
     }
 
@@ -26,6 +27,7 @@ class CardRepositoryImpl(
         return when (sortOrder) {
             SortOrder.ALPHABETICAL -> dao.searchCardsAlphabetical(query)
             SortOrder.FREQUENCY -> dao.searchCardsByFrequency(query)
+            SortOrder.CREATION_DATE -> dao.searchCardsByCreationDate(query)
         }
     }
 

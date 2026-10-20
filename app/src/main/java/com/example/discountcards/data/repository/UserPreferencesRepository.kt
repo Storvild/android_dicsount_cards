@@ -23,7 +23,8 @@ enum class ThemeMode {
 
 enum class SortOrder {
     ALPHABETICAL,
-    FREQUENCY
+    FREQUENCY,
+    CREATION_DATE
 }
 
 enum class AppLanguage {

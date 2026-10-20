@@ -18,6 +18,9 @@ interface DiscountCardDao {
     @Query("SELECT * FROM discount_cards ORDER BY isFavorite DESC, usageCount DESC, storeName ASC")
     fun getAllCardsByFrequency(): Flow<List<DiscountCard>>
 
+    @Query("SELECT * FROM discount_cards ORDER BY isFavorite DESC, createdAt DESC, storeName ASC")
+    fun getAllCardsByCreationDate(): Flow<List<DiscountCard>>
+
     @Query("SELECT * FROM discount_cards ORDER BY isFavorite DESC, storeName ASC")
     fun getAllCards(): Flow<List<DiscountCard>>
 
@@ -29,6 +32,9 @@ interface DiscountCardDao {
 
     @Query("SELECT * FROM discount_cards WHERE storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%' ORDER BY isFavorite DESC, usageCount DESC, storeName ASC")
     fun searchCardsByFrequency(query: String): Flow<List<DiscountCard>>
+
+    @Query("SELECT * FROM discount_cards WHERE storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%' ORDER BY isFavorite DESC, createdAt DESC, storeName ASC")
+    fun searchCardsByCreationDate(query: String): Flow<List<DiscountCard>>
 
     @Query("SELECT * FROM discount_cards WHERE storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%' ORDER BY isFavorite DESC, storeName ASC")
     fun searchCards(query: String): Flow<List<DiscountCard>>

@@ -38,6 +38,10 @@ class CardListViewModelTest {
             return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName }))
         }
 
+        override fun getAllCardsByCreationDate(): Flow<List<DiscountCard>> {
+            return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.createdAt }.thenBy { it.storeName }))
+        }
+
         override fun getAllCards(): Flow<List<DiscountCard>> = getAllCardsAlphabetical()
 
         override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
@@ -56,6 +60,14 @@ class CardListViewModelTest {
                         it.note.contains(query, ignoreCase = true) ||
                         it.cardNumber.contains(query, ignoreCase = true)
             }.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName }))
+        }
+
+        override fun searchCardsByCreationDate(query: String): Flow<List<DiscountCard>> {
+            return flowOf(cards.filter {
+                it.storeName.contains(query, ignoreCase = true) ||
+                        it.note.contains(query, ignoreCase = true) ||
+                        it.cardNumber.contains(query, ignoreCase = true)
+            }.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.createdAt }.thenBy { it.storeName }))
         }
 
         override fun searchCards(query: String): Flow<List<DiscountCard>> = searchCardsAlphabetical(query)

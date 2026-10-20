@@ -40,6 +40,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -267,6 +268,31 @@ fun CardDetailScreen(
                                     )
                                 }
                             }
+                        }
+                    }
+
+                    // Creation Date at bottom left
+                    if (card.createdAt > 0) {
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        val dateFormat = remember {
+                            java.text.SimpleDateFormat("dd.MM.yyyy HH:mm", java.util.Locale.getDefault())
+                        }
+                        val formattedDate = remember(card.createdAt) {
+                            dateFormat.format(java.util.Date(card.createdAt))
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Text(
+                                text = stringResource(R.string.created_at_label, formattedDate),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
                         }
                     }
                 }

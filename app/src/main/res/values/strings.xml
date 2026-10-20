@@ -42,6 +42,7 @@
     <!-- Sort options -->
     <string name="sort_alphabetical">По алфавиту</string>
     <string name="sort_frequency">По частоте использования</string>
+    <string name="sort_creation_date">По дате создания</string>
     <string name="sort_dialog_title">Сортировка карт</string>
 
     <!-- Settings -->
@@ -87,6 +88,7 @@
     <string name="note_label">Примечание (опционально)</string>
     <string name="note_placeholder">Например: скидка 5%, бонусная карта</string>
     <string name="shown_count_label">Количество показов: %1$d</string>
+    <string name="created_at_label">Дата создания: %1$s</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="add_card_button">Добавить карту</string>
 

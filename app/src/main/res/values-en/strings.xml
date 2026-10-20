@@ -42,6 +42,7 @@ Version 1.0</string>
     <!-- Sort options -->
     <string name="sort_alphabetical">Alphabetical</string>
     <string name="sort_frequency">By usage frequency</string>
+    <string name="sort_creation_date">By creation date</string>
     <string name="sort_dialog_title">Sort cards</string>
 
     <!-- Settings -->
@@ -87,6 +88,7 @@ Version 1.0</string>
     <string name="note_label">Note (optional)</string>
     <string name="note_placeholder">e.g. 5% discount, loyalty card</string>
     <string name="shown_count_label">Shown count: %1$d</string>
+    <string name="created_at_label">Creation date: %1$s</string>
     <string name="save_changes">Save changes</string>
     <string name="add_card_button">Add card</string>
 

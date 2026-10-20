@@ -4,6 +4,7 @@ import com.example.discountcards.data.local.dao.DiscountCardDao
 import com.example.discountcards.data.local.entity.DiscountCard
 import com.example.discountcards.util.ImportMode
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -24,6 +25,10 @@ class CardRepositoryImplTest {
             return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName }))
         }
 
+        override fun getAllCardsByCreationDate(): Flow<List<DiscountCard>> {
+            return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.createdAt }.thenBy { it.storeName }))
+        }
+
         override fun getAllCards(): Flow<List<DiscountCard>> = getAllCardsAlphabetical()
 
         override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
@@ -36,6 +41,11 @@ class CardRepositoryImplTest {
         override fun searchCardsByFrequency(query: String): Flow<List<DiscountCard>> {
             return flowOf(cards.filter { it.storeName.contains(query, ignoreCase = true) || it.cardNumber.contains(query, ignoreCase = true) }
                 .sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName }))
+        }
+
+        override fun searchCardsByCreationDate(query: String): Flow<List<DiscountCard>> {
+            return flowOf(cards.filter { it.storeName.contains(query, ignoreCase = true) || it.cardNumber.contains(query, ignoreCase = true) }
+                .sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.createdAt }.thenBy { it.storeName }))
         }
 
         override fun searchCards(query: String): Flow<List<DiscountCard>> = searchCardsAlphabetical(query)
@@ -201,6 +211,22 @@ class CardRepositoryImplTest {
         assertTrue(result.isSuccess)
         assertEquals(1, dao.cards.size)
         assertEquals("111111", dao.cards[0].cardNumber)
+    }
+
+    @Test
+    fun testGetAllCardsSortedByCreationDate() = runTest {
+        val dao = FakeDiscountCardDao()
+        val repository = CardRepositoryImpl(dao)
+
+        val olderCard = DiscountCard(id = 1, storeName = "Alpha", cardNumber = "100", barcodeFormat = "EAN_13", createdAt = 1000000L)
+        val newerCard = DiscountCard(id = 2, storeName = "Beta", cardNumber = "200", barcodeFormat = "EAN_13", createdAt = 2000000L)
+        dao.insertCard(olderCard)
+        dao.insertCard(newerCard)
+
+        val resultList = repository.getAllCards(SortOrder.CREATION_DATE).first()
+        assertEquals(2, resultList.size)
+        assertEquals("Beta", resultList[0].storeName)
+        assertEquals("Alpha", resultList[1].storeName)
     }
 
 }
