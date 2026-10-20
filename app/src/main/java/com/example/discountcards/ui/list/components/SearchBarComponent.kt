@@ -312,15 +312,19 @@ fun SearchBarComponent(
     // About Dialog
     if (showAboutDialog) {
         val aboutContext = LocalContext.current
+        val aboutDialogText = stringResource(R.string.about_dialog_text)
+        val aboutGithubLink = stringResource(R.string.about_github_link)
+        val shareTitle = stringResource(R.string.share_action)
+
         AlertDialog(
             onDismissRequest = { showAboutDialog = false },
             title = { Text(stringResource(R.string.about_dialog_title)) },
             text = {
                 Column {
-                    Text(stringResource(R.string.about_dialog_text))
+                    Text(aboutDialogText)
                     Spacer(modifier = Modifier.padding(8.dp))
                     Text(
-                        text = stringResource(R.string.about_github_link),
+                        text = aboutGithubLink,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.clickable {
                             val intent = Intent(
@@ -335,6 +339,25 @@ fun SearchBarComponent(
             confirmButton = {
                 TextButton(onClick = { showAboutDialog = false }) {
                     Text(stringResource(R.string.cancel_button))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        val shareText = "$aboutDialogText\n\n$aboutGithubLink"
+                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, shareText)
+                        }
+                        aboutContext.startActivity(
+                            Intent.createChooser(
+                                shareIntent,
+                                shareTitle
+                            )
+                        )
+                    }
+                ) {
+                    Text(shareTitle)
                 }
             }
         )

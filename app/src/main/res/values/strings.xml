@@ -25,6 +25,7 @@
     <string name="about_github_link">Проект доступен на GitHub: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">Экспорт в JSON-файл</string>
     <string name="share_json_action">Поделиться…</string>
+    <string name="share_action">Поделиться…</string>
     <string name="add_card_action">Добавить карточку…</string>
     <string name="import_json_action">Импорт из JSON-файла</string>
     <string name="delete_cards_action">Удаление карточек…</string>

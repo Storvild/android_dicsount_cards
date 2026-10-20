@@ -25,6 +25,7 @@ Version 1.0</string>
     <string name="about_github_link">Project is available on GitHub: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">Export to JSON file</string>
     <string name="share_json_action">Share…</string>
+    <string name="share_action">Share…</string>
     <string name="add_card_action">Add card…</string>
     <string name="import_json_action">Import from JSON file</string>
     <string name="delete_cards_action">Delete cards…</string>
