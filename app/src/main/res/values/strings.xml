@@ -164,4 +164,8 @@
     <string name="preview_store_name">Название магазина</string>
     <string name="barcode_preview_desc">Предпросмотр штрихкода</string>
     <string name="card_number_default">Номер карты</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">Кнопка «Добавить»</string>
+    <string name="show_add_button_description">Показывать кнопку «Добавить» на главном экране</string>
 </resources>

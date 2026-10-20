@@ -39,4 +39,10 @@ class SettingsViewModel(
             preferencesRepository.updateCardBrightnessPercent(percent)
         }
     }
+
+    fun setShowAddButton(show: Boolean) {
+        viewModelScope.launch {
+            preferencesRepository.updateShowAddButton(show)
+        }
+    }
 }

@@ -55,7 +55,8 @@ fun CardListScreen(
     currentThemeMode: ThemeMode = ThemeMode.SYSTEM,
     onThemeModeSelected: (ThemeMode) -> Unit = {},
     currentSortOrder: SortOrder = SortOrder.ALPHABETICAL,
-    onSortOrderSelected: (SortOrder) -> Unit = {}
+    onSortOrderSelected: (SortOrder) -> Unit = {},
+    showAddButton: Boolean = true
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -112,16 +113,18 @@ fun CardListScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddCardClick,
-                shape = CircleShape,
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.add_first_card)
-                )
+            if (showAddButton) {
+                FloatingActionButton(
+                    onClick = onAddCardClick,
+                    shape = CircleShape,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(R.string.add_first_card)
+                    )
+                }
             }
         }
     ) { innerPadding ->

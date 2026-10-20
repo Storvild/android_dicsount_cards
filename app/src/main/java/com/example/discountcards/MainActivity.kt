@@ -124,7 +124,8 @@ fun DiscountCardsNavigation() {
                     CoroutineScope(Dispatchers.Main).launch {
                         preferencesRepository.updateSortOrder(order)
                     }
-                }
+                },
+                showAddButton = preferences.showAddButton
             )
         }
         is Destination.CardDetail -> {
