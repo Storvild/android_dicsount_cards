@@ -38,6 +38,11 @@ class CardListViewModel(
     private val exportSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
     private val selectedExportCardIds = MutableStateFlow<Set<Long>>(emptySet())
 
+    // Delete selection
+    private val showDeleteSelectionDialog = MutableStateFlow(false)
+    private val deleteSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
+    private val selectedDeleteCardIds = MutableStateFlow<Set<Long>>(emptySet())
+
     // Import selection
     private val showImportSelectionDialog = MutableStateFlow(false)
     private val importSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
@@ -69,6 +74,9 @@ class CardListViewModel(
         showExportSelectionDialog,
         exportSelectionCards,
         selectedExportCardIds,
+        showDeleteSelectionDialog,
+        deleteSelectionCards,
+        selectedDeleteCardIds,
         showImportSelectionDialog,
         importSelectionCards,
         selectedImportIndexes,
@@ -90,12 +98,16 @@ class CardListViewModel(
             exportSelectionCards = args[6] as List<DiscountCard>,
             selectedExportCardIds = args[7] as Set<Long>,
 
-            showImportSelectionDialog = args[8] as Boolean,
-            importSelectionCards = args[9] as List<DiscountCard>,
-            selectedImportIndexes = args[10] as Set<Int>,
-            existingStoreNames = args[11] as Set<String>,
-            importMode = args[12] as ImportMode,
-            duplicateStrategy = args[13] as DuplicateStrategy
+            showDeleteSelectionDialog = args[8] as Boolean,
+            deleteSelectionCards = args[9] as List<DiscountCard>,
+            selectedDeleteCardIds = args[10] as Set<Long>,
+
+            showImportSelectionDialog = args[11] as Boolean,
+            importSelectionCards = args[12] as List<DiscountCard>,
+            selectedImportIndexes = args[13] as Set<Int>,
+            existingStoreNames = args[14] as Set<String>,
+            importMode = args[15] as ImportMode,
+            duplicateStrategy = args[16] as DuplicateStrategy
         )
     }.stateIn(
         scope = viewModelScope,
@@ -220,6 +232,70 @@ class CardListViewModel(
                     userMessage.value = "EXPORT_FAILED:${error.localizedMessage ?: "Error"}"
                 }
             )
+        }
+    }
+
+    // Delete Selection Methods
+    fun prepareDeleteSelection() {
+        viewModelScope.launch {
+            val allCards = repository.getAllCards().first()
+            if (allCards.isEmpty()) {
+                userMessage.value = "DELETE_FAILED:No cards to delete"
+                return@launch
+            }
+            deleteSelectionCards.value = allCards
+            selectedDeleteCardIds.value = emptySet()
+            showDeleteSelectionDialog.value = true
+        }
+    }
+
+    fun toggleDeleteCardSelection(cardId: Long) {
+        val current = selectedDeleteCardIds.value
+        selectedDeleteCardIds.value = if (current.contains(cardId)) {
+            current - cardId
+        } else {
+            current + cardId
+        }
+    }
+
+    fun selectAllDeleteCards() {
+        selectedDeleteCardIds.value = deleteSelectionCards.value.map { it.id }.toSet()
+    }
+
+    fun deselectAllDeleteCards() {
+        selectedDeleteCardIds.value = emptySet()
+    }
+
+    fun invertDeleteCardSelection() {
+        val allIds = deleteSelectionCards.value.map { it.id }.toSet()
+        selectedDeleteCardIds.value = allIds - selectedDeleteCardIds.value
+    }
+
+    fun cancelDeleteSelection() {
+        showDeleteSelectionDialog.value = false
+        deleteSelectionCards.value = emptyList()
+        selectedDeleteCardIds.value = emptySet()
+    }
+
+    fun confirmDeleteSelected() {
+        viewModelScope.launch {
+            val selectedCards = deleteSelectionCards.value.filter {
+                selectedDeleteCardIds.value.contains(it.id)
+            }
+            if (selectedCards.isEmpty()) {
+                userMessage.value = "DELETE_FAILED:No cards selected"
+                return@launch
+            }
+            try {
+                for (card in selectedCards) {
+                    repository.deleteCard(card)
+                }
+                val count = selectedCards.size
+                cancelDeleteSelection()
+                userMessage.value = "DELETE_SUCCESS:$count"
+            } catch (e: Exception) {
+                userMessage.value = "DELETE_FAILED:${e.localizedMessage ?: "Error"}"
+            }
         }
     }
 

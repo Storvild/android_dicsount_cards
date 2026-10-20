@@ -19,6 +19,11 @@ data class CardListUiState(
     val exportSelectionCards: List<DiscountCard> = emptyList(),
     val selectedExportCardIds: Set<Long> = emptySet(),
 
+    // Delete selection dialog state
+    val showDeleteSelectionDialog: Boolean = false,
+    val deleteSelectionCards: List<DiscountCard> = emptyList(),
+    val selectedDeleteCardIds: Set<Long> = emptySet(),
+
     // Import selection dialog state
     val showImportSelectionDialog: Boolean = false,
     val importSelectionCards: List<DiscountCard> = emptyList(),

@@ -282,3 +282,68 @@ CoroutineScope(Dispatchers.IO).launch {
 - лучше всего — через `doOnFirstCompositionComplete { ... }` на корневом Compose-экране — тогда pre-warm гарантированно стартует **после** первого фрейма и не мешает TTI.
 
 Но в вашем случае pre-warm **не имеет смысла вообще**, потому что результат не используется — его можно просто убрать.
+
+
+---  
+
+You:  
+Корректно убрать тяжелую операцию pre-warm при запуске приложения
+
+Agent:  
+Нашёл! В [DiscountCardsApp.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/DiscountCardsApp.kt) в `onCreate()` есть pre-warm:
+
+```kotlin
+CoroutineScope(Dispatchers.IO).launch {
+    repository.getAllCards().firstOrNull()
+}
+```
+
+Эта тяжёлая операция (запрос ко всем карточкам в Room) выполняется **синхронно при запуске приложения** на `Dispatchers.IO`. Она блокирует загрузку UI, потому что:
+1. Создается новый `CoroutineScope` без привязки к lifecycle приложения
+2. Запрос ко всем карточкам может быть тяжёлым
+3. Это происходит **до** того, как UI начнёт рендериться
+
+**Решение:** Убрать pre-warm из `onCreate()`. Room уже кэширует данные, а Compose UI сам подтянет данные при первом рендере.
+
+**Что сделано:**
+
+1. **Убран тяжёлый pre-warm** из [DiscountCardsApp.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/DiscountCardsApp.kt)
+   - Удалён `CoroutineScope(Dispatchers.IO).launch { repository.getAllCards().firstOrNull() }`
+   - Убраны неиспользуемые импорты (`CoroutineScope`, `Dispatchers`, `firstOrNull`, `launch`)
+   - Убрано пустое переопределение `onCreate()`
+
+2. **Настроен splash screen** в [values-v31/themes.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values-v31/themes.xml)
+   - Чёрный фон (`@android:color/black`)
+   - Иконка приложения (`@drawable/ic_launcher_foreground`)
+   - Длительность анимации 1000мс
+
+**Результат:**
+- Приложение запускается быстрее (нет тяжёлой операции при старте)
+- Splash screen теперь чёрный с иконкой (как вы просили)
+- Композиция Compose UI загружается без блокировок
+
+
+
+---  
+
+You:  
+Добавить в меню Файл/Удаление карточек... по которому должен появится список аналогично окну экспорта. Выделенные будут удалены
+
+Agent:  
+Всё готово. Функция «Удаление карточек…» добавлена в меню **Файл → Удаление карточек…**.
+
+## Что было сделано:
+
+1. **[strings.xml](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml)** — добавлены строки: `delete_cards_action`, `delete_selection_title`, `delete_selected_button`, `delete_cards_success`, `delete_cards_error`
+
+2. **[ImportExportDialogs.kt](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/ImportExportDialogs.kt)** — добавлен компонент `DeleteSelectionDialog`, аналогичный окну экспорта (список с чекбоксами, кнопки «Отметить все / Снять все / Инвертировать», подтверждение с красным цветом)
+
+3. **[CardListUiState.kt](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListUiState.kt)** — добавлены поля `showDeleteSelectionDialog`, `deleteSelectionCards`, `selectedDeleteCardIds`
+
+4. **[CardListViewModel.kt](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListViewModel.kt)** — добавлены методы: `prepareDeleteSelection`, `toggleDeleteCardSelection`, `selectAllDeleteCards`, `deselectAllDeleteCards`, `invertDeleteCardSelection`, `cancelDeleteSelection`, `confirmDeleteSelected`
+
+5. **[SearchBarComponent.kt](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt)** — добавлен параметр `onDeleteClick` и пункт меню «Удаление карточек…» в подменю «Файл»
+
+6. **[CardListScreen.kt](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt)** — подключена кнопка, отображение диалога, обработка toast-уведомлений об успехе/ошибке удаления
+
+При подтверждении выделенные карточки удаляются из базы данных, и показывается toast «Удалено карточек: N».

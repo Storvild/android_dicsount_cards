@@ -19,6 +19,11 @@
     <string name="menu_settings">Настройки</string>
     <string name="export_json_action">Экспорт в JSON-файл</string>
     <string name="import_json_action">Импорт из JSON-файла</string>
+    <string name="delete_cards_action">Удаление карточек…</string>
+    <string name="delete_selection_title">Выбор карточек для удаления</string>
+    <string name="delete_selected_button">Удалить (%1$d)</string>
+    <string name="delete_cards_success">Удалено карточек: %1$d</string>
+    <string name="delete_cards_error">Ошибка при удалении: %1$s</string>
 
     <!-- Theme options -->
     <string name="theme_system">Системная тема</string>

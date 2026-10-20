@@ -38,6 +38,7 @@ import com.example.discountcards.data.repository.ThemeMode
 import com.example.discountcards.ui.list.components.CardListItem
 import com.example.discountcards.ui.list.components.EmptyState
 import com.example.discountcards.ui.list.components.ExportDialog
+import com.example.discountcards.ui.list.components.DeleteSelectionDialog
 import com.example.discountcards.ui.list.components.ExportSelectionDialog
 import com.example.discountcards.ui.list.components.ImportDialog
 import com.example.discountcards.ui.list.components.ImportSelectionDialog
@@ -92,6 +93,14 @@ fun CardListScreen(
                     resources.getString(R.string.import_success, count)
                 }
                 msg.startsWith("IMPORT_FAILED:") -> resources.getString(R.string.import_failed)
+                msg.startsWith("DELETE_SUCCESS:") -> {
+                    val count = msg.removePrefix("DELETE_SUCCESS:").toIntOrNull() ?: 0
+                    resources.getString(R.string.delete_cards_success, count)
+                }
+                msg.startsWith("DELETE_FAILED:") -> {
+                    val detail = msg.removePrefix("DELETE_FAILED:")
+                    resources.getString(R.string.delete_cards_error, detail)
+                }
                 else -> msg
             }
             Toast.makeText(context, displayMsg, Toast.LENGTH_SHORT).show()
@@ -126,6 +135,7 @@ fun CardListScreen(
                 onClearQuery = viewModel::onClearSearch,
                 onExportClick = { viewModel.prepareExportSelection() },
                 onImportClick = { importLauncher.launch(arrayOf("application/json", "*/*")) },
+                onDeleteClick = { viewModel.prepareDeleteSelection() },
                 currentThemeMode = currentThemeMode,
                 onThemeModeSelected = onThemeModeSelected,
                 currentSortOrder = currentSortOrder,
@@ -183,6 +193,20 @@ fun CardListScreen(
             onInvert = viewModel::invertExportCardSelection,
             onConfirm = { exportLauncher.launch("discount_cards_backup.json") },
             onDismiss = viewModel::cancelExportSelection
+        )
+    }
+
+    // Delete Selection Dialog
+    if (uiState.showDeleteSelectionDialog) {
+        DeleteSelectionDialog(
+            cards = uiState.deleteSelectionCards,
+            selectedCardIds = uiState.selectedDeleteCardIds,
+            onToggleCard = viewModel::toggleDeleteCardSelection,
+            onSelectAll = viewModel::selectAllDeleteCards,
+            onDeselectAll = viewModel::deselectAllDeleteCards,
+            onInvert = viewModel::invertDeleteCardSelection,
+            onConfirm = viewModel::confirmDeleteSelected,
+            onDismiss = viewModel::cancelDeleteSelection
         )
     }
 

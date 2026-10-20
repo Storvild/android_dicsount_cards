@@ -17,6 +17,7 @@ import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Upload
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
@@ -51,6 +52,7 @@ fun SearchBarComponent(
     onClearQuery: () -> Unit,
     onExportClick: () -> Unit,
     onImportClick: () -> Unit,
+    onDeleteClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     currentThemeMode: ThemeMode = ThemeMode.SYSTEM,
     onThemeModeSelected: (ThemeMode) -> Unit = {},
@@ -156,6 +158,21 @@ fun SearchBarComponent(
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Outlined.Download,
+                                contentDescription = null,
+                                modifier = Modifier.padding(start = 12.dp)
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.delete_cards_action)) },
+                        onClick = {
+                            menuExpanded = false
+                            fileSubmenuExpanded = false
+                            onDeleteClick()
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Delete,
                                 contentDescription = null,
                                 modifier = Modifier.padding(start = 12.dp)
                             )
