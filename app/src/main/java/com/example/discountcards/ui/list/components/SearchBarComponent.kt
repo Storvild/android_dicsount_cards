@@ -23,6 +23,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Upload
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
@@ -58,6 +59,7 @@ fun SearchBarComponent(
     onClearQuery: () -> Unit,
     onExportClick: () -> Unit,
     onShareClick: () -> Unit = {},
+    onAddCardClick: () -> Unit = {},
     onImportClick: () -> Unit,
     onDeleteClick: () -> Unit = {},
     modifier: Modifier = Modifier,
@@ -151,6 +153,22 @@ fun SearchBarComponent(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Outlined.Share,
+                            contentDescription = null
+                        )
+                    }
+                )
+
+                // 3. Добавить карточку
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.add_card_action)) },
+                    onClick = {
+                        menuExpanded = false
+                        fileSubmenuExpanded = false
+                        onAddCardClick()
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Add,
                             contentDescription = null
                         )
                     }

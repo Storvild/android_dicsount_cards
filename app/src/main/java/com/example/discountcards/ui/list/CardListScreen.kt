@@ -136,6 +136,7 @@ fun CardListScreen(
                 onClearQuery = viewModel::onClearSearch,
                 onExportClick = { viewModel.prepareExportSelection() },
                 onShareClick = { viewModel.prepareShareSelection() },
+                onAddCardClick = onAddCardClick,
                 onImportClick = { importLauncher.launch(arrayOf("application/json", "*/*")) },
                 onDeleteClick = { viewModel.prepareDeleteSelection() },
                 currentThemeMode = currentThemeMode,
