@@ -37,11 +37,15 @@ class CardListViewModel(
     private val showExportSelectionDialog = MutableStateFlow(false)
     private val exportSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
     private val selectedExportCardIds = MutableStateFlow<Set<Long>>(emptySet())
+    private val exportIncludeCvc = MutableStateFlow(false)
+    private val exportIncludeUsageCount = MutableStateFlow(false)
 
     // Share selection
     private val showShareSelectionDialog = MutableStateFlow(false)
     private val shareSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
     private val selectedShareCardIds = MutableStateFlow<Set<Long>>(emptySet())
+    private val shareIncludeCvc = MutableStateFlow(false)
+    private val shareIncludeUsageCount = MutableStateFlow(false)
 
     // Delete selection
     private val showDeleteSelectionDialog = MutableStateFlow(false)
@@ -79,9 +83,13 @@ class CardListViewModel(
         showExportSelectionDialog,
         exportSelectionCards,
         selectedExportCardIds,
+        exportIncludeCvc,
+        exportIncludeUsageCount,
         showShareSelectionDialog,
         shareSelectionCards,
         selectedShareCardIds,
+        shareIncludeCvc,
+        shareIncludeUsageCount,
         showDeleteSelectionDialog,
         deleteSelectionCards,
         selectedDeleteCardIds,
@@ -105,21 +113,25 @@ class CardListViewModel(
             showExportSelectionDialog = args[5] as Boolean,
             exportSelectionCards = args[6] as List<DiscountCard>,
             selectedExportCardIds = args[7] as Set<Long>,
+            exportIncludeCvc = args[8] as Boolean,
+            exportIncludeUsageCount = args[9] as Boolean,
 
-            showShareSelectionDialog = args[8] as Boolean,
-            shareSelectionCards = args[9] as List<DiscountCard>,
-            selectedShareCardIds = args[10] as Set<Long>,
+            showShareSelectionDialog = args[10] as Boolean,
+            shareSelectionCards = args[11] as List<DiscountCard>,
+            selectedShareCardIds = args[12] as Set<Long>,
+            shareIncludeCvc = args[13] as Boolean,
+            shareIncludeUsageCount = args[14] as Boolean,
 
-            showDeleteSelectionDialog = args[11] as Boolean,
-            deleteSelectionCards = args[12] as List<DiscountCard>,
-            selectedDeleteCardIds = args[13] as Set<Long>,
+            showDeleteSelectionDialog = args[15] as Boolean,
+            deleteSelectionCards = args[16] as List<DiscountCard>,
+            selectedDeleteCardIds = args[17] as Set<Long>,
 
-            showImportSelectionDialog = args[14] as Boolean,
-            importSelectionCards = args[15] as List<DiscountCard>,
-            selectedImportIndexes = args[16] as Set<Int>,
-            existingStoreNames = args[17] as Set<String>,
-            importMode = args[18] as ImportMode,
-            duplicateStrategy = args[19] as DuplicateStrategy
+            showImportSelectionDialog = args[18] as Boolean,
+            importSelectionCards = args[19] as List<DiscountCard>,
+            selectedImportIndexes = args[20] as Set<Int>,
+            existingStoreNames = args[21] as Set<String>,
+            importMode = args[22] as ImportMode,
+            duplicateStrategy = args[23] as DuplicateStrategy
         )
     }.stateIn(
         scope = viewModelScope,
@@ -151,8 +163,18 @@ class CardListViewModel(
             }
             exportSelectionCards.value = allCards
             selectedExportCardIds.value = allCards.map { it.id }.toSet()
+            exportIncludeCvc.value = false
+            exportIncludeUsageCount.value = false
             showExportSelectionDialog.value = true
         }
+    }
+
+    fun setExportIncludeCvc(include: Boolean) {
+        exportIncludeCvc.value = include
+    }
+
+    fun setExportIncludeUsageCount(include: Boolean) {
+        exportIncludeUsageCount.value = include
     }
 
     fun toggleExportCardSelection(cardId: Long) {
@@ -193,7 +215,10 @@ class CardListViewModel(
                     userMessage.value = "EXPORT_FAILED:No cards selected"
                     return@launch
                 }
-                val json = repository.exportToJson(selectedCards)
+                val cardsToExport = selectedCards.map {
+                    it.redact(exportIncludeCvc.value, exportIncludeUsageCount.value)
+                }
+                val json = repository.exportToJson(cardsToExport)
                 cancelExportSelection()
                 exportedJson.value = json
             } catch (e: Exception) {
@@ -211,7 +236,10 @@ class CardListViewModel(
                 userMessage.value = "EXPORT_FAILED:No cards selected"
                 return@launch
             }
-            val result = repository.exportToUri(contentResolver, uri, selectedCards)
+            val cardsToExport = selectedCards.map {
+                it.redact(exportIncludeCvc.value, exportIncludeUsageCount.value)
+            }
+            val result = repository.exportToUri(contentResolver, uri, cardsToExport)
             result.fold(
                 onSuccess = {
                     cancelExportSelection()
@@ -238,8 +266,18 @@ class CardListViewModel(
             }
             shareSelectionCards.value = allCards
             selectedShareCardIds.value = allCards.map { it.id }.toSet()
+            shareIncludeCvc.value = false
+            shareIncludeUsageCount.value = false
             showShareSelectionDialog.value = true
         }
+    }
+
+    fun setShareIncludeCvc(include: Boolean) {
+        shareIncludeCvc.value = include
+    }
+
+    fun setShareIncludeUsageCount(include: Boolean) {
+        shareIncludeUsageCount.value = include
     }
 
     fun toggleShareCardSelection(cardId: Long) {
@@ -280,7 +318,10 @@ class CardListViewModel(
                 return@launch
             }
             try {
-                val json = repository.exportToJson(selectedCards)
+                val cardsToExport = selectedCards.map {
+                    it.redact(shareIncludeCvc.value, shareIncludeUsageCount.value)
+                }
+                val json = repository.exportToJson(cardsToExport)
                 cancelShareSelection()
                 // Write to a temp file and share via ACTION_SEND
                 val file = java.io.File(context.cacheDir, "discount_cards_share.json")
@@ -309,7 +350,11 @@ class CardListViewModel(
             val selectedCards = exportSelectionCards.value.filter {
                 selectedExportCardIds.value.contains(it.id)
             }
-            val cardsToExport = if (selectedCards.isNotEmpty()) selectedCards else null
+            val cardsToExport = if (selectedCards.isNotEmpty()) {
+                selectedCards.map { it.redact(exportIncludeCvc.value, exportIncludeUsageCount.value) }
+            } else {
+                null
+            }
             val result = repository.exportToUri(contentResolver, uri, cardsToExport)
             result.fold(
                 onSuccess = {

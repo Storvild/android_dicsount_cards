@@ -443,3 +443,23 @@ Agent:
 
 Теперь в выпадающем меню (иконка «⋮») после пункта «Поделиться…» появляется пункт «Добавить карточку…», который открывает экран добавления новой карты.
 
+---
+
+Что было сделано:
+
+**1. [DiscountCard.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/local/entity/DiscountCard.kt)** — добавлен метод [redact](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/local/entity/DiscountCard.kt#L25-L30), который сбрасывает `cvc` и `usageCount`, если соответствующие флаги выключены.
+
+**2. [CardListViewModel.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListViewModel.kt)**:
+- Добавлены 4 `MutableStateFlow` (`exportIncludeCvc/UsageCount`, `shareIncludeCvc/UsageCount`), подключены к `uiState`.
+- Сбрасываются на `false` при открытии каждого диалога.
+- Добавлены сеттеры `setExportIncludeCvc/UsageCount` и `setShareIncludeCvc/UsageCount`.
+- [confirmExportToText](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListViewModel.kt#L204-L220), [confirmExportToUri](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListViewModel.kt#L222-L240) и [shareExportCards](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListViewModel.kt#L294-L323) теперь применяют `redact` с текущими значениями флагов перед сериализацией.
+
+**3. [ImportExportDialogs.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/ImportExportDialogs.kt)**:
+- [ExportSelectionDialog](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/ImportExportDialogs.kt#L106-L119) и [ShareSelectionDialog](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/ImportExportDialogs.kt#L806-L818) получили параметры `includeCvc`, `includeUsageCount` и соответствующие коллбеки; в тексте диалогов появились два `Checkbox` с подписями «Выгружать CVC» и «Выгружать счётчик использования».
+
+**4. [CardListScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt#L192-L225)** — оба диалога передают значения из `uiState` и коллбеки ViewModels.
+
+**5. [strings.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml#L149-L150)** — добавлены `export_include_cvc_label` и `export_include_usage_count_label`.
+
+Поведование: при открытии диалога флаги по умолчанию выключены; если не отметить ни один из них, в JSON `cvc` будет пустой строкой, а `usageCount` — 0 (существующий импорт с `coerceInputValues = true` такое корректно читает).

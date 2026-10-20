@@ -197,6 +197,10 @@ fun CardListScreen(
             onSelectAll = viewModel::selectAllExportCards,
             onDeselectAll = viewModel::deselectAllExportCards,
             onInvert = viewModel::invertExportCardSelection,
+            includeCvc = uiState.exportIncludeCvc,
+            includeUsageCount = uiState.exportIncludeUsageCount,
+            onIncludeCvcChange = viewModel::setExportIncludeCvc,
+            onIncludeUsageCountChange = viewModel::setExportIncludeUsageCount,
             onConfirm = { exportLauncher.launch("discount_cards_backup.json") },
             onDismiss = viewModel::cancelExportSelection
         )
@@ -211,6 +215,10 @@ fun CardListScreen(
             onSelectAll = viewModel::selectAllShareCards,
             onDeselectAll = viewModel::deselectAllShareCards,
             onInvert = viewModel::invertShareCardSelection,
+            includeCvc = uiState.shareIncludeCvc,
+            includeUsageCount = uiState.shareIncludeUsageCount,
+            onIncludeCvcChange = viewModel::setShareIncludeCvc,
+            onIncludeUsageCountChange = viewModel::setShareIncludeUsageCount,
             onConfirm = { viewModel.shareExportCards(context) },
             onDismiss = viewModel::cancelShareSelection
         )

@@ -105,6 +105,10 @@ fun ExportSelectionDialog(
     onSelectAll: () -> Unit,
     onDeselectAll: () -> Unit,
     onInvert: () -> Unit,
+    includeCvc: Boolean = false,
+    includeUsageCount: Boolean = false,
+    onIncludeCvcChange: (Boolean) -> Unit = {},
+    onIncludeUsageCountChange: (Boolean) -> Unit = {},
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -140,6 +144,36 @@ fun ExportSelectionDialog(
                         .heightIn(max = 280.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
+                    item {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = includeCvc,
+                                onCheckedChange = { onIncludeCvcChange(it) }
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = stringResource(R.string.export_include_cvc_label),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = includeUsageCount,
+                                onCheckedChange = { onIncludeUsageCountChange(it) }
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = stringResource(R.string.export_include_usage_count_label),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(4.dp))
+                    }
+
                     items(items = cards, key = { it.id }) { card ->
                         val isSelected = selectedCardIds.contains(card.id)
                         Surface(
@@ -779,6 +813,10 @@ fun ShareSelectionDialog(
     onSelectAll: () -> Unit,
     onDeselectAll: () -> Unit,
     onInvert: () -> Unit,
+    includeCvc: Boolean = false,
+    includeUsageCount: Boolean = false,
+    onIncludeCvcChange: (Boolean) -> Unit = {},
+    onIncludeUsageCountChange: (Boolean) -> Unit = {},
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -814,6 +852,36 @@ fun ShareSelectionDialog(
                         .heightIn(max = 280.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
+                    item {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = includeCvc,
+                                onCheckedChange = { onIncludeCvcChange(it) }
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = stringResource(R.string.export_include_cvc_label),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = includeUsageCount,
+                                onCheckedChange = { onIncludeUsageCountChange(it) }
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = stringResource(R.string.export_include_usage_count_label),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(4.dp))
+                    }
+
                     items(items = cards, key = { it.id }) { card ->
                         val isSelected = selectedCardIds.contains(card.id)
                         Surface(

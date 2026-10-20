@@ -86,7 +86,7 @@
     <string name="hide_cvc">Скрыть CVC</string>
     <string name="note_label">Примечание (опционально)</string>
     <string name="note_placeholder">Например: скидка 5%, бонусная карта</string>
-    <string name="shown_count_label">Показано %1$d раз</string>
+    <string name="shown_count_label">Количество показов: %1$d</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="add_card_button">Добавить карту</string>
 
@@ -146,6 +146,8 @@
     <string name="share_selection_title">Выбор карточек для отправки</string>
     <string name="share_success">Файл готов к отправке</string>
     <string name="share_selected_button">Отправить (%1$d)</string>
+    <string name="export_include_cvc_label">Выгружать CVC</string>
+    <string name="export_include_usage_count_label">Выгружать счётчик использования</string>
     <string name="import_selection_title">Выбор карточек для импорта</string>
 
     <!-- Camera Scanner -->

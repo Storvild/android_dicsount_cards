@@ -20,4 +20,12 @@ data class DiscountCard(
     val usageCount: Int = 0,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
-)
+) {
+    fun redact(
+        includeCvc: Boolean,
+        includeUsageCount: Boolean
+    ): DiscountCard = copy(
+        cvc = if (includeCvc) cvc else "",
+        usageCount = if (includeUsageCount) usageCount else 0
+    )
+}
