@@ -17,6 +17,12 @@
     <string name="menu_appearance">Оформление</string>
     <string name="menu_sort">Сортировка</string>
     <string name="menu_settings">Настройки</string>
+    <string name="menu_about">О программе</string>
+    <string name="about_dialog_title">О программе</string>
+    <string name="about_dialog_text">Приложение «Скидочные карты» — удобный способ хранить скидочные карты ваших любимых магазинов.
+
+Версия 1.0</string>
+    <string name="about_github_link">Проект доступен на GitHub: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">Экспорт в JSON-файл</string>
     <string name="share_json_action">Поделиться…</string>
     <string name="import_json_action">Импорт из JSON-файла</string>

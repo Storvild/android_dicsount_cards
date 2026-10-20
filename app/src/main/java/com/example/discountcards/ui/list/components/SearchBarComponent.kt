@@ -1,5 +1,8 @@
 package com.example.discountcards.ui.list.components
 
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +19,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.Palette
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Share
@@ -39,6 +43,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -66,6 +71,7 @@ fun SearchBarComponent(
     var fileSubmenuExpanded by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
     var showSortDialog by remember { mutableStateOf(false) }
+    var showAboutDialog by remember { mutableStateOf(false) }
 
     Row(
         modifier = modifier
@@ -242,6 +248,21 @@ fun SearchBarComponent(
                         )
                     }
                 )
+
+                // 6. О программе
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.menu_about)) },
+                    onClick = {
+                        menuExpanded = false
+                        showAboutDialog = true
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = null
+                        )
+                    }
+                )
             }
         }
     }
@@ -266,6 +287,37 @@ fun SearchBarComponent(
             onSelect = { order ->
                 onSortOrderSelected(order)
                 showSortDialog = false
+            }
+        )
+    }
+
+    // About Dialog
+    if (showAboutDialog) {
+        val aboutContext = LocalContext.current
+        AlertDialog(
+            onDismissRequest = { showAboutDialog = false },
+            title = { Text(stringResource(R.string.about_dialog_title)) },
+            text = {
+                Column {
+                    Text(stringResource(R.string.about_dialog_text))
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Text(
+                        text = stringResource(R.string.about_github_link),
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable {
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://github.com/Storvild/android_dicsount_cards")
+                            )
+                            aboutContext.startActivity(intent)
+                        }
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showAboutDialog = false }) {
+                    Text(stringResource(R.string.cancel_button))
+                }
             }
         )
     }

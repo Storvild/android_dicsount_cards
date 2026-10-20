@@ -369,3 +369,12 @@ You:
 | [ImportExportDialogs.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/ImportExportDialogs.kt) | Новый composable `ShareSelectionDialog` |
 
 
+---
+
+Готово! Я добавил пункт «**О программе**» в конец выпадающего меню (после «Настройки»):
+
+1. **Строки** — добавил [menu_about](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml) и текст диалога в [strings.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml)
+
+2. **Меню** — добавил новый `DropdownMenuItem` с иконкой `Info` в [SearchBarComponent.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt) после пункта «Настройки»
+
+3. **Диалог** — при нажатии на «О программе» показывается `AlertDialog` с названием приложения и версией
