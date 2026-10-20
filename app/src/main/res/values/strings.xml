@@ -9,7 +9,7 @@
     <string name="settings_title">Настройки</string>
 
     <!-- Search & Menu -->
-    <string name="search_placeholder">Поиск по магазину или примечанию…</string>
+    <string name="search_placeholder">Поиск по магазину…</string>
     <string name="search_icon_desc">Поиск</string>
     <string name="clear_search_desc">Очистить поиск</string>
     <string name="menu_options_desc">Меню опций</string>
