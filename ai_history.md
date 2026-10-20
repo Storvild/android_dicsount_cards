@@ -463,3 +463,15 @@ Agent:
 **5. [strings.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml#L149-L150)** — добавлены `export_include_cvc_label` и `export_include_usage_count_label`.
 
 Поведование: при открытии диалога флаги по умолчанию выключены; если не отметить ни один из них, в JSON `cvc` будет пустой строкой, а `usageCount` — 0 (существующий импорт с `coerceInputValues = true` такое корректно читает).
+
+
+---
+
+Agent:  
+Done! I've created [strings.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values-en/strings.xml) with English translations for all strings. The file is placed in the `values-en/` directory, so Android will automatically use it when the system language is set to English.
+
+Key translation choices:
+- **Store name placeholder** — replaced Russian-specific store examples (Пятёрочка, Перекрёсток) with generic ones (Walmart, Target, Best Buy)
+- **Categories** — translated to standard English retail categories (Groceries, Pharmacy, Fashion, etc.)
+- **All format strings** (`%1$d`, `%1$s`) preserved as-is so formatting works correctly
+

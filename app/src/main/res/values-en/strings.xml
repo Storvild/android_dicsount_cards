@@ -1,0 +1,174 @@
+<resources>
+    <string name="app_name">Discount Cards</string>
+
+    <!-- Navigation & Titles -->
+    <string name="card_list_title">Discount Cards</string>
+    <string name="add_card_title">Add Card</string>
+    <string name="edit_card_title">Edit Card</string>
+    <string name="card_details_title">Card Details</string>
+    <string name="settings_title">Settings</string>
+
+    <!-- Search & Menu -->
+    <string name="search_placeholder">Search by store…</string>
+    <string name="search_icon_desc">Search</string>
+    <string name="clear_search_desc">Clear search</string>
+    <string name="menu_options_desc">Options menu</string>
+    <string name="menu_file">File</string>
+    <string name="menu_appearance">Appearance</string>
+    <string name="menu_sort">Sort</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_about">About</string>
+    <string name="about_dialog_title">About</string>
+    <string name="about_dialog_text">Discount Cards — a convenient way to keep discount cards from your favorite stores.
+
+Version 1.0</string>
+    <string name="about_github_link">Project is available on GitHub: https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="export_json_action">Export to JSON file</string>
+    <string name="share_json_action">Share…</string>
+    <string name="add_card_action">Add card…</string>
+    <string name="import_json_action">Import from JSON file</string>
+    <string name="delete_cards_action">Delete cards…</string>
+    <string name="delete_selection_title">Select cards to delete</string>
+    <string name="delete_selected_button">Delete (%1$d)</string>
+    <string name="delete_cards_success">Deleted cards: %1$d</string>
+    <string name="delete_cards_error">Delete error: %1$s</string>
+
+    <!-- Theme options -->
+    <string name="theme_system">System theme</string>
+    <string name="theme_light">Light theme</string>
+    <string name="theme_dark">Dark theme</string>
+    <string name="theme_dialog_title">Choose theme</string>
+
+    <!-- Sort options -->
+    <string name="sort_alphabetical">Alphabetical</string>
+    <string name="sort_frequency">By usage frequency</string>
+    <string name="sort_dialog_title">Sort cards</string>
+
+    <!-- Settings -->
+    <string name="brightness_setting_label">Brightness when opening a card</string>
+    <string name="brightness_no_change">0% — no change</string>
+    <string name="brightness_percent">%1$d%%</string>
+
+    <!-- Favorites & Formats -->
+    <string name="favorite_label">Favorites</string>
+    <string name="favorite_toggle_desc">Toggle favorite</string>
+    <string name="format_phone">Phone</string>
+    <string name="phone_discount_label">Phone number discount</string>
+
+    <!-- Empty States -->
+    <string name="empty_title">No cards yet</string>
+    <string name="empty_search_title">Nothing found</string>
+    <string name="empty_subtitle">Add discount cards from your favorite stores so they\'re always at your fingertips.</string>
+    <string name="empty_search_subtitle">Try changing your search query or add a new card.</string>
+    <string name="add_first_card">Add a card</string>
+
+    <!-- Card Detail Screen -->
+    <string name="notes_label">Notes:</string>
+    <string name="copy_card_number">Copy number</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="barcode_error">Barcode generation error</string>
+
+    <!-- Add / Edit Card Screen -->
+    <string name="store_name_label">Store name *</string>
+    <string name="store_name_placeholder">e.g. Walmart, Target, Best Buy</string>
+    <string name="clear_store_name">Clear store name</string>
+    <string name="card_number_label">Card number / Barcode / Phone *</string>
+    <string name="card_number_placeholder">Enter a number or scan a barcode</string>
+    <string name="clear_card_number">Clear card number</string>
+    <string name="pick_gallery_desc">Pick barcode from gallery</string>
+    <string name="scan_camera_desc">Scan barcode with camera</string>
+    <string name="format_label">Barcode format</string>
+    <string name="card_color_label">Card color</string>
+    <string name="category_icon_label">Category icon</string>
+    <string name="cvc_label">CVC code</string>
+    <string name="cvc_placeholder">e.g. 123</string>
+    <string name="show_cvc">Show CVC</string>
+    <string name="hide_cvc">Hide CVC</string>
+    <string name="note_label">Note (optional)</string>
+    <string name="note_placeholder">e.g. 5% discount, loyalty card</string>
+    <string name="shown_count_label">Shown count: %1$d</string>
+    <string name="save_changes">Save changes</string>
+    <string name="add_card_button">Add card</string>
+
+    <!-- Categories -->
+    <string name="cat_store">Store</string>
+    <string name="cat_grocery">Groceries</string>
+    <string name="cat_pharmacy">Pharmacy</string>
+    <string name="cat_fashion">Fashion</string>
+    <string name="cat_dining">Restaurants</string>
+    <string name="cat_fuel">Fuel</string>
+    <string name="cat_tickets">Tickets</string>
+    <string name="cat_gift">Gifts</string>
+    <string name="cat_sports">Sports</string>
+    <string name="cat_other">Other</string>
+
+    <!-- Actions / Buttons -->
+    <string name="delete_button">Delete</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="edit_button">Edit</string>
+    <string name="back_button">Back</string>
+    <string name="continue_button">Continue</string>
+
+    <!-- Dialogs -->
+    <string name="delete_card_title">Delete card?</string>
+    <string name="delete_card_message">Are you sure you want to delete this discount card? This action cannot be undone.</string>
+
+    <!-- Import / Export -->
+    <string name="export_title">Export cards</string>
+    <string name="export_copy">Copy JSON</string>
+    <string name="import_title">Import cards</string>
+    <string name="import_hint">Paste card JSON data here…</string>
+    <string name="import_button">Import</string>
+    <string name="export_success">Cards exported successfully</string>
+    <string name="export_failed">Export error: %1$s</string>
+    <string name="import_mode_title">Import mode</string>
+    <string name="import_mode_message">How would you like to import cards from the file?</string>
+    <string name="import_mode_merge">Add to existing</string>
+    <string name="import_mode_merge_desc">Keep current cards and add new ones from the file</string>
+    <string name="import_mode_overwrite">Overwrite all</string>
+    <string name="import_mode_overwrite_desc">Delete all existing cards and load only from the file</string>
+    <string name="import_success">Imported cards: %1$d</string>
+    <string name="import_failed">Import error: invalid file format</string>
+
+    <!-- Selection & Duplicate Handling -->
+    <string name="select_all">Select all</string>
+    <string name="deselect_all">Deselect all</string>
+    <string name="invert_selection">Invert selection</string>
+    <string name="selected_count">Selected: %1$d of %2$d</string>
+    <string name="duplicate_badge">Already in database</string>
+    <string name="duplicate_strategy_title">On name conflict:</string>
+    <string name="duplicate_strategy_update">Update existing</string>
+    <string name="duplicate_strategy_add_new">Add as new</string>
+    <string name="duplicate_strategy_skip">Skip duplicates</string>
+    <string name="export_selected_button">Export (%1$d)</string>
+    <string name="import_selected_button">Import (%1$d)</string>
+    <string name="export_selection_title">Select cards to export</string>
+    <string name="share_selection_title">Select cards to share</string>
+    <string name="share_success">File is ready to share</string>
+    <string name="share_selected_button">Share (%1$d)</string>
+    <string name="export_include_cvc_label">Export CVC</string>
+    <string name="export_include_usage_count_label">Export usage count</string>
+    <string name="import_selection_title">Select cards to import</string>
+
+    <!-- Camera Scanner -->
+    <string name="scan_barcode_title">Scanning barcode</string>
+    <string name="toggle_torch">Toggle torch</string>
+    <string name="scanner_instruction">Place the barcode within the frame</string>
+    <string name="camera_permission_title">Camera access required</string>
+    <string name="camera_permission_desc">Camera access is needed to scan barcodes from physical cards.</string>
+    <string name="grant_permission">Grant access</string>
+
+    <!-- Validation messages -->
+    <string name="error_store_name_empty">Enter a store name</string>
+    <string name="error_card_number_empty">Enter a card number or scan a barcode</string>
+    <string name="error_barcode_not_found">No barcode found in the image</string>
+
+    <!-- Previews / Defaults -->
+    <string name="preview_store_name">Store name</string>
+    <string name="barcode_preview_desc">Barcode preview</string>
+    <string name="card_number_default">Card number</string>
+
+    <!-- Settings: Show Add Button -->
+    <string name="show_add_button_label">Show "Add" button</string>
+    <string name="show_add_button_description">Show the "Add" button on the main screen</string>
+</resources>
