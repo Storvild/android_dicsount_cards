@@ -506,3 +506,33 @@ Key translation choices:
 - `ExposedDropdownMenuBox` + `OutlinedTextField` (read-only) с якорем `ExposedDropdownMenuAnchorType.PrimaryNotEditable`
 - `DropdownMenu` с тремя вариантами (Системный / English / Русский)
 - При выборе языка закрывается меню, вызывается `viewModel.setAppLanguage()` и `onLanguageChange()` → `recreate()`
+
+---  
+
+You:  
+В настройках добавить "Показывать штрихкоды в списке" (или придумай название лучше) по умолчанию вкл. Если настройка выключена убрать формирование штрихкодов или qr кодов на главной странице в элементах списка, и также не показывать код. тем самым размеры карточек уменьшатся по высоте в два раза.
+
+Agent:  
+В настройки приложения добавлена опция **«Показывать штрихкоды в списке»** (по умолчанию **включена**).
+
+### Что было сделано:
+
+1. **Репозиторий настроек и ViewModel**:
+   - В [UserPreferences.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/repository/UserPreferencesRepository.kt) добавлено поле `showBarcodesInList: Boolean = true` и ключ `SHOW_BARCODES_IN_LIST`.
+   - Добавлена функция `updateShowBarcodesInList(show: Boolean)` в [UserPreferencesRepository.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/repository/UserPreferencesRepository.kt) и метод `setShowBarcodesInList(show: Boolean)` в [SettingsViewModel.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/settings/SettingsViewModel.kt).
+
+2. **Экран настроек ([SettingsScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/settings/SettingsScreen.kt))**:
+   - Добавлена карточка переключателя **«Показывать штрихкоды в списке»** с описанием *«Отображать штрихкоды и номера карт на главном экране»*.
+   - Добавлены соответствующие локализованные строки во все файлы ресурсов `strings.xml`.
+
+3. **Список карточек и элементы списка**:
+   - В [CardListItem.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/CardListItem.kt) добавлен параметр `showBarcode: Boolean`.
+   - Если настройка отключена:
+     - Генерация битмапа штрихкода/QR-кода полностью пропускается (экономия ресурсов и памяти).
+     - Блок с изображением/превью штрихкода скрывается.
+     - Текстовый номер карты (код) не отображается.
+     - Высота элемента карточки уменьшается примерно в два раза.
+   - В [CardListScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt) и [MainActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/MainActivity.kt) передано текущее значение этой настройки.
+
+4. **Тесты**:
+   - Обновлен модуль модульного тестирования [UserPreferencesRepositoryTest.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/test/java/com/example/discountcards/data/repository/UserPreferencesRepositoryTest.kt) — все 31 юнит-тест успешно проходят.

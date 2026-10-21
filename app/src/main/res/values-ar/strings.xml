@@ -176,6 +176,10 @@
     <string name="show_add_button_label">زر «إضافة»</string>
     <string name="show_add_button_description">إظهار زر «إضافة» على الشاشة الرئيسية</string>
 
+    <!-- Settings: Show Barcodes in List -->
+    <string name="show_barcodes_in_list_label">إظهار الرمز الشريطية في القائمة</string>
+    <string name="show_barcodes_in_list_description">عرض الرمز الشريطية وأرقام البطاقات على الشاشة الرئيسية</string>
+
     <!-- Language -->
     <string name="language_setting_label">اللغة</string>
     <string name="language_system">اللغة الافتراضية للنظام</string>

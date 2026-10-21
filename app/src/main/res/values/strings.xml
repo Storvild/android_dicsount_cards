@@ -175,6 +175,10 @@
     <string name="show_add_button_label">Кнопка «Добавить»</string>
     <string name="show_add_button_description">Показывать кнопку «Добавить» на главном экране</string>
 
+    <!-- Settings: Show Barcodes in List -->
+    <string name="show_barcodes_in_list_label">Показывать штрихкоды в списке</string>
+    <string name="show_barcodes_in_list_description">Отображать штрихкоды и номера карт на главном экране</string>
+
     <!-- Language -->
     <string name="language_setting_label">Язык</string>
     <string name="language_system">Системный</string>

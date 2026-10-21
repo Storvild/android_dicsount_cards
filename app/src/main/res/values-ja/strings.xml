@@ -175,6 +175,10 @@
     <string name="show_add_button_label">「追加」ボタン</string>
     <string name="show_add_button_description">メイン画面に「追加」ボタンを表示する</string>
 
+    <!-- Settings: Show Barcodes in List -->
+    <string name="show_barcodes_in_list_label">リストにバーコードを表示</string>
+    <string name="show_barcodes_in_list_description">メイン画面でバーコードとカード番号を表示します</string>
+
     <!-- Language -->
     <string name="language_setting_label">言語</string>
     <string name="language_system">システム言語</string>

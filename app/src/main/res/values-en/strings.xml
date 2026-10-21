@@ -175,6 +175,10 @@ Version 1.0</string>
     <string name="show_add_button_label">Show "Add" button</string>
     <string name="show_add_button_description">Show the "Add" button on the main screen</string>
 
+    <!-- Settings: Show Barcodes in List -->
+    <string name="show_barcodes_in_list_label">Show barcodes in list</string>
+    <string name="show_barcodes_in_list_description">Display barcodes and card numbers on the main screen</string>
+
     <!-- Language -->
     <string name="language_setting_label">Language</string>
     <string name="language_system">System</string>

@@ -56,7 +56,8 @@ fun CardListScreen(
     onThemeModeSelected: (ThemeMode) -> Unit = {},
     currentSortOrder: SortOrder = SortOrder.ALPHABETICAL,
     onSortOrderSelected: (SortOrder) -> Unit = {},
-    showAddButton: Boolean = true
+    showAddButton: Boolean = true,
+    showBarcodesInList: Boolean = true
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -179,7 +180,8 @@ fun CardListScreen(
                             CardListItem(
                                 card = card,
                                 onClick = { onCardClick(card.id) },
-                                onFavoriteToggle = { viewModel.toggleFavorite(card.id, card.isFavorite) }
+                                onFavoriteToggle = { viewModel.toggleFavorite(card.id, card.isFavorite) },
+                                showBarcode = showBarcodesInList
                             )
                         }
                     }

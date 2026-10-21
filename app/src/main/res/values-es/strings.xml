@@ -175,6 +175,10 @@ Versión 1.0</string>
     <string name="show_add_button_label">Botón «Añadir»</string>
     <string name="show_add_button_description">Mostrar el botón «Añadir» en la pantalla principal</string>
 
+    <!-- Settings: Show Barcodes in List -->
+    <string name="show_barcodes_in_list_label">Mostrar códigos de barras en la lista</string>
+    <string name="show_barcodes_in_list_description">Mostrar códigos de barras y números de tarjeta en la pantalla principal</string>
+
     <!-- Language -->
     <string name="language_setting_label">Idioma</string>
     <string name="language_system">Sistema</string>

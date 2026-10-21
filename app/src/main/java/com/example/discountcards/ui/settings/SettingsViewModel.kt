@@ -47,6 +47,12 @@ class SettingsViewModel(
         }
     }
 
+    fun setShowBarcodesInList(show: Boolean) {
+        viewModelScope.launch {
+            preferencesRepository.updateShowBarcodesInList(show)
+        }
+    }
+
     fun setAppLanguage(language: AppLanguage) {
         viewModelScope.launch {
             preferencesRepository.updateAppLanguage(language)

@@ -175,6 +175,10 @@
     <string name="show_add_button_label">"जोड़ें" बटन</string>
     <string name="show_add_button_description">मुख्य स्क्रीन पर "जोड़ें" बटन दिखाएं</string>
 
+    <!-- Settings: Show Barcodes in List -->
+    <string name="show_barcodes_in_list_label">सूची में बारकोड दिखाएं</string>
+    <string name="show_barcodes_in_list_description">मुख्य स्क्रीन पर बारकोड और कार्ड नंबर प्रदर्शित करें</string>
+
     <!-- Language -->
     <string name="language_setting_label">भाषा</string>
     <string name="language_system">सिस्टम</string>

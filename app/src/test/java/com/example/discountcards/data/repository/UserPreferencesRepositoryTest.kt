@@ -11,6 +11,8 @@ class UserPreferencesRepositoryTest {
         assertEquals(ThemeMode.SYSTEM, prefs.themeMode)
         assertEquals(SortOrder.ALPHABETICAL, prefs.sortOrder)
         assertEquals(100, prefs.cardBrightnessPercent)
+        assertEquals(true, prefs.showAddButton)
+        assertEquals(true, prefs.showBarcodesInList)
     }
 
     @Test
@@ -18,10 +20,14 @@ class UserPreferencesRepositoryTest {
         val prefs = UserPreferences(
             themeMode = ThemeMode.DARK,
             sortOrder = SortOrder.FREQUENCY,
-            cardBrightnessPercent = 80
+            cardBrightnessPercent = 80,
+            showAddButton = false,
+            showBarcodesInList = false
         )
         assertEquals(ThemeMode.DARK, prefs.themeMode)
         assertEquals(SortOrder.FREQUENCY, prefs.sortOrder)
         assertEquals(80, prefs.cardBrightnessPercent)
+        assertEquals(false, prefs.showAddButton)
+        assertEquals(false, prefs.showBarcodesInList)
     }
 }

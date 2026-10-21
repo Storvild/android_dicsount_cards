@@ -175,6 +175,10 @@
     <string name="show_add_button_label">“添加”按钮</string>
     <string name="show_add_button_description">在主屏幕上显示“添加”按钮</string>
 
+    <!-- Settings: Show Barcodes in List -->
+    <string name="show_barcodes_in_list_label">在列表中显示条形码</string>
+    <string name="show_barcodes_in_list_description">在主屏幕上显示条形码和卡号</string>
+
     <!-- Language -->
     <string name="language_setting_label">语言</string>
     <string name="language_system">跟随系统</string>

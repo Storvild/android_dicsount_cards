@@ -154,7 +154,8 @@ fun DiscountCardsNavigation(
                         preferencesRepository.updateSortOrder(order)
                     }
                 },
-                showAddButton = preferences.showAddButton
+                showAddButton = preferences.showAddButton,
+                showBarcodesInList = preferences.showBarcodesInList
             )
         }
         is Destination.CardDetail -> {

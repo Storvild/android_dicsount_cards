@@ -52,6 +52,7 @@ data class UserPreferences(
     val sortOrder: SortOrder = SortOrder.ALPHABETICAL,
     val cardBrightnessPercent: Int = 100,
     val showAddButton: Boolean = true,
+    val showBarcodesInList: Boolean = true,
     val appLanguage: AppLanguage = AppLanguage.SYSTEM
 )
 
@@ -64,6 +65,7 @@ class UserPreferencesRepository(private val context: Context) {
         val SORT_ORDER = intPreferencesKey("sort_order")
         val CARD_BRIGHTNESS = intPreferencesKey("card_brightness")
         val SHOW_ADD_BUTTON = booleanPreferencesKey("show_add_button")
+        val SHOW_BARCODES_IN_LIST = booleanPreferencesKey("show_barcodes_in_list")
         val APP_LANGUAGE = intPreferencesKey("app_language")
     }
 
@@ -80,6 +82,7 @@ class UserPreferencesRepository(private val context: Context) {
         val sortOrdinal = preferences[PreferencesKeys.SORT_ORDER] ?: SortOrder.ALPHABETICAL.ordinal
         val brightness = preferences[PreferencesKeys.CARD_BRIGHTNESS] ?: 100
         val showAddButton = preferences[PreferencesKeys.SHOW_ADD_BUTTON] ?: true
+        val showBarcodesInList = preferences[PreferencesKeys.SHOW_BARCODES_IN_LIST] ?: true
         val languageOrdinal = preferences[PreferencesKeys.APP_LANGUAGE] ?: AppLanguage.SYSTEM.ordinal
 
         UserPreferences(
@@ -87,6 +90,7 @@ class UserPreferencesRepository(private val context: Context) {
             sortOrder = SortOrder.entries.getOrElse(sortOrdinal) { SortOrder.ALPHABETICAL },
             cardBrightnessPercent = brightness.coerceIn(0, 100),
             showAddButton = showAddButton,
+            showBarcodesInList = showBarcodesInList,
             appLanguage = AppLanguage.fromOrdinal(languageOrdinal)
         )
     }
@@ -112,6 +116,12 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun updateShowAddButton(show: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.SHOW_ADD_BUTTON] = show
+        }
+    }
+
+    suspend fun updateShowBarcodesInList(show: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.SHOW_BARCODES_IN_LIST] = show
         }
     }
 

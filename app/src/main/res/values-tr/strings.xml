@@ -175,6 +175,10 @@ Sürüm 1.0</string>
     <string name="show_add_button_label">„Ekle“ düğmesi</string>
     <string name="show_add_button_description">Ana ekranda „Ekle“ düğmesini göster</string>
 
+    <!-- Settings: Show Barcodes in List -->
+    <string name="show_barcodes_in_list_label">Barkodları listede göster</string>
+    <string name="show_barcodes_in_list_description">Ana ekranda barkodları ve kart numaralarını göster</string>
+
     <!-- Language -->
     <string name="language_setting_label">Dil</string>
     <string name="language_system">Sistem</string>
