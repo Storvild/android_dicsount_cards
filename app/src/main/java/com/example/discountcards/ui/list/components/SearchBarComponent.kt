@@ -2,6 +2,7 @@ package com.example.discountcards.ui.list.components
 
 import android.content.Intent
 import android.net.Uri
+import com.example.discountcards.BuildConfig
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -312,7 +313,8 @@ fun SearchBarComponent(
     // About Dialog
     if (showAboutDialog) {
         val aboutContext = LocalContext.current
-        val aboutDialogText = stringResource(R.string.about_dialog_text)
+        val appVersion = BuildConfig.VERSION_NAME
+        val aboutDialogText = stringResource(R.string.about_dialog_text, appVersion)
         val aboutGithubLink = stringResource(R.string.about_github_link)
         val shareTitle = stringResource(R.string.share_action)
 

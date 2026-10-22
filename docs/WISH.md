@@ -51,4 +51,14 @@
 
 + В О программе Поделиться...
 
+https://resources.jetbrains.com/grazie/model/language-tool/6.8.27/ru-6.8.27.jar
+https://packages.jetbrains.team/maven/p/grazi/grazie-platform-public/ai/grazie/spell/hunspell-ru/0.2.359/hunspell-ru-0.2.359.jar
+
++ Выключение штрихкодов на главном экране
+
++ README с картинками
+
++ Версионирование
+
++ Сборка проекта на GitHub
 

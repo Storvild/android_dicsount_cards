@@ -5,6 +5,16 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.plugin.serialization)
 }
 
+val appVersionName: String = (project.findProperty("versionName") as? String) ?: "0.0.0"
+val appVersionCode: Int = appVersionName
+    .split(".")
+    .let { parts ->
+        val major = parts.getOrNull(0)?.toIntOrNull() ?: 0
+        val minor = parts.getOrNull(1)?.toIntOrNull() ?: 0
+        val patch = parts.getOrNull(2)?.toIntOrNull() ?: 0
+        (major * 10000) + (minor * 100) + patch
+    }
+
 android {
     namespace = "com.example.discountcards"
     compileSdk {
@@ -15,8 +25,8 @@ android {
         applicationId = "com.example.discountcards"
         minSdk = 24
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
+        versionName = appVersionName
+        versionCode = appVersionCode
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     testOptions {
         unitTests.isReturnDefaultValues = true

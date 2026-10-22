@@ -555,3 +555,52 @@ Agent:
 
 ---
 
+Версионирование
+
+## Итог изменений
+
+**[gradle.properties](gradle.properties)** — добавлена строка:
+```properties
+versionName=1.0.0
+```
+
+**[app/build.gradle.kts](app/build.gradle.kts)** — версия читается из свойства, `versionCode` вычисляется из semver:
+```kotlin
+val appVersionName: String = (project.findProperty("versionName") as? String) ?: "0.0.0"
+val appVersionCode: Int = appVersionName
+    .split(".")
+    .let { parts ->
+        val major = parts.getOrNull(0)?.toIntOrNull() ?: 0
+        val minor = parts.getOrNull(1)?.toIntOrNull() ?: 0
+        val patch = parts.getOrNull(2)?.toIntOrNull() ?: 0
+        (major * 10000) + (minor * 100) + patch
+    }
+```
+в `defaultConfig` используются `appVersionName` / `appVersionCode`. Плюс включён `buildConfig = true`, чтобы в коде было доступно `BuildConfig.VERSION_NAME`.
+
+**[.github/workflows/release.yml](.github/workflows/release.yml)** — при сборке версия подставляется из тега:
+```yaml
+run: |
+  VERSION="${GITHUB_REF_NAME#v}"
+  ./gradlew assembleDebug -PversionName=${VERSION}
+```
+Затем APK переименовывается в `discount_cards_v${VERSION}.apk`.
+
+**[app/src/main/res/values/strings.xml](app/src/main/res/values/strings.xml#L22)** — `about_dialog_text` теперь содержит `%1$s`:
+```xml
+<string name="about_dialog_text">... Версия %1$s</string>
+```
+
+**[SearchBarComponent.kt](app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt#L313-L317)** — в диалоге версия подставляется из `BuildConfig.VERSION_NAME`:
+```kotlin
+val appVersion = BuildConfig.VERSION_NAME
+val aboutDialogText = stringResource(R.string.about_dialog_text, appVersion)
+```
+И тот же `appVersion` попадает в share-текст, т.к. используется тот же `aboutDialogText`.
+
+> [!TIP]
+> Теперь локально версия берётся из [gradle.properties](gradle.properties), а в GitHub Actions — из тега `v*`. При релизе просто создайте тег `v1.0.4` — workflow соберёт APK `discount_cards_v1.0.4.apk` с `versionName=1.0.4` и `versionCode=10004`, а в «О программе» отобразится «Версия 1.0.4».
+>
+> [!NOTE]
+> Остались warning'ы в `app/build.gradle.kts` о дублях `platform(libs.androidx.compose.bom)` и `testImplementation(libs.androidx.junit)` — это предсуществующее, к текущей задаче не относится.
+
