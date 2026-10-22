@@ -29,6 +29,15 @@
     <string name="add_card_action">कार्ड जोड़ें…</string>
     <string name="import_json_action">JSON फ़ाइल से आयात करें</string>
     <string name="delete_cards_action">कार्ड हटाएं…</string>
+    <string name="archive_cards_action">संग्रह…</string>
+    <string name="menu_archive">संग्रह</string>
+    <string name="archive_title">संग्रह</string>
+    <string name="empty_archive_title">संग्रह खाली है</string>
+    <string name="empty_archive_subtitle">संग्रह में भेजे गए कार्ड यहां दिखाए जाएंगे।</string>
+    <string name="archive_card_action">संग्रह में भेजें</string>
+    <string name="restore_from_archive_action">संग्रह से पुनर्स्थापित करें</string>
+    <string name="archived_message">कार्ड संग्रह में भेजा गया</string>
+    <string name="restored_message">कार्ड संग्रह से पुनर्स्थापित किया गया</string>
     <string name="delete_selection_title">हटाने के लिए कार्ड चुनें</string>
     <string name="delete_selected_button">हटाएं (%1$d)</string>
     <string name="delete_cards_success">हटाए गए कार्ड: %1$d</string>

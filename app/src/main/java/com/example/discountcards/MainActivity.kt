@@ -13,7 +13,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,6 +29,7 @@ import com.example.discountcards.ui.CardListViewModelFactory
 import com.example.discountcards.ui.SettingsViewModelFactory
 import com.example.discountcards.ui.addedit.AddEditCardScreen
 import com.example.discountcards.ui.addedit.AddEditCardViewModel
+import com.example.discountcards.ui.archive.ArchiveScreen
 import com.example.discountcards.ui.detail.CardDetailScreen
 import com.example.discountcards.ui.detail.CardDetailViewModel
 import com.example.discountcards.ui.list.CardListScreen
@@ -50,6 +53,7 @@ sealed interface Destination {
         val key: String = UUID.randomUUID().toString(),
     ) : Destination
     data object Settings : Destination
+    data object Archive : Destination
 }
 
 class MainActivity : ComponentActivity() {
@@ -139,6 +143,9 @@ fun DiscountCardsNavigation(
                 onAddCardClick = {
                     backStack.add(Destination.AddEditCard(null))
                 },
+                onArchiveClick = {
+                    backStack.add(Destination.Archive)
+                },
                 onSettingsClick = {
                     backStack.add(Destination.Settings)
                 },
@@ -211,6 +218,40 @@ fun DiscountCardsNavigation(
                     // Recreate the activity to apply the new locale via attachBaseContext
                     onLanguageChange()
                 }
+            )
+        }
+        is Destination.Archive -> {
+            var archivedSearchQuery by remember { mutableStateOf("") }
+            // Rebuild the source flow when the search query changes, then collect it.
+            val sourceFlow = remember(archivedSearchQuery) {
+                if (archivedSearchQuery.isBlank()) {
+                    repository.getArchivedCards()
+                } else {
+                    repository.searchArchivedCards(archivedSearchQuery)
+                }
+            }
+
+            val archivedCardsState = sourceFlow.collectAsStateWithLifecycle(initialValue = emptyList())
+            val archivedCards = archivedCardsState.value
+            val isLoadingArchived = archivedCards.isEmpty()
+
+            ArchiveScreen(
+                cards = archivedCards,
+                isLoading = isLoadingArchived,
+                searchQuery = archivedSearchQuery,
+                onSearchQueryChange = { archivedSearchQuery = it },
+                onCardClick = { cardId ->
+                    backStack.add(Destination.CardDetail(cardId))
+                },
+                onAddCardClick = {
+                    backStack.add(Destination.AddEditCard(null))
+                },
+                onBackClick = {
+                    if (backStack.size > 1) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                },
+                showBarcodesInList = preferences.showBarcodesInList
             )
         }
     }

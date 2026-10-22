@@ -29,6 +29,15 @@ Sürüm 1.0</string>
     <string name="add_card_action">Kart ekle…</string>
     <string name="import_json_action">JSON dosyasından içe aktar</string>
     <string name="delete_cards_action">Kartları sil…</string>
+    <string name="archive_cards_action">Arşiv…</string>
+    <string name="menu_archive">Arşiv</string>
+    <string name="archive_title">Arşiv</string>
+    <string name="empty_archive_title">Arşiv boş</string>
+    <string name="empty_archive_subtitle">Arşive taşınan kartlar burada görünecektir.</string>
+    <string name="archive_card_action">Arşive taşı</string>
+    <string name="restore_from_archive_action">Arşivden geri yükle</string>
+    <string name="archived_message">Kart arşive taşındı</string>
+    <string name="restored_message">Kart arşivden geri yüklendi</string>
     <string name="delete_selection_title">Silinecek kartları seçin</string>
     <string name="delete_selected_button">Sil (%1$d)</string>
     <string name="delete_cards_success">Silinen kart sayısı: %1$d</string>

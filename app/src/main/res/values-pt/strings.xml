@@ -29,6 +29,15 @@ Versão 1.0</string>
     <string name="add_card_action">Adicionar cartão…</string>
     <string name="import_json_action">Importar de ficheiro JSON</string>
     <string name="delete_cards_action">Eliminar cartões…</string>
+    <string name="archive_cards_action">Arquivo…</string>
+    <string name="menu_archive">Arquivo</string>
+    <string name="archive_title">Arquivo</string>
+    <string name="empty_archive_title">O arquivo está vazio</string>
+    <string name="empty_archive_subtitle">Os cartões movidos para o arquivo serão mostrados aqui.</string>
+    <string name="archive_card_action">Mover para o arquivo</string>
+    <string name="restore_from_archive_action">Restaurar do arquivo</string>
+    <string name="archived_message">Cartão movido para o arquivo</string>
+    <string name="restored_message">Cartão restaurado do arquivo</string>
     <string name="delete_selection_title">Selecionar cartões para eliminar</string>
     <string name="delete_selected_button">Eliminar (%1$d)</string>
     <string name="delete_cards_success">Cartões eliminados: %1$d</string>

@@ -29,6 +29,15 @@ Version 1.0</string>
     <string name="add_card_action">Add card…</string>
     <string name="import_json_action">Import from JSON file</string>
     <string name="delete_cards_action">Delete cards…</string>
+    <string name="archive_cards_action">Archive…</string>
+    <string name="menu_archive">Archive</string>
+    <string name="archive_title">Archive</string>
+    <string name="empty_archive_title">Archive is empty</string>
+    <string name="empty_archive_subtitle">Cards moved to the archive will be shown here.</string>
+    <string name="archive_card_action">Move to archive</string>
+    <string name="restore_from_archive_action">Restore from archive</string>
+    <string name="archived_message">Card moved to archive</string>
+    <string name="restored_message">Card restored from archive</string>
     <string name="delete_selection_title">Select cards to delete</string>
     <string name="delete_selected_button">Delete (%1$d)</string>
     <string name="delete_cards_success">Deleted cards: %1$d</string>

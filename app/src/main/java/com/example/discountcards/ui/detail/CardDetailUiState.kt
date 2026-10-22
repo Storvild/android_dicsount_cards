@@ -14,5 +14,6 @@ data class CardDetailUiState(
     val error: String? = null,
     val showShareDialog: Boolean = false,
     val shareIncludeCvc: Boolean = false,
-    val shareIncludeUsageCount: Boolean = false
+    val shareIncludeUsageCount: Boolean = false,
+    val isArchivedMessage: String? = null
 )

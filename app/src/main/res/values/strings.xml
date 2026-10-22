@@ -27,6 +27,15 @@
     <string name="add_card_action">Добавить карточку…</string>
     <string name="import_json_action">Импорт из JSON-файла</string>
     <string name="delete_cards_action">Удаление карточек…</string>
+    <string name="archive_cards_action">Архив…</string>
+    <string name="menu_archive">Архив</string>
+    <string name="archive_title">Архив</string>
+    <string name="empty_archive_title">Архив пуст</string>
+    <string name="empty_archive_subtitle">Перенесённые в архив карточки будут отображаться здесь.</string>
+    <string name="archive_card_action">Перенести в архив</string>
+    <string name="restore_from_archive_action">Извлечь из архива</string>
+    <string name="archived_message">Карточка перенесена в архив</string>
+    <string name="restored_message">Карточка извлечена из архива</string>
     <string name="delete_selection_title">Выбор карточек для удаления</string>
     <string name="delete_selected_button">Удалить (%1$d)</string>
     <string name="delete_cards_success">Удалено карточек: %1$d</string>

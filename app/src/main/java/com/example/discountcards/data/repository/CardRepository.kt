@@ -9,10 +9,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface CardRepository {
     fun getAllCards(sortOrder: SortOrder = SortOrder.ALPHABETICAL): Flow<List<DiscountCard>>
+    fun getArchivedCards(): Flow<List<DiscountCard>>
     fun searchCards(query: String, sortOrder: SortOrder = SortOrder.ALPHABETICAL): Flow<List<DiscountCard>>
+    fun searchArchivedCards(query: String): Flow<List<DiscountCard>>
     fun getCardById(id: Long): Flow<DiscountCard?>
     suspend fun getCardByIdDirect(id: Long): DiscountCard?
     suspend fun toggleFavorite(id: Long, isFavorite: Boolean)
+    suspend fun setArchived(id: Long, isArchived: Boolean)
     suspend fun incrementUsageCount(id: Long)
     suspend fun insertCard(card: DiscountCard): Long
     suspend fun updateCard(card: DiscountCard)

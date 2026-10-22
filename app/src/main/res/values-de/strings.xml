@@ -29,6 +29,15 @@ Version 1.0</string>
     <string name="add_card_action">Karte hinzufügen…</string>
     <string name="import_json_action">Aus JSON-Datei importieren</string>
     <string name="delete_cards_action">Karten löschen…</string>
+    <string name="archive_cards_action">Archivieren…</string>
+    <string name="menu_archive">Archiv</string>
+    <string name="archive_title">Archiv</string>
+    <string name="empty_archive_title">Archiv ist leer</string>
+    <string name="empty_archive_subtitle">Karten, die ins Archiv verschoben wurden, werden hier angezeigt.</string>
+    <string name="archive_card_action">Ins Archiv verschieben</string>
+    <string name="restore_from_archive_action">Aus dem Archiv wiederherstellen</string>
+    <string name="archived_message">Karte ins Archiv verschoben</string>
+    <string name="restored_message">Karte aus dem Archiv wiederhergestellt</string>
     <string name="delete_selection_title">Zu löschende Karten auswählen</string>
     <string name="delete_selected_button">Löschen (%1$d)</string>
     <string name="delete_cards_success">Gelöschte Karten: %1$d</string>

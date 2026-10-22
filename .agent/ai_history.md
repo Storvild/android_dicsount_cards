@@ -604,3 +604,19 @@ val aboutDialogText = stringResource(R.string.about_dialog_text, appVersion)
 > [!NOTE]
 > Остались warning'ы в `app/build.gradle.kts` о дублях `platform(libs.androidx.compose.bom)` и `testImplementation(libs.androidx.junit)` — это предсуществующее, к текущей задаче не относится.
 
+
+---
+
+You:  
+используй окно из меню/Поделиться... для экспорта отдельной карты
+
+Готово. Кнопка «Поделиться» в Detail теперь работает так же, как в меню списка карт:
+
+**Изменённые файлы:**
+
+1. **[CardDetailUiState.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailUiState.kt)** — добавлены поля `showShareDialog`, `shareIncludeCvc`, `shareIncludeUsageCount`
+
+2. **[CardDetailViewModel.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailViewModel.kt)** — добавлены методы `prepareShare()`, `toggleShareIncludeCvc()`, `toggleShareIncludeUsageCount()`, `cancelShare()`, `shareSingleCard(context)`. Функция `buildShareText()` удалена. `shareSingleCard` делает то же, что и `shareExportCards` в списке: сериализует карту в JSON (с учётом флагов CVC/usageCount), пишет во временный файл и запускает `ACTION_SEND` через `FileProvider`.
+
+3. **[CardDetailScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailScreen.kt)** — кнопка Share теперь вызывает `viewModel::prepareShare` (открывает диалог). В конце экрана рендерится `ShareSelectionDialog` (тот же композабл из списка) с одной картой, предвыбранной, и с чекбоксами «Выгружать CVC» и «Выгружать счётчик использования». При подтверждении вызывается `viewModel.shareSingleCard(context)`.
+

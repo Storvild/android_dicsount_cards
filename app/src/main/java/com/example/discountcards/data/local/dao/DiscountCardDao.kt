@@ -12,31 +12,37 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DiscountCardDao {
 
-    @Query("SELECT * FROM discount_cards ORDER BY isFavorite DESC, storeName ASC")
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 ORDER BY isFavorite DESC, storeName ASC")
     fun getAllCardsAlphabetical(): Flow<List<DiscountCard>>
 
-    @Query("SELECT * FROM discount_cards ORDER BY isFavorite DESC, usageCount DESC, storeName ASC")
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 ORDER BY isFavorite DESC, usageCount DESC, storeName ASC")
     fun getAllCardsByFrequency(): Flow<List<DiscountCard>>
 
-    @Query("SELECT * FROM discount_cards ORDER BY isFavorite DESC, createdAt DESC, storeName ASC")
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 ORDER BY isFavorite DESC, createdAt DESC, storeName ASC")
     fun getAllCardsByCreationDate(): Flow<List<DiscountCard>>
 
-    @Query("SELECT * FROM discount_cards ORDER BY isFavorite DESC, storeName ASC")
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 ORDER BY isFavorite DESC, storeName ASC")
     fun getAllCards(): Flow<List<DiscountCard>>
 
-    @Query("SELECT * FROM discount_cards ORDER BY storeName ASC")
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 ORDER BY storeName ASC")
     suspend fun getAllCardsDirect(): List<DiscountCard>
 
-    @Query("SELECT * FROM discount_cards WHERE storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%' ORDER BY isFavorite DESC, storeName ASC")
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 1 ORDER BY storeName ASC")
+    fun getArchivedCards(): Flow<List<DiscountCard>>
+
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 1 AND (storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%') ORDER BY storeName ASC")
+    fun searchArchivedCards(query: String): Flow<List<DiscountCard>>
+
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 AND (storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%') ORDER BY isFavorite DESC, storeName ASC")
     fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>>
 
-    @Query("SELECT * FROM discount_cards WHERE storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%' ORDER BY isFavorite DESC, usageCount DESC, storeName ASC")
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 AND (storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%') ORDER BY isFavorite DESC, usageCount DESC, storeName ASC")
     fun searchCardsByFrequency(query: String): Flow<List<DiscountCard>>
 
-    @Query("SELECT * FROM discount_cards WHERE storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%' ORDER BY isFavorite DESC, createdAt DESC, storeName ASC")
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 AND (storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%') ORDER BY isFavorite DESC, createdAt DESC, storeName ASC")
     fun searchCardsByCreationDate(query: String): Flow<List<DiscountCard>>
 
-    @Query("SELECT * FROM discount_cards WHERE storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%' ORDER BY isFavorite DESC, storeName ASC")
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 AND (storeName LIKE '%' || :query || '%' OR cardNumber LIKE '%' || :query || '%' OR note LIKE '%' || :query || '%') ORDER BY isFavorite DESC, storeName ASC")
     fun searchCards(query: String): Flow<List<DiscountCard>>
 
     @Query("SELECT * FROM discount_cards WHERE id = :id")
@@ -47,6 +53,9 @@ interface DiscountCardDao {
 
     @Query("UPDATE discount_cards SET isFavorite = :isFavorite, updatedAt = :updatedAt WHERE id = :id")
     suspend fun updateFavorite(id: Long, isFavorite: Boolean, updatedAt: Long = System.currentTimeMillis())
+
+    @Query("UPDATE discount_cards SET isArchived = :isArchived, updatedAt = :updatedAt WHERE id = :id")
+    suspend fun setArchived(id: Long, isArchived: Boolean, updatedAt: Long = System.currentTimeMillis())
 
     @Query("UPDATE discount_cards SET usageCount = usageCount + 1 WHERE id = :id")
     suspend fun incrementUsageCount(id: Long)

@@ -31,12 +31,20 @@ class CardRepositoryImpl(
         }
     }
 
+    override fun getArchivedCards(): Flow<List<DiscountCard>> = dao.getArchivedCards()
+
+    override fun searchArchivedCards(query: String): Flow<List<DiscountCard>> = dao.searchArchivedCards(query)
+
     override fun getCardById(id: Long): Flow<DiscountCard?> = dao.getCardById(id)
 
     override suspend fun getCardByIdDirect(id: Long): DiscountCard? = dao.getCardByIdDirect(id)
 
     override suspend fun toggleFavorite(id: Long, isFavorite: Boolean) {
         dao.updateFavorite(id, isFavorite)
+    }
+
+    override suspend fun setArchived(id: Long, isArchived: Boolean) {
+        dao.setArchived(id, isArchived)
     }
 
     override suspend fun incrementUsageCount(id: Long) {

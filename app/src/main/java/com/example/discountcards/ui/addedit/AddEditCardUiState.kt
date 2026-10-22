@@ -13,6 +13,7 @@ data class AddEditCardUiState(
     val cvc: String = "",
     val isFavorite: Boolean = false,
     val usageCount: Int = 0,
+    val isArchived: Boolean = false,
     val createdAt: Long? = null,
     val isLoading: Boolean = false,
     val isSaving: Boolean = false,

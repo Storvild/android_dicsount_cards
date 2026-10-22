@@ -29,6 +29,15 @@
     <string name="add_card_action">إضافة بطاقة…</string>
     <string name="import_json_action">استيراد من ملف JSON</string>
     <string name="delete_cards_action">حذف البطاقات…</string>
+    <string name="archive_cards_action">الأرشيف…</string>
+    <string name="menu_archive">الأرشيف</string>
+    <string name="archive_title">الأرشيف</string>
+    <string name="empty_archive_title">الأرشيف فارغ</string>
+    <string name="empty_archive_subtitle">سيظهر هنا البطاقات المنقولة إلى الأرشيف.</string>
+    <string name="archive_card_action">نقل إلى الأرشيف</string>
+    <string name="restore_from_archive_action">استعادة من الأرشيف</string>
+    <string name="archived_message">تم نقل البطاقة إلى الأرشيف</string>
+    <string name="restored_message">تمت استعادة البطاقة من الأرشيف</string>
     <string name="delete_selection_title">تحديد البطاقات للحذف</string>
     <string name="delete_selected_button">حذف (%1$d)</string>
     <string name="delete_cards_success">البطاقات المحذوفة: %1$d</string>

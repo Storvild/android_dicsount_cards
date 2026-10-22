@@ -98,6 +98,19 @@ class CardDetailViewModel(
         }
     }
 
+    fun toggleArchive() {
+        val currentCard = _uiState.value.card ?: return
+        val newState = !currentCard.isArchived
+        viewModelScope.launch {
+            repository.setArchived(cardId, newState)
+            _uiState.update { it.copy(isArchivedMessage = if (newState) "ARCHIVED" else "RESTORED") }
+        }
+    }
+
+    fun clearArchiveMessage() {
+        _uiState.update { it.copy(isArchivedMessage = null) }
+    }
+
     fun showDeleteDialog() {
         _uiState.update { it.copy(isDeleteDialogVisible = true) }
     }

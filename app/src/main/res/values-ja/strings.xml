@@ -29,6 +29,15 @@
     <string name="add_card_action">カードを追加…</string>
     <string name="import_json_action">JSONファイルからインポート</string>
     <string name="delete_cards_action">カードを削除…</string>
+    <string name="archive_cards_action">アーカイブ…</string>
+    <string name="menu_archive">アーカイブ</string>
+    <string name="archive_title">アーカイブ</string>
+    <string name="empty_archive_title">アーカイブは空です</string>
+    <string name="empty_archive_subtitle">アーカイブに移動したカードがここに表示されます。</string>
+    <string name="archive_card_action">アーカイブに移動</string>
+    <string name="restore_from_archive_action">アーカイブから復元</string>
+    <string name="archived_message">カードをアーカイブに移動しました</string>
+    <string name="restored_message">カードをアーカイブから復元しました</string>
     <string name="delete_selection_title">削除するカードを選択</string>
     <string name="delete_selected_button">削除 (%1$d)</string>
     <string name="delete_cards_success">削除されたカード: %1$d</string>

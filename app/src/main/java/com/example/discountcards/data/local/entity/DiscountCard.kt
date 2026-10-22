@@ -18,6 +18,7 @@ data class DiscountCard(
     val isFavorite: Boolean = false,
     val cvc: String = "",
     val usageCount: Int = 0,
+    val isArchived: Boolean = false,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 ) {

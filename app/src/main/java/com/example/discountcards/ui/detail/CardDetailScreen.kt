@@ -2,6 +2,7 @@ package com.example.discountcards.ui.detail
 
 import android.app.Activity
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Note
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Archive
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Share
@@ -66,6 +68,7 @@ fun CardDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val resources = context.resources
 
     // Set screen brightness according to user preference (0% = no change, >0% = percentage)
     DisposableEffect(uiState.brightnessPercent) {
@@ -94,6 +97,19 @@ fun CardDetailScreen(
     LaunchedEffect(uiState.isDeleted) {
         if (uiState.isDeleted) {
             onBackClick()
+        }
+    }
+
+    // Show a toast when the card is archived or restored from the archive
+    LaunchedEffect(uiState.isArchivedMessage) {
+        uiState.isArchivedMessage?.let { msg ->
+            val displayMsg = when (msg) {
+                "ARCHIVED" -> resources.getString(R.string.archived_message)
+                "RESTORED" -> resources.getString(R.string.restored_message)
+                else -> msg
+            }
+            Toast.makeText(context, displayMsg, Toast.LENGTH_SHORT).show()
+            viewModel.clearArchiveMessage()
         }
     }
 
@@ -132,6 +148,17 @@ fun CardDetailScreen(
                             Icon(
                                 imageVector = Icons.Outlined.Edit,
                                 contentDescription = stringResource(R.string.edit_button)
+                            )
+                        }
+                        // Archive / Restore from archive toggle
+                        IconButton(onClick = viewModel::toggleArchive) {
+                            Icon(
+                                imageVector = Icons.Outlined.Archive,
+                                contentDescription = stringResource(
+                                    if (card.isArchived) R.string.restore_from_archive_action
+                                    else R.string.archive_card_action
+                                ),
+                                tint = if (card.isArchived) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                             )
                         }
                         IconButton(onClick = viewModel::prepareShare) {

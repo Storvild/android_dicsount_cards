@@ -48,6 +48,7 @@ class AddEditCardViewModel(
                         iconName = card.iconName.ifBlank { "shopping_bag" },
                         isFavorite = card.isFavorite,
                         usageCount = card.usageCount,
+                        isArchived = card.isArchived,
                         createdAt = card.createdAt,
                         isLoading = false,
                         isEditMode = true
@@ -182,6 +183,8 @@ class AddEditCardViewModel(
                 iconName = currentState.iconName,
                 isFavorite = currentState.isFavorite,
                 cvc = currentState.cvc,
+                usageCount = currentState.usageCount,
+                isArchived = currentState.isArchived,
                 createdAt = currentState.createdAt ?: System.currentTimeMillis(),
                 updatedAt = System.currentTimeMillis()
             )

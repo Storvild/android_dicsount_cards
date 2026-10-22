@@ -22,6 +22,7 @@ import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Archive
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.Add
@@ -63,6 +64,7 @@ fun SearchBarComponent(
     onAddCardClick: () -> Unit = {},
     onImportClick: () -> Unit,
     onDeleteClick: () -> Unit = {},
+    onArchiveClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     currentThemeMode: ThemeMode = ThemeMode.SYSTEM,
     onThemeModeSelected: (ThemeMode) -> Unit = {},
@@ -202,6 +204,22 @@ fun SearchBarComponent(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Outlined.Share,
+                            contentDescription = null
+                        )
+                    }
+                )
+
+                // Архив
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.menu_archive)) },
+                    onClick = {
+                        menuExpanded = false
+                        fileSubmenuExpanded = false
+                        onArchiveClick()
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Archive,
                             contentDescription = null
                         )
                     }

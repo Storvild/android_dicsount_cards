@@ -29,6 +29,15 @@
     <string name="add_card_action">添加卡片…</string>
     <string name="import_json_action">从 JSON 文件导入</string>
     <string name="delete_cards_action">删除卡片…</string>
+    <string name="archive_cards_action">归档…</string>
+    <string name="menu_archive">归档</string>
+    <string name="archive_title">归档</string>
+    <string name="empty_archive_title">归档为空</string>
+    <string name="empty_archive_subtitle">移入归档的卡片将显示在这里。</string>
+    <string name="archive_card_action">移入归档</string>
+    <string name="restore_from_archive_action">从归档恢复</string>
+    <string name="archived_message">卡片已移入归档</string>
+    <string name="restored_message">卡片已从归档恢复</string>
     <string name="delete_selection_title">选择要删除的卡片</string>
     <string name="delete_selected_button">删除 (%1$d)</string>
     <string name="delete_cards_success">已删除卡片: %1$d</string>
