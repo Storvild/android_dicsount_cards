@@ -28,7 +28,15 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          ./gradlew assembleDebug -PversionName=${VERSION}
+
+      - name: Rename APK
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          mv app/build/outputs/apk/debug/app-debug.apk \
+             "app/build/outputs/apk/debug/discount_cards_v${VERSION}.apk"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
