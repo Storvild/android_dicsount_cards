@@ -1,6 +1,8 @@
 package com.example.discountcards
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -19,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.IntentCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.discountcards.data.repository.AppLanguage
@@ -88,6 +91,16 @@ class MainActivity : ComponentActivity() {
         val app = applicationContext as DiscountCardsApp
         val preferencesRepository = app.preferencesRepository
         val initialCardId = intent?.getLongExtra("card_id", -1L) ?: -1L
+        val incomingUri = when (intent?.action) {
+            Intent.ACTION_VIEW -> intent.data
+            Intent.ACTION_SEND -> IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, Uri::class.java)
+            else -> intent?.data
+        }
+
+        if (savedInstanceState == null && incomingUri != null) {
+            intent?.action = null
+            intent?.data = null
+        }
 
         setContent {
             val preferences by preferencesRepository.userPreferencesFlow
@@ -106,6 +119,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     DiscountCardsNavigation(
                         initialCardId = initialCardId,
+                        initialImportUri = if (savedInstanceState == null) incomingUri else null,
                         onLanguageChange = { recreate() }
                     )
                 }
@@ -117,6 +131,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DiscountCardsNavigation(
     initialCardId: Long = -1L,
+    initialImportUri: Uri? = null,
     onLanguageChange: () -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -146,6 +161,15 @@ fun DiscountCardsNavigation(
             val viewModel: CardListViewModel = viewModel(
                 factory = CardListViewModelFactory(repository, preferencesRepository)
             )
+
+            var handledImportUri by remember { mutableStateOf(initialImportUri) }
+            LaunchedEffect(handledImportUri) {
+                handledImportUri?.let { uri ->
+                    viewModel.onImportFileSelected(uri, context.contentResolver)
+                    handledImportUri = null
+                }
+            }
+
             CardListScreen(
                 viewModel = viewModel,
                 onCardClick = { cardId ->

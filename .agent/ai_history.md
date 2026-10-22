@@ -818,3 +818,15 @@ Agent:
 
 ---
 
+Agent:  
+Добавлена возможность открывать `.json` файлы с помощью вашего приложения («Открыть с помощью»), а также принимать JSON-файлы через меню «Поделиться» (`ACTION_SEND`).
+
+### Что было сделано:
+1. **[AndroidManifest.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/AndroidManifest.xml)**:
+   - В `MainActivity` добавлен `<intent-filter>` для действий `ACTION_VIEW` и `ACTION_SEND`.
+   - Настроена поддержка стандартных MIME-типов (`application/json`, `text/json`, `text/plain`, `application/octet-stream`, `*/*`) и расширений файлов (`.json`, `.JSON`) со схемами `content` и `file`. Благодаря этому приложение будет появляться в системном списке «Открыть с помощью» для файлов JSON.
+
+2. **[MainActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/MainActivity.kt)**:
+   - Реализована обработка входящего `Uri` из интента при запуске приложения через `ACTION_VIEW` или `ACTION_SEND`.
+   - Входящий файл автоматически передается в `CardListViewModel` (`onImportFileSelected`), благодаря чему сразу открывается диалоговое окно импорта карточек из открытого файла.
+   - Добавлена защита от повторного срабатывания импорта при повороте экрана или изменении конфигурации.
