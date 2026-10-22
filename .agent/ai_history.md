@@ -679,3 +679,70 @@ val isLoadingArchived = archivedCards.isEmpty()
 Поведение совпадает с логикой [CardListScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt): спиннер только в момент первой загрузки, затем — либо список, либо empty-state. Сборка `:app:assembleDebug` успешна.
 
 
+---
+
+## Итоги изменений
+
+Я успешно реализовал запрошенную функциональность:
+
+### 1. **Добавлена строка ресурса**
+- Файл: `strings.xml`
+- Добавлена строка `archived_badge` со значением "в архиве"
+
+### 2. **Обновлён ViewModel**
+- Файл: `CardListViewModel.kt`
+- **`prepareExportSelection()`**: Теперь возвращает ВСЕ карточки (включая архивные), но по умолчанию выделяет только не-архивные
+- **`prepareShareSelection()`**: Аналогично — все карточки, но по умолчанию только не-архивные
+- **`prepareDeleteSelection()`**: Теперь возвращает ВСЕ карточки (включая архивные)
+
+### 3. **Обновлены UI-компоненты**
+- Файл: `ImportExportDialogs.kt`
+- **`ExportSelectionDialog`**: Добавлена пометка "в архиве" для архивных карточек
+- **`ShareSelectionDialog`**: Добавлена пометка "в архиве" для архивных карточек
+- **`DeleteSelectionDialog`**: Добавлена пометка "в архиве" для архивных карточек
+
+### Поведение:
+- При **Файл/Экспорт** показываются ВСЕ карточки (включая архивные), архивные помечены бейджем "в архиве"
+- При **Файл/Удаление** показываются ВСЕ карточки (включая архивные), архивные помечены бейджем "в архиве"
+- При **Поделиться** показываются ВСЕ карточки (включая архивные), архивные помечены бейджем "в архиве"
+- По умолчанию выделяются только не-архивные карточки (для экспорта и шаринга), чтобы пользователь не экспортировал случайно архивные
+
+Все тесты проходят успешно (31 тест).
+
+
+---
+
+### Изменения:
+
+1. **DAO** (`DiscountCardDao.kt`):
+   - Добавлены 4 новых метода для получения ВСЕХ карточек (включая архивные):
+     - `getAllCardsIncludingArchivedAlphabetical()`
+     - `getAllCardsIncludingArchivedByFrequency()`
+     - `getAllCardsIncludingArchivedByCreationDate()`
+     - `getAllCardsIncludingArchived()`
+
+2. **Repository** (`CardRepository.kt` и `CardRepositoryImpl.kt`):
+   - Добавлен метод `getAllCardsIncludingArchived(sortOrder)`
+
+3. **ViewModel** (`CardListViewModel.kt`):
+   - `prepareExportSelection()` теперь использует `getAllCardsIncludingArchived()`
+   - `prepareShareSelection()` теперь использует `getAllCardsIncludingArchived()`
+   - `prepareDeleteSelection()` теперь использует `getAllCardsIncludingArchived()`
+
+4. **UI** (`ImportExportDialogs.kt`):
+   - В `ExportSelectionDialog`, `ShareSelectionDialog` и `DeleteSelectionDialog` добавлена пометка "в архиве" для архивных карточек
+   - Пометка отображается как бейдж рядом с названием магазина
+
+5. **Ресурсы** (`strings.xml`):
+   - Добавлена строка `archived_badge` со значением "в архиве"
+
+6. **Тесты**:
+   - Обновлены все Fake DAO в тестах для реализации новых методов
+   - Все 31 тест проходят успешно
+
+### Поведение:
+- При **Файл/Экспорт** показываются ВСЕ карточки (включая архивные), архивные помечены бейджем "в архиве"
+- При **Файл/Удаление** показываются ВСЕ карточки (включая архивные), архивные помечены бейджем "в архиве"
+- При **Поделиться** показываются ВСЕ карточки (включая архивные), архивные помечены бейджем "в архиве"
+- По умолчанию при экспорте и шаринге выделяются только не-архивные карточки
+- При удалении по умолчанию ничего не выделено

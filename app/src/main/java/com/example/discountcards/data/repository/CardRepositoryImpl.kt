@@ -23,6 +23,14 @@ class CardRepositoryImpl(
         }
     }
 
+    override fun getAllCardsIncludingArchived(sortOrder: SortOrder): Flow<List<DiscountCard>> {
+        return when (sortOrder) {
+            SortOrder.ALPHABETICAL -> dao.getAllCardsIncludingArchivedAlphabetical()
+            SortOrder.FREQUENCY -> dao.getAllCardsIncludingArchivedByFrequency()
+            SortOrder.CREATION_DATE -> dao.getAllCardsIncludingArchivedByCreationDate()
+        }
+    }
+
     override fun searchCards(query: String, sortOrder: SortOrder): Flow<List<DiscountCard>> {
         return when (sortOrder) {
             SortOrder.ALPHABETICAL -> dao.searchCardsAlphabetical(query)

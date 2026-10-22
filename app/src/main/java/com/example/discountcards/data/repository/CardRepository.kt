@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CardRepository {
     fun getAllCards(sortOrder: SortOrder = SortOrder.ALPHABETICAL): Flow<List<DiscountCard>>
+    fun getAllCardsIncludingArchived(sortOrder: SortOrder = SortOrder.ALPHABETICAL): Flow<List<DiscountCard>>
     fun getArchivedCards(): Flow<List<DiscountCard>>
     fun searchCards(query: String, sortOrder: SortOrder = SortOrder.ALPHABETICAL): Flow<List<DiscountCard>>
     fun searchArchivedCards(query: String): Flow<List<DiscountCard>>

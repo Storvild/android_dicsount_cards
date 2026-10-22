@@ -44,6 +44,20 @@ class CardListViewModelTest {
 
         override fun getAllCards(): Flow<List<DiscountCard>> = getAllCardsAlphabetical()
 
+        override fun getAllCardsIncludingArchivedAlphabetical(): Flow<List<DiscountCard>> {
+            return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenBy { it.storeName }))
+        }
+
+        override fun getAllCardsIncludingArchivedByFrequency(): Flow<List<DiscountCard>> {
+            return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName }))
+        }
+
+        override fun getAllCardsIncludingArchivedByCreationDate(): Flow<List<DiscountCard>> {
+            return flowOf(cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.createdAt }.thenBy { it.storeName }))
+        }
+
+        override fun getAllCardsIncludingArchived(): Flow<List<DiscountCard>> = getAllCardsIncludingArchivedAlphabetical()
+
         override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
 
         override fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>> {

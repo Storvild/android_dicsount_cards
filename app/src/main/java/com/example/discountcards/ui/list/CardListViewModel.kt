@@ -156,13 +156,14 @@ class CardListViewModel(
     // Export Selection Methods
     fun prepareExportSelection() {
         viewModelScope.launch {
-            val allCards = repository.getAllCards().first()
+            val allCards = repository.getAllCardsIncludingArchived().first()
             if (allCards.isEmpty()) {
                 userMessage.value = "EXPORT_FAILED:No cards to export"
                 return@launch
             }
             exportSelectionCards.value = allCards
-            selectedExportCardIds.value = allCards.map { it.id }.toSet()
+            // Select only non-archived cards by default
+            selectedExportCardIds.value = allCards.filter { !it.isArchived }.map { it.id }.toSet() 
             exportIncludeCvc.value = false
             exportIncludeUsageCount.value = false
             showExportSelectionDialog.value = true
@@ -259,13 +260,14 @@ class CardListViewModel(
     // Share Selection Methods
     fun prepareShareSelection() {
         viewModelScope.launch {
-            val allCards = repository.getAllCards().first()
+            val allCards = repository.getAllCardsIncludingArchived().first()
             if (allCards.isEmpty()) {
                 userMessage.value = "EXPORT_FAILED:No cards to share"
                 return@launch
             }
             shareSelectionCards.value = allCards
-            selectedShareCardIds.value = allCards.map { it.id }.toSet()
+            // Select only non-archived cards by default
+            selectedShareCardIds.value = allCards.filter { !it.isArchived }.map { it.id }.toSet()
             shareIncludeCvc.value = false
             shareIncludeUsageCount.value = false
             showShareSelectionDialog.value = true
@@ -371,11 +373,12 @@ class CardListViewModel(
     // Delete Selection Methods
     fun prepareDeleteSelection() {
         viewModelScope.launch {
-            val allCards = repository.getAllCards().first()
+            val allCards = repository.getAllCardsIncludingArchived().first()
             if (allCards.isEmpty()) {
                 userMessage.value = "DELETE_FAILED:No cards to delete"
                 return@launch
             }
+            // Include archived cards in the delete list as well
             deleteSelectionCards.value = allCards
             selectedDeleteCardIds.value = emptySet()
             showDeleteSelectionDialog.value = true

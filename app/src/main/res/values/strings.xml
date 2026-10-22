@@ -159,6 +159,7 @@
     <string name="export_include_cvc_label">Выгружать CVC</string>
     <string name="export_include_usage_count_label">Выгружать счётчик использования</string>
     <string name="import_selection_title">Выбор карточек для импорта</string>
+    <string name="archived_badge">в архиве</string>
 
     <!-- Camera Scanner -->
     <string name="scan_barcode_title">Сканирование штрихкода</string>
