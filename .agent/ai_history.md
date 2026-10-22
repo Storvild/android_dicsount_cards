@@ -654,3 +654,28 @@ You:
 ## Проверено
 - `app:assembleDebug` — успешно.
 - `:app:testDebugUnitTest` — 31 тестов, 0 провалов.
+
+---
+
+Agent:  
+## Причина бага
+
+В [MainActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/MainActivity.kt#L249) была строчка:
+
+```kotlin
+val isLoadingArchived = archivedCards.isEmpty()
+```
+
+Она трактует "список пуст" как "идёт загрузка". А когда в архиве **нет ни одной карточки**, `isEmpty()` = `true` → `isLoading = true` → спиннер крутится **вечно**.
+
+## Исправление
+
+Теперь флаг загрузки отслеживается отдельно:
+
+- `var isArchivedLoaded by remember(sourceFlow) { mutableStateOf(false) }` — стартует как `false`.
+- `LaunchedEffect(sourceFlow) { sourceFlow.collect { isArchivedLoaded = true } }` — как только Room Flow выдал первое значение (даже пустой список), флаг становится `true`.
+- `val isLoadingArchived = !isArchivedLoaded` — спиннер показывается только пока Flow ещё не выдал данные; как только пустой список получен — показывается empty-state с иконкой архива, а не спиннер.
+
+Поведение совпадает с логикой [CardListScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt): спиннер только в момент первой загрузки, затем — либо список, либо empty-state. Сборка `:app:assembleDebug` успешна.
+
+

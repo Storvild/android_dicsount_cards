@@ -204,3 +204,7 @@ app/src/main/java/com/example/discountcards/
 ## 📄 Лицензия
 
 Проект распространяется на условиях лицензии, указанной в файле [LICENSE](./LICENSE).
+
+
+---
+

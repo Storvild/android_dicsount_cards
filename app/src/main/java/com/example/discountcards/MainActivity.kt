@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -233,7 +234,14 @@ fun DiscountCardsNavigation(
 
             val archivedCardsState = sourceFlow.collectAsStateWithLifecycle(initialValue = emptyList())
             val archivedCards = archivedCardsState.value
-            val isLoadingArchived = archivedCards.isEmpty()
+            // Track loading: true until the first emission from the flow.
+            var isArchivedLoaded by remember(sourceFlow) { mutableStateOf(false) }
+            LaunchedEffect(sourceFlow) {
+                sourceFlow.collect {
+                    isArchivedLoaded = true
+                }
+            }
+            val isLoadingArchived = !isArchivedLoaded
 
             ArchiveScreen(
                 cards = archivedCards,
