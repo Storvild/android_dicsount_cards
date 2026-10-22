@@ -50,6 +50,17 @@ class CardRepositoryImplTest {
 
         override fun searchCards(query: String): Flow<List<DiscountCard>> = searchCardsAlphabetical(query)
 
+        override fun getArchivedCards(): Flow<List<DiscountCard>> = flowOf(cards.filter { it.isArchived }.sortedWith(compareBy { it.storeName }))
+
+        override fun searchArchivedCards(query: String): Flow<List<DiscountCard>> = flowOf(cards.filter { it.isArchived && (it.storeName.contains(query, ignoreCase = true) || it.cardNumber.contains(query, ignoreCase = true)) })
+
+        override suspend fun setArchived(id: Long, isArchived: Boolean, updatedAt: Long) {
+            val index = cards.indexOfFirst { it.id == id }
+            if (index != -1) {
+                cards[index] = cards[index].copy(isArchived = isArchived, updatedAt = updatedAt)
+            }
+        }
+
         override fun getCardById(id: Long): Flow<DiscountCard?> = flowOf(cards.find { it.id == id })
 
         override suspend fun getCardByIdDirect(id: Long): DiscountCard? = cards.find { it.id == id }
