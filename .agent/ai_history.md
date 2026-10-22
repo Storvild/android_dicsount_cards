@@ -620,3 +620,37 @@ You:
 
 3. **[CardDetailScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailScreen.kt)** — кнопка Share теперь вызывает `viewModel::prepareShare` (открывает диалог). В конце экрана рендерится `ShareSelectionDialog` (тот же композабл из списка) с одной картой, предвыбранной, и с чекбоксами «Выгружать CVC» и «Выгружать счётчик использования». При подтверждении вызывается `viewModel.shareSingleCard(context)`.
 
+---
+
+You:  
+Кнопка "Перенести в архив" в detail. Попадающие в архив карты исчезают из главного экрана, из экспорта, из Меню/Поделиться. Добавить в меню Архив. если из архива открывается карточка (detail) то там будет кнопка Извлечь из архива.
+
+## Что сделано
+
+Реализована функция архива скидочных карт:
+
+**Данные (Room DB, версия 3 → 4):**
+- [DiscountCard.kt](app/src/main/java/com/example/discountcards/data/local/entity/DiscountCard.kt) — добавлено поле `isArchived: Boolean = false`.
+- [AppDatabase.kt](app/src/main/java/com/example/discountcards/data/local/AppDatabase.kt) — `version = 4` + миграция `MIGRATION_3_4` (добавляет столбец `isArchived INTEGER NOT NULL DEFAULT 0`).
+- [DiscountCardDao.kt](app/src/main/java/com/example/discountcards/data/local/dao/DiscountCardDao.kt) — все запросы `getAllCards*` и `searchCards*` теперь фильтруют `WHERE isArchived = 0`; добавлены `getArchivedCards()`, `searchArchivedCards(query)` и `setArchived(id, isArchived)`.
+- [CardRepository.kt](app/src/main/java/com/example/discountcards/data/repository/CardRepository.kt) / [CardRepositoryImpl.kt](app/src/main/java/com/example/discountcards/data/repository/CardRepositoryImpl.kt) — добавлены `getArchivedCards()`, `searchArchivedCards()`, `setArchived()`.
+
+**UI:**
+- [CardDetailScreen.kt](app/src/main/java/com/example/discountcards/ui/detail/CardDetailScreen.kt) — в TopAppBar появилась иконка архива: «Перенести в архив» для активных карт и «Извлечь из архива» (с акцентным цветом) для архивных. При переключении показывается тост.
+- [CardDetailViewModel.kt](app/src/main/java/com/example/discountcards/ui/detail/CardDetailViewModel.kt) — `toggleArchive()`, `clearArchiveMessage()`, поле `isArchivedMessage` в UiState.
+- [CardListScreen.kt](app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt) / [SearchBarComponent.kt](app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt) — в меню добавлен пункт «Архив» с иконкой.
+- [ArchiveScreen.kt](app/src/main/java/com/example/discountcards/ui/archive/ArchiveScreen.kt) — новый экран архива (поиск, список карточек, пустое состояние, FAB «Добавить», кнопка «Назад»).
+- [MainActivity.kt](app/src/main/java/com/example/discountcards/MainActivity.kt) — новый `Destination.Archive` и ветка навигации.
+
+**Данные в UI-слой:**
+- [AddEditCardUiState.kt](app/src/main/java/com/example/discountcards/ui/addedit/AddEditCardUiState.kt) / [AddEditCardViewModel.kt](app/src/main/java/com/example/discountcards/ui/addedit/AddEditCardViewModel.kt) — при сохранении карты `isArchived` и `usageCount` теперь сохраняются как есть (не сбрасываются).
+
+**Локализация:** добавлены 10 новых строк в `strings.xml` на 11 языках (ru, en, fr, de, es, pt, ja, hi, ar, tr, zh-rCN).
+
+**Тесты:** в 4 фейковых DAO (`CardRepositoryImplTest`, `CardListViewModelTest`, `CardDetailViewModelTest`, `AddEditCardViewModelTest`) добавлены новые методы.
+
+**Документация:** обновлены [CHANGELOG.md](CHANGELOG.md) (новые пункты в Unreleased) и [WISH.md](docs/WISH.md) (отметка `+` для реализованной функции).
+
+## Проверено
+- `app:assembleDebug` — успешно.
+- `:app:testDebugUnitTest` — 31 тестов, 0 провалов.
