@@ -31,6 +31,7 @@ import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.QrCodeScanner
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material.icons.outlined.Storefront
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -46,6 +47,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -422,6 +424,25 @@ fun AddEditCardScreen(
             onDismissRequest = viewModel::closeCameraScanner,
             onBarcodeScanned = { cardNumber, format ->
                 viewModel.onBarcodeScanned(cardNumber, format)
+            }
+        )
+    }
+
+    // Duplicate Code Warning Dialog
+    if (uiState.showDuplicateWarningDialog) {
+        AlertDialog(
+            onDismissRequest = viewModel::onDuplicateWarningDismissed,
+            title = { Text(stringResource(R.string.duplicate_code_warning_title)) },
+            text = { Text(stringResource(R.string.duplicate_code_warning_message)) },
+            confirmButton = {
+                TextButton(onClick = viewModel::onDuplicateWarningConfirmed) {
+                    Text(stringResource(R.string.duplicate_code_warning_yes))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = viewModel::onDuplicateWarningDismissed) {
+                    Text(stringResource(R.string.duplicate_code_warning_no))
+                }
             }
         )
     }

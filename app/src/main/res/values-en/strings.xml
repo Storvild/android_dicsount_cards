@@ -215,4 +215,10 @@ Version 1.0</string>
     <string name="card_action_edit">Edit</string>
     <string name="card_action_delete">Delete</string>
     <string name="card_actions_title">Card Actions</string>
+
+    <!-- Duplicate Code Warning -->
+    <string name="duplicate_code_warning_title">Code already exists</string>
+    <string name="duplicate_code_warning_message">Such code already exists. Add anyway?</string>
+    <string name="duplicate_code_warning_yes">Add anyway</string>
+    <string name="duplicate_code_warning_no">Cancel</string>
 </resources>

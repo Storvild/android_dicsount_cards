@@ -57,6 +57,8 @@ class AddEditCardViewModelTest {
 
         override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
 
+        override suspend fun getCardsByNumber(cardNumber: String): List<DiscountCard> = cards.filter { it.cardNumber == cardNumber }
+
         override fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>> = flowOf(cards)
 
         override fun searchCardsByFrequency(query: String): Flow<List<DiscountCard>> = flowOf(cards)
@@ -280,6 +282,7 @@ class AddEditCardViewModelTest {
         assertTrue(viewModel.uiState.value.isCameraScannerOpen)
 
         viewModel.onBarcodeScanned("9988776655443", "EAN_13")
+        advanceUntilIdle()
 
         val state = viewModel.uiState.value
         assertFalse(state.isCameraScannerOpen)
@@ -315,5 +318,66 @@ class AddEditCardViewModelTest {
         val state = viewModel.uiState.value
         assertTrue(state.isEditMode)
         assertEquals(expectedCreatedAt, state.createdAt)
+    }
+
+    @Test
+    fun testScanningDuplicateCardNumberShowsWarning() = runTest {
+        val dao = FakeDao()
+        dao.cards.add(
+            DiscountCard(
+                id = 1,
+                storeName = "Existing Store",
+                cardNumber = "123456789",
+                barcodeFormat = "CODE_128"
+            )
+        )
+        val repository = CardRepositoryImpl(dao)
+        val viewModel = AddEditCardViewModel(
+            repository = repository,
+            cardId = null,
+            ioDispatcher = testDispatcher
+        )
+
+        viewModel.onBarcodeScanned("123456789", "CODE_128")
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertTrue(state.showDuplicateWarningDialog)
+        assertEquals("123456789", state.pendingCardNumber)
+
+        viewModel.onDuplicateWarningConfirmed()
+        val confirmedState = viewModel.uiState.value
+        assertFalse(confirmedState.showDuplicateWarningDialog)
+        assertEquals("123456789", confirmedState.cardNumber)
+    }
+
+    @Test
+    fun testDismissingDuplicateWarningCancelsScan() = runTest {
+        val dao = FakeDao()
+        dao.cards.add(
+            DiscountCard(
+                id = 1,
+                storeName = "Existing Store",
+                cardNumber = "123456789",
+                barcodeFormat = "CODE_128"
+            )
+        )
+        val repository = CardRepositoryImpl(dao)
+        val viewModel = AddEditCardViewModel(
+            repository = repository,
+            cardId = null,
+            ioDispatcher = testDispatcher
+        )
+
+        viewModel.onBarcodeScanned("123456789", "CODE_128")
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertTrue(state.showDuplicateWarningDialog)
+
+        viewModel.onDuplicateWarningDismissed()
+        val dismissedState = viewModel.uiState.value
+        assertFalse(dismissedState.showDuplicateWarningDialog)
+        assertEquals("", dismissedState.cardNumber)
     }
 }

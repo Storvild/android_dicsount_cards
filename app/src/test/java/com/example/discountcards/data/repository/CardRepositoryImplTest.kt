@@ -47,6 +47,8 @@ class CardRepositoryImplTest {
 
         override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
 
+        override suspend fun getCardsByNumber(cardNumber: String): List<DiscountCard> = cards.filter { it.cardNumber == cardNumber }
+
         override fun searchCardsAlphabetical(query: String): Flow<List<DiscountCard>> {
             return flowOf(cards.filter { it.storeName.contains(query, ignoreCase = true) || it.cardNumber.contains(query, ignoreCase = true) }
                 .sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenBy { it.storeName }))

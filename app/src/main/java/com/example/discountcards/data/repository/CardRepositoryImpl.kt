@@ -47,6 +47,8 @@ class CardRepositoryImpl(
 
     override suspend fun getCardByIdDirect(id: Long): DiscountCard? = dao.getCardByIdDirect(id)
 
+    override suspend fun getCardsByNumber(cardNumber: String): List<DiscountCard> = dao.getCardsByNumber(cardNumber)
+
     override suspend fun toggleFavorite(id: Long, isFavorite: Boolean) {
         dao.updateFavorite(id, isFavorite)
     }

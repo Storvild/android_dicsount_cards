@@ -20,5 +20,8 @@ data class AddEditCardUiState(
     val isSaved: Boolean = false,
     val isEditMode: Boolean = false,
     val isCameraScannerOpen: Boolean = false,
+    val showDuplicateWarningDialog: Boolean = false,
+    val pendingCardNumber: String = "",
+    val pendingBarcodeFormat: String = "",
     val userMessage: String? = null
 )

@@ -116,13 +116,55 @@ class AddEditCardViewModel(
     }
 
     fun onBarcodeScanned(cardNumber: String, barcodeFormat: String) {
+        viewModelScope.launch(ioDispatcher) {
+            val currentState = _uiState.value
+            val existingCards = repository.getCardsByNumber(cardNumber)
+            val hasDuplicate = existingCards.any { it.id != currentState.cardId }
+
+            if (hasDuplicate) {
+                _uiState.update {
+                    it.copy(
+                        isCameraScannerOpen = false,
+                        showDuplicateWarningDialog = true,
+                        pendingCardNumber = cardNumber,
+                        pendingBarcodeFormat = barcodeFormat
+                    )
+                }
+            } else {
+                _uiState.update {
+                    it.copy(
+                        cardNumber = cardNumber,
+                        barcodeFormat = barcodeFormat,
+                        cardNumberError = null,
+                        isCameraScannerOpen = false,
+                        userMessage = "Barcode recognized: $cardNumber"
+                    )
+                }
+            }
+        }
+    }
+
+    fun onDuplicateWarningConfirmed() {
+        val state = _uiState.value
         _uiState.update {
             it.copy(
-                cardNumber = cardNumber,
-                barcodeFormat = barcodeFormat,
+                cardNumber = state.pendingCardNumber,
+                barcodeFormat = state.pendingBarcodeFormat,
                 cardNumberError = null,
-                isCameraScannerOpen = false,
-                userMessage = "Barcode recognized: $cardNumber"
+                showDuplicateWarningDialog = false,
+                pendingCardNumber = "",
+                pendingBarcodeFormat = "",
+                userMessage = "Barcode recognized: ${state.pendingCardNumber}"
+            )
+        }
+    }
+
+    fun onDuplicateWarningDismissed() {
+        _uiState.update {
+            it.copy(
+                showDuplicateWarningDialog = false,
+                pendingCardNumber = "",
+                pendingBarcodeFormat = ""
             )
         }
     }

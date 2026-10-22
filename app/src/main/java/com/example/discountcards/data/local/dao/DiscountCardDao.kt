@@ -63,6 +63,9 @@ interface DiscountCardDao {
     @Query("SELECT * FROM discount_cards WHERE id = :id")
     suspend fun getCardByIdDirect(id: Long): DiscountCard?
 
+    @Query("SELECT * FROM discount_cards WHERE cardNumber = :cardNumber")
+    suspend fun getCardsByNumber(cardNumber: String): List<DiscountCard>
+
     @Query("UPDATE discount_cards SET isFavorite = :isFavorite, updatedAt = :updatedAt WHERE id = :id")
     suspend fun updateFavorite(id: Long, isFavorite: Boolean, updatedAt: Long = System.currentTimeMillis())
 

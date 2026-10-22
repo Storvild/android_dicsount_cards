@@ -15,6 +15,7 @@ interface CardRepository {
     fun searchArchivedCards(query: String): Flow<List<DiscountCard>>
     fun getCardById(id: Long): Flow<DiscountCard?>
     suspend fun getCardByIdDirect(id: Long): DiscountCard?
+    suspend fun getCardsByNumber(cardNumber: String): List<DiscountCard>
     suspend fun toggleFavorite(id: Long, isFavorite: Boolean)
     suspend fun setArchived(id: Long, isArchived: Boolean)
     suspend fun incrementUsageCount(id: Long)
