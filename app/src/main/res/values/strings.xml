@@ -201,4 +201,17 @@
     <string name="language_arabic">العربية</string>
     <string name="language_turkish">Türkçe</string>
     <string name="language_chinese_simplified">简体中文</string>
+
+    <!-- Widget & Card Actions -->
+    <string name="widget_configure_title">Настройка виджета</string>
+    <string name="widget_select_card">Выберите карточку</string>
+    <string name="widget_show_code">Показать код</string>
+    <string name="widget_show_name">Показать название магазина</string>
+    <string name="widget_transparent_bg">Прозрачный фон</string>
+    <string name="widget_save_button">Сохранить</string>
+    <string name="widget_1x1_warning">Для виджета 1х1 можно выбрать только одно: название или код.</string>
+    <string name="widget_settings_desc">Настройки виджета</string>
+    <string name="card_action_edit">Редактировать</string>
+    <string name="card_action_delete">Удалить</string>
+    <string name="card_actions_title">Действия с картой</string>
 </resources>

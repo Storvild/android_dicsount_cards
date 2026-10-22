@@ -202,4 +202,17 @@ Sürüm 1.0</string>
     <string name="language_arabic">العربية</string>
     <string name="language_turkish">Türkçe</string>
     <string name="language_chinese_simplified">简体中文</string>
+
+    <!-- Widget & Card Actions -->
+    <string name="widget_configure_title">Widget Yapılandır</string>
+    <string name="widget_select_card">Kart Seç</string>
+    <string name="widget_show_code">Kodu Göster</string>
+    <string name="widget_show_name">Mağaza Adını Göster</string>
+    <string name="widget_transparent_bg">Şeffaf Arka Plan</string>
+    <string name="widget_save_button">Kaydet</string>
+    <string name="widget_1x1_warning">1x1 widget için yalnızca birini seçebilirsiniz: ad veya kod.</string>
+    <string name="widget_settings_desc">Widget Ayarları</string>
+    <string name="card_action_edit">Düzenle</string>
+    <string name="card_action_delete">Sil</string>
+    <string name="card_actions_title">Kart İşlemleri</string>
 </resources>

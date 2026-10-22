@@ -202,4 +202,17 @@
     <string name="language_arabic">العربية</string>
     <string name="language_turkish">Türkçe</string>
     <string name="language_chinese_simplified">简体中文</string>
+
+    <!-- Widget & Card Actions -->
+    <string name="widget_configure_title">विजेट कॉन्फ़िगर करें</string>
+    <string name="widget_select_card">कार्ड चुनें</string>
+    <string name="widget_show_code">कोड दिखाएं</string>
+    <string name="widget_show_name">स्टोर का नाम दिखाएं</string>
+    <string name="widget_transparent_bg">पारदर्शी पृष्ठभूमि</string>
+    <string name="widget_save_button">सहेजें</string>
+    <string name="widget_1x1_warning">1x1 विजेट के लिए, आप केवल एक चुन सकते हैं: नाम या कोड।</string>
+    <string name="widget_settings_desc">विजेट सेटिंग्स</string>
+    <string name="card_action_edit">संपादित करें</string>
+    <string name="card_action_delete">हटाएं</string>
+    <string name="card_actions_title">कार्ड क्रियाएँ</string>
 </resources>

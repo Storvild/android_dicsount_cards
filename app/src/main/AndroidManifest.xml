@@ -29,6 +29,28 @@
             </intent-filter>
         </activity>
 
+        <!-- Widget Provider -->
+        <receiver
+            android:name=".widget.DiscountCardsWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/discount_cards_widget_info" />
+        </receiver>
+
+        <!-- Widget Configuration Activity -->
+        <activity
+            android:name=".widget.DiscountCardsWidgetConfigureActivity"
+            android:exported="true"
+            android:theme="@style/Theme.DiscountCards">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

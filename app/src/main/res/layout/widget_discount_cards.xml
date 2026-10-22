@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp">
+
+    <!-- Inner container that holds the content (name, barcode, etc.) -->
+    <FrameLayout
+        android:id="@+id/widget_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/widget_bg_rounded"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!-- Store Name TextView -->
+            <TextView
+                android:id="@+id/widget_store_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:visibility="gone"
+                android:paddingBottom="4dp" />
+
+            <!-- Barcode ImageView -->
+            <ImageView
+                android:id="@+id/widget_barcode_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:visibility="gone"
+                android:contentDescription="@string/app_name" />
+
+            <!-- Fallback text -->
+            <TextView
+                android:id="@+id/widget_card_number_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <!-- Settings / Edit Button in top-right corner -->
+        <ImageButton
+            android:id="@+id/widget_settings_button"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="top|end"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_widget_settings"
+            android:contentDescription="@string/widget_settings_desc"
+            android:padding="4dp" />
+
+    </FrameLayout>
+
+</FrameLayout>

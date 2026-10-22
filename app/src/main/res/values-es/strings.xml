@@ -202,4 +202,17 @@ Versión 1.0</string>
     <string name="language_arabic">العربية</string>
     <string name="language_turkish">Türkçe</string>
     <string name="language_chinese_simplified">简体中文</string>
+
+    <!-- Widget & Card Actions -->
+    <string name="widget_configure_title">Configurar widget</string>
+    <string name="widget_select_card">Seleccionar tarjeta</string>
+    <string name="widget_show_code">Mostrar código</string>
+    <string name="widget_show_name">Mostrar nombre de tienda</string>
+    <string name="widget_transparent_bg">Fondo transparente</string>
+    <string name="widget_save_button">Guardar</string>
+    <string name="widget_1x1_warning">Para el widget 1x1, solo puedes elegir uno: nombre o código.</string>
+    <string name="widget_settings_desc">Ajustes del widget</string>
+    <string name="card_action_edit">Editar</string>
+    <string name="card_action_delete">Eliminar</string>
+    <string name="card_actions_title">Acciones de tarjeta</string>
 </resources>

@@ -87,6 +87,7 @@ class MainActivity : ComponentActivity() {
 
         val app = applicationContext as DiscountCardsApp
         val preferencesRepository = app.preferencesRepository
+        val initialCardId = intent?.getLongExtra("card_id", -1L) ?: -1L
 
         setContent {
             val preferences by preferencesRepository.userPreferencesFlow
@@ -104,6 +105,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     DiscountCardsNavigation(
+                        initialCardId = initialCardId,
                         onLanguageChange = { recreate() }
                     )
                 }
@@ -114,6 +116,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DiscountCardsNavigation(
+    initialCardId: Long = -1L,
     onLanguageChange: () -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -124,7 +127,14 @@ fun DiscountCardsNavigation(
     val preferences by preferencesRepository.userPreferencesFlow
         .collectAsStateWithLifecycle(initialValue = UserPreferences())
 
-    val backStack = remember { mutableStateListOf<Destination>(Destination.CardList) }
+    val backStack = remember {
+        mutableStateListOf<Destination>().apply {
+            add(Destination.CardList)
+            if (initialCardId != -1L) {
+                add(Destination.CardDetail(initialCardId))
+            }
+        }
+    }
     val currentDestination = backStack.lastOrNull() ?: Destination.CardList
 
     BackHandler(enabled = backStack.size > 1) {
@@ -140,6 +150,9 @@ fun DiscountCardsNavigation(
                 viewModel = viewModel,
                 onCardClick = { cardId ->
                     backStack.add(Destination.CardDetail(cardId))
+                },
+                onEditCardClick = { cardId ->
+                    backStack.add(Destination.AddEditCard(cardId))
                 },
                 onAddCardClick = {
                     backStack.add(Destination.AddEditCard(null))

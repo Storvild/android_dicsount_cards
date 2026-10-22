@@ -49,6 +49,7 @@ import com.example.discountcards.ui.list.components.SearchBarComponent
 fun CardListScreen(
     viewModel: CardListViewModel,
     onCardClick: (Long) -> Unit,
+    onEditCardClick: (Long) -> Unit = {},
     onAddCardClick: () -> Unit,
     onArchiveClick: () -> Unit = {},
     onSettingsClick: () -> Unit,
@@ -183,7 +184,9 @@ fun CardListScreen(
                                 card = card,
                                 onClick = { onCardClick(card.id) },
                                 onFavoriteToggle = { viewModel.toggleFavorite(card.id, card.isFavorite) },
-                                showBarcode = showBarcodesInList
+                                showBarcode = showBarcodesInList,
+                                onEditClick = { onEditCardClick(card.id) },
+                                onDeleteClick = { viewModel.deleteCard(card) }
                             )
                         }
                     }

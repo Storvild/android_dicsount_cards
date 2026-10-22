@@ -563,6 +563,17 @@ class CardListViewModel(
         exportedJson.value = null
     }
 
+    fun deleteCard(card: DiscountCard) {
+        viewModelScope.launch {
+            runCatching {
+                repository.deleteCard(card)
+                userMessage.value = "DELETE_SUCCESS:1"
+            }.onFailure { e ->
+                userMessage.value = "DELETE_FAILED:${e.localizedMessage ?: "Error"}"
+            }
+        }
+    }
+
     fun clearUserMessage() {
         userMessage.value = null
     }
