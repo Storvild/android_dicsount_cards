@@ -121,4 +121,58 @@ class CardDetailViewModel(
             }
         }
     }
+
+    fun prepareShare() {
+        _uiState.value.card ?: return
+        _uiState.update {
+            it.copy(
+                showShareDialog = true,
+                shareIncludeCvc = false,
+                shareIncludeUsageCount = false
+            )
+        }
+    }
+
+    fun toggleShareIncludeCvc(include: Boolean) {
+        _uiState.update { it.copy(shareIncludeCvc = include) }
+    }
+
+    fun toggleShareIncludeUsageCount(include: Boolean) {
+        _uiState.update { it.copy(shareIncludeUsageCount = include) }
+    }
+
+    fun cancelShare() {
+        _uiState.update { it.copy(showShareDialog = false) }
+    }
+
+    fun shareSingleCard(context: android.content.Context) {
+        val card = _uiState.value.card ?: return
+        viewModelScope.launch {
+            try {
+                val cardToExport = card.redact(
+                    includeCvc = _uiState.value.shareIncludeCvc,
+                    includeUsageCount = _uiState.value.shareIncludeUsageCount
+                )
+                val json = repository.exportToJson(listOf(cardToExport))
+                cancelShare()
+                val file = java.io.File(context.cacheDir, "discount_cards_share.json")
+                file.writeText(json)
+                val uri = androidx.core.content.FileProvider.getUriForFile(
+                    context,
+                    "${context.packageName}.fileprovider",
+                    file
+                )
+                val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                    type = "application/json"
+                    putExtra(android.content.Intent.EXTRA_STREAM, uri)
+                    addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                context.startActivity(
+                    android.content.Intent.createChooser(shareIntent, null)
+                )
+            } catch (e: Exception) {
+                _uiState.update { it.copy(error = e.localizedMessage ?: "Error") }
+            }
+        }
+    }
 }

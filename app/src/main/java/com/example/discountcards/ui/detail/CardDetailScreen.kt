@@ -22,6 +22,7 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
@@ -53,6 +54,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.discountcards.R
 import com.example.discountcards.ui.detail.components.BarcodeDisplay
 import com.example.discountcards.ui.detail.components.DeleteConfirmDialog
+import com.example.discountcards.ui.list.components.ShareSelectionDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -130,6 +132,12 @@ fun CardDetailScreen(
                             Icon(
                                 imageVector = Icons.Outlined.Edit,
                                 contentDescription = stringResource(R.string.edit_button)
+                            )
+                        }
+                        IconButton(onClick = viewModel::prepareShare) {
+                            Icon(
+                                imageVector = Icons.Outlined.Share,
+                                contentDescription = stringResource(R.string.share_action)
                             )
                         }
                         IconButton(onClick = viewModel::showDeleteDialog) {
@@ -315,6 +323,23 @@ fun CardDetailScreen(
         DeleteConfirmDialog(
             onDismiss = viewModel::hideDeleteDialog,
             onConfirmDelete = viewModel::deleteCard
+        )
+    }
+
+    if (uiState.showShareDialog && card != null) {
+        ShareSelectionDialog(
+            cards = listOf(card),
+            selectedCardIds = setOf(card.id),
+            onToggleCard = {},
+            onSelectAll = {},
+            onDeselectAll = {},
+            onInvert = {},
+            includeCvc = uiState.shareIncludeCvc,
+            includeUsageCount = uiState.shareIncludeUsageCount,
+            onIncludeCvcChange = viewModel::toggleShareIncludeCvc,
+            onIncludeUsageCountChange = viewModel::toggleShareIncludeUsageCount,
+            onConfirm = { viewModel.shareSingleCard(context) },
+            onDismiss = viewModel::cancelShare
         )
     }
 }

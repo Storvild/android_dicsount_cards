@@ -11,5 +11,8 @@ data class CardDetailUiState(
     val isDeleteDialogVisible: Boolean = false,
     val isDeleted: Boolean = false,
     val isCvcVisible: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val showShareDialog: Boolean = false,
+    val shareIncludeCvc: Boolean = false,
+    val shareIncludeUsageCount: Boolean = false
 )
