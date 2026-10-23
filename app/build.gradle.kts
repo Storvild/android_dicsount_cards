@@ -6,6 +6,7 @@ plugins {
 }
 
 val appVersionName: String = (project.findProperty("versionName") as? String) ?: "0.0.0"
+val apkNamePrefix: String = (project.findProperty("apkNamePrefix") as? String) ?: "discount_cards"
 val appVersionCode: Int = appVersionName
     .split(".")
     .let { parts ->
@@ -111,4 +112,13 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     "ksp"(libs.androidx.room.compiler)
     "ksp"(libs.moshi.kotlin.codegen)
+}
+
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach { output ->
+            @Suppress("UnstableApiUsage")
+            output.outputFileName = "${apkNamePrefix}_v${appVersionName}.apk"
+        }
+    }
 }
