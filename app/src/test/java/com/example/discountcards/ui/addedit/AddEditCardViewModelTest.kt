@@ -56,6 +56,8 @@ class AddEditCardViewModelTest {
         override fun getAllCardsIncludingArchived(): Flow<List<DiscountCard>> = getAllCardsIncludingArchivedAlphabetical()
 
         override suspend fun getAllCardsDirect(): List<DiscountCard> = cards.toList()
+        override suspend fun getAllCardsDirectByFrequency(): List<DiscountCard> = cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.usageCount }.thenBy { it.storeName })
+        override suspend fun getAllCardsDirectByCreationDate(): List<DiscountCard> = cards.sortedWith(compareByDescending<DiscountCard> { it.isFavorite }.thenByDescending { it.createdAt }.thenBy { it.storeName })
 
         override suspend fun getCardsByNumber(cardNumber: String): List<DiscountCard> = cards.filter { it.cardNumber == cardNumber }
 

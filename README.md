@@ -156,13 +156,13 @@ app/src/main/java/com/example/discountcards/
     "cardNumber": "1234567890123",
     "barcodeFormat": "EAN_13",
     "note": "Карта семьи",
-    "cardColor": -15796827,
+    "cardColor": "#0EE8A5",
     "iconName": "shopping_cart",
     "isFavorite": true,
     "cvc": "123",
     "usageCount": 5,
-    "createdAt": 1730000000000,
-    "updatedAt": 1730000000000,
+    "createdAt": "2026-01-01T10:10:10",
+    "updatedAt": "2026-01-01T10:10:10",
     "isArchived": false
   }
 ]

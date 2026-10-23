@@ -13,13 +13,16 @@ data class DiscountCard(
     val cardNumber: String,
     val barcodeFormat: String,
     val note: String = "",
+    @Serializable(with = com.example.discountcards.util.ColorHexSerializer::class)
     val cardColor: Int = 0xFF1E88E5.toInt(),
     val iconName: String = "",
     val isFavorite: Boolean = false,
     val cvc: String = "",
     val usageCount: Int = 0,
     val isArchived: Boolean = false,
+    @Serializable(with = com.example.discountcards.util.DateIso8601Serializer::class)
     val createdAt: Long = System.currentTimeMillis(),
+    @Serializable(with = com.example.discountcards.util.DateIso8601Serializer::class)
     val updatedAt: Long = System.currentTimeMillis()
 ) {
     fun redact(
