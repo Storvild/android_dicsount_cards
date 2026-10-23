@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.example.discountcards.DiscountCardsApp
 import com.example.discountcards.R
 import com.example.discountcards.data.local.entity.DiscountCard
+import com.example.discountcards.data.repository.SortOrder
 import com.example.discountcards.ui.theme.DiscountCardsTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -98,10 +99,16 @@ fun WidgetConfigureScreen(
     var showCode by remember { mutableStateOf(existingConfig.showCode) }
     var showStoreName by remember { mutableStateOf(existingConfig.showStoreName) }
     var isTransparent by remember { mutableStateOf(existingConfig.isTransparent) }
+    var sortOrder by remember { mutableStateOf(SortOrder.ALPHABETICAL) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(sortOrder) {
         val loaded = withContext(Dispatchers.IO) {
-            app.database.discountCardDao().getAllCardsDirect()
+            val dao = app.database.discountCardDao()
+            when (sortOrder) {
+                SortOrder.ALPHABETICAL -> dao.getAllCardsDirect()
+                SortOrder.FREQUENCY -> dao.getAllCardsDirectByFrequency()
+                SortOrder.CREATION_DATE -> dao.getAllCardsDirectByCreationDate()
+            }
         }
         cards = loaded
         if (selectedCardId == null && loaded.isNotEmpty()) {
@@ -201,6 +208,52 @@ fun WidgetConfigureScreen(
                                 onClick = { selectedCardId = card.id }
                             )
                         }
+                    }
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Сортировка",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            item {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = sortOrder == SortOrder.ALPHABETICAL,
+                            onClick = { sortOrder = SortOrder.ALPHABETICAL }
+                        )
+                        Text(stringResource(R.string.sort_alphabetical))
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = sortOrder == SortOrder.FREQUENCY,
+                            onClick = { sortOrder = SortOrder.FREQUENCY }
+                        )
+                        Text(stringResource(R.string.sort_frequency))
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = sortOrder == SortOrder.CREATION_DATE,
+                            onClick = { sortOrder = SortOrder.CREATION_DATE }
+                        )
+                        Text(stringResource(R.string.sort_creation_date))
                     }
                 }
             }

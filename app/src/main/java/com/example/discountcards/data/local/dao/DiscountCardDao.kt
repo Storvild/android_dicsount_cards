@@ -39,6 +39,12 @@ interface DiscountCardDao {
     @Query("SELECT * FROM discount_cards WHERE isArchived = 0 ORDER BY storeName ASC")
     suspend fun getAllCardsDirect(): List<DiscountCard>
 
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 ORDER BY isFavorite DESC, usageCount DESC, storeName ASC")
+    suspend fun getAllCardsDirectByFrequency(): List<DiscountCard>
+
+    @Query("SELECT * FROM discount_cards WHERE isArchived = 0 ORDER BY isFavorite DESC, createdAt DESC, storeName ASC")
+    suspend fun getAllCardsDirectByCreationDate(): List<DiscountCard>
+
     @Query("SELECT * FROM discount_cards WHERE isArchived = 1 ORDER BY storeName ASC")
     fun getArchivedCards(): Flow<List<DiscountCard>>
 

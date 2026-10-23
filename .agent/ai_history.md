@@ -830,3 +830,51 @@ Agent:
    - Реализована обработка входящего `Uri` из интента при запуске приложения через `ACTION_VIEW` или `ACTION_SEND`.
    - Входящий файл автоматически передается в `CardListViewModel` (`onImportFileSelected`), благодаря чему сразу открывается диалоговое окно импорта карточек из открытого файла.
    - Добавлена защита от повторного срабатывания импорта при повороте экрана или изменении конфигурации.
+   
+---
+
+## Итог
+
+Я успешно настроил имя APK в файле [build.gradle.kts](file:///E:/virtualenvs/discount_cards/DiscountCards/app/build.gradle.kts#L115-L121):
+
+1. Добавил блок `androidComponents` с обработчиком `onVariants`
+2. Установил `outputFileName` в `"discount_cards_v${appVersionName}.apk"`
+3. Использовал `@Suppress("UnstableApiUsage")` для подавления предупреждения о том, что `outputFileName` является экспериментальным API
+
+Теперь при сборке APK имя файла будет `discount_cards_v1.0.9.apk` (или `discount_cards_v<version>.apk`, где `<version>` - это значение из `versionName` в `gradle.properties`).
+
+Мы проверили, что изменения работают корректно - debug-версия APK была создана с именем `discount_cards_v1.0.9.apk`.
+
+префикс имени APK вынесен в `gradle.properties` и может быть легко изменен.
+
+## Итог
+
+Я успешно вынес префикс имени APK в `gradle.properties`:
+
+1. Добавил `apkNamePrefix=discount_cards` в [gradle.properties](file:///E:/virtualenvs/discount_cards/DiscountCards/gradle.properties#L21)
+2. Добавил чтение переменной `apkNamePrefix` в [build.gradle.kts](file:///E:/virtualenvs/discount_cards/DiscountCards/app/build.gradle.kts#L8)
+3. Обновил блок `androidComponents` для использования `apkNamePrefix` в имени файла APK
+
+Теперь при необходимости можно легко изменить префикс имени APK, отредактировав `gradle.properties`.   
+
+---
+
+You:  
+В форме редактирования виджета добавить сотрировку - по имени, по частоте, по дате
+Agent:  
+
+
+Всё готово. Вот что было сделано:
+
+**Изменённые файлы:**
+
+1. [DiscountCardDao.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/local/dao/DiscountCardDao.kt#L42-L46) — добавлены два новых suspend-метода:
+   - `getAllCardsDirectByFrequency()` — сортировка по частоте использования (сначала избранное, затем по убыванию `usageCount`)
+   - `getAllCardsDirectByCreationDate()` — сортировка по дате создания (сначала избранное, затем по убыванию `createdAt`)
+
+2. [DiscountCardsWidgetConfigureActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetConfigureActivity.kt) — в форме конфигурации виджета добавлена секция **«Сортировка»** с тремя радио-кнопками:
+   - По имени (алфавитный порядок)
+   - По частоте (самые используемые наверху)
+   - По дате (самые новые наверху)
+
+При переключении сортировки список карточек автоматически перезагружается с новым порядком. Строки `sort_alphabetical`, `sort_frequency`, `sort_creation_date` уже существуют в `strings.xml` (они используются в главном списке), поэтому локализация во все языки уже в порядке.
