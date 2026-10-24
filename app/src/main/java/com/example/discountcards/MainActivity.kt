@@ -18,7 +18,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.IntentCompat
@@ -59,6 +62,51 @@ sealed interface Destination {
     data object Settings : Destination
     data object Archive : Destination
 }
+
+fun destinationSaver(): Saver<Destination, String> = Saver(
+    save = { _, destination ->
+        when (destination) {
+            is Destination.CardList -> "CardList"
+            is Destination.CardDetail -> "CardDetail:${destination.cardId}:${destination.key}"
+            is Destination.AddEditCard -> "AddEditCard:${destination.cardId ?: -1L}:${destination.key}"
+            is Destination.Settings -> "Settings"
+            is Destination.Archive -> "Archive"
+        }
+    },
+    restore = { value ->
+        val parts = value.split(":")
+        when (parts[0]) {
+            "CardList" -> Destination.CardList
+            "CardDetail" -> Destination.CardDetail(
+                cardId = parts[1].toLong(),
+                key = parts.getOrNull(2) ?: UUID.randomUUID().toString()
+            )
+            "AddEditCard" -> {
+                val id = parts[1].toLong()
+                Destination.AddEditCard(
+                    cardId = if (id == -1L) null else id,
+                    key = parts.getOrNull(2) ?: UUID.randomUUID().toString()
+                )
+            }
+            "Settings" -> Destination.Settings
+            "Archive" -> Destination.Archive
+            else -> Destination.CardList
+        }
+    }
+)
+
+val backStackSaver = Saver<SnapshotStateList<Destination>, List<String>>(
+    save = { scope, list ->
+        val destSaver = destinationSaver()
+        list.mapNotNull { with(destSaver) { scope.save(it) } }
+    },
+    restore = { savedList ->
+        val destSaver = destinationSaver()
+        mutableStateListOf<Destination>().apply {
+            addAll(savedList.mapNotNull { destSaver.restore(it) })
+        }
+    }
+)
 
 class MainActivity : ComponentActivity() {
     private val desiredLanguage: AppLanguage

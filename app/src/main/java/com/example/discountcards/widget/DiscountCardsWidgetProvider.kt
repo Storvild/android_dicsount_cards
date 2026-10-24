@@ -14,6 +14,9 @@ import com.example.discountcards.MainActivity
 import com.example.discountcards.R
 import com.example.discountcards.data.local.entity.DiscountCard
 import com.example.discountcards.util.BarcodeGenerator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class DiscountCardsWidgetProvider : AppWidgetProvider() {
@@ -23,8 +26,15 @@ class DiscountCardsWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
+        val pendingResult = goAsync()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                for (appWidgetId in appWidgetIds) {
+                    updateAppWidget(context, appWidgetManager, appWidgetId)
+                }
+            } finally {
+                pendingResult.finish()
+            }
         }
     }
 
@@ -35,7 +45,14 @@ class DiscountCardsWidgetProvider : AppWidgetProvider() {
         newOptions: Bundle?
     ) {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
-        updateAppWidget(context, appWidgetManager, appWidgetId)
+        val pendingResult = goAsync()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                updateAppWidget(context, appWidgetManager, appWidgetId)
+            } finally {
+                pendingResult.finish()
+            }
+        }
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
@@ -55,7 +72,7 @@ class DiscountCardsWidgetProvider : AppWidgetProvider() {
             if (config.cardId == -1L) return
 
             val app = context.applicationContext as? DiscountCardsApp ?: return
-            val card: DiscountCard? = runBlocking {
+            val card: DiscountCard? = runBlocking(Dispatchers.IO) {
                 app.database.discountCardDao().getCardByIdDirect(config.cardId)
             }
 

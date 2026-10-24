@@ -192,6 +192,9 @@ class AddEditCardViewModel(
                     .addOnFailureListener {
                         _uiState.update { it.copy(userMessage = "ERROR_BARCODE_NOT_FOUND") }
                     }
+                    .addOnCompleteListener {
+                        runCatching { scanner.close() }
+                    }
             }.onFailure {
                 _uiState.update { it.copy(userMessage = "ERROR_BARCODE_NOT_FOUND") }
             }

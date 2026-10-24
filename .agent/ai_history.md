@@ -969,4 +969,266 @@ Agent:
 3. **Локализация** ([`strings.xml`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml#L214)):
    - Добавлена строка `widget_edit_note` во все 11 поддерживаемых языковых ресурсов проекта (`values/strings.xml`, `values-en`, `values-de`, `values-fr` и др.).   
    
+
+---
+
+You:  
+GitHub не смог сделать Actions. Ошибка: cannot stat 'app/build/outputs/apk/debug/app-debug.apk': No such file or directory
+
+Ошибка возникла из-за того, что в конфигурации Gradle [`app/build.gradle.kts`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/build.gradle.kts#L117-L124) уже прописано переименование итогового APK файла:
+
+```kotlin
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach { output ->
+            output.outputFileName = "${apkNamePrefix}_v${appVersionName}.apk"
+        }
+    }
+}
+```
+
+Когда шаг в GitHub Actions выполняет `./gradlew assembleDebug -PversionName=${VERSION}`, Gradle сходу создаёт файл с именем `discount_cards_v${VERSION}.apk` (например, `discount_cards_v1.0.0.apk`), а стандартный `app-debug.apk` **не создаётся вовсе**.
+
+Следующий шаг `Rename APK` пытался выполнить команды `mv app/build/outputs/apk/debug/app-debug.apk ...`, но так как файла `app-debug.apk` не существовало, команда завершалась с ошибкой:
+`cannot stat 'app/build/outputs/apk/debug/app-debug.apk': No such file or directory`.
+
+---
+
+### Что сделано
+Из файла [`.github/workflows/release.yml`](file:///E:/virtualenvs/discount_cards/DiscountCards/.github/workflows/release.yml) убран лишний шаг `Rename APK`, так как переименование автоматически производит сам Gradle во время сборки.
+
+Теперь конфигурация выглядит так:
+```yaml
+      - name: Build Debug APK
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          ./gradlew assembleDebug -PversionName=${VERSION}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/build/outputs/apk/debug/*.apk
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+После замичивания и отправки этих изменений в репозиторий GitHub Actions выполнит релиз без ошибок.
+
    
+---
+
+## 1. Общая оценка проекта
+Проект **Discount Cards** представляет собой Android-приложение на **Kotlin / Jetpack Compose** с архитектурой **MVVM / Clean Architecture (Data -> Repository -> UI)**. 
+- **БД**: Room с миграциями (версия 4).
+- **Хранение настроек**: DataStore Preferences + SharedPreferences.
+- **Работа со штрихкодами**: ZXing + ML Kit Barcode Scanning.
+- **Интерфейс**: Material 3, адаптивная поддержка тем и локализации.
+
+В целом код написан аккуратно, структуры данных декомпозированы, основные функции экспорта/импорта и работы со штрихкодами реализованы корректно. Юнит-тесты выполняются успешно (33/33). Однако в ходе подробного анализа выявлены **потенциальные ошибки, утечки ресурсов, проблемы с управлением потоками, локализацией и недостаток тестового покрытия в ряде компонентов**.
+
+---
+
+## 2. Анализ потенциальных ошибок и рисков (Code Analysis)
+
+### 🔴 Критические и важные риски (High / Medium Severity)
+
+#### 1. Утечка ресурсов и потоков при сканировании штрихкодов (ML Kit + CameraX)
+- **Файл**: [`CameraBarcodeScanner.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/addedit/components/CameraBarcodeScanner.kt)
+- **Проблема**:
+  ```kotlin
+  val analysisExecutor = remember { Executors.newSingleThreadExecutor() }
+  val barcodeScanner = remember { BarcodeScanning.getClient() }
+  ```
+  `Executor` и `BarcodeScanner` создаются через `remember`, но при закрытии диалога сканера их ресурсы **никогда не закрываются** (`analysisExecutor.shutdown()` и `barcodeScanner.close()` отсутствуют).
+- **Риск**: Нативный утечка ресурсов и памяти ML Kit, а также утечка однопоточного экзекутора при каждом открытии сканера камеры.
+- **Решение**: Использовать `DisposableEffect` для вызова `analysisExecutor.shutdown()` и `barcodeScanner.close()` при размонтировании Composable.
+
+#### 2. Утечка памяти ML Kit при выборе изображения из галереи
+- **Файл**: [`AddEditCardViewModel.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/addedit/AddEditCardViewModel.kt)
+- **Проблема**:
+  ```kotlin
+  val scanner = BarcodeScanning.getClient()
+  scanner.process(inputImage)...
+  ```
+  При каждом распознавании фото из галереи создается новый экземпляр `BarcodeScanning.getClient()`, который не закрывается ни в `addOnSuccessListener`, ни в `addOnFailureListener`.
+- **Решение**: Вызывать `scanner.close()` после завершения обработки изображения.
+
+#### 3. Опасность потери данных при сбое миграции Room (`fallbackToDestructiveMigration`)
+- **Файл**: [`AppDatabase.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/local/AppDatabase.kt)
+- **Проблема**:
+  ```kotlin
+  .fallbackToDestructiveMigration(dropAllTables = true)
+  ```
+  В случае отсутствия миграции между версиями базы данных Room без предупреждения полностью очистит базу данных пользователя и удалит все сохраненные дисконтные карты.
+- **Решение**: Для приложения, хранящего пользовательские данные локально, рекомендуется убрать `fallbackToDestructiveMigration(dropAllTables = true)` или предусмотреть логику резервного копирования.
+
+#### 4. Неэффективность и риск OutOfMemory в кэше штрихкодов (`LruCache`)
+- **Файл**: [`BarcodeGenerator.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/util/BarcodeGenerator.kt)
+- **Проблема**:
+  ```kotlin
+  private val barcodeCache = LruCache<String, Bitmap>(100)
+  ```
+  Кэш ограничен количеством элементов (100 битмапов). Битмап размером 800x400 ARGB_8888 занимает ~1.28 МБ. 100 битмапов могут занять свыше 100 МБ Heap-памяти.
+- **Решение**: Перевести `LruCache` на ограничение по размеру в килобайтах (`maxSize` в KB и переопределение `sizeOf`).
+
+#### 5. Выполнение синхронного кода с базой данных на Main Thread во Widgеt Provider
+- **Файл**: [`DiscountCardsWidgetProvider.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetProvider.kt)
+- **Проблема**:
+  ```kotlin
+  val card: DiscountCard? = runBlocking {
+      app.database.discountCardDao().getCardByIdDirect(config.cardId)
+  }
+  ```
+  Вызов `runBlocking` с обращением к Room прямо на главном потоке `BroadcastReceiver` может вызвать задержку интерфейса или ANR при высокой нагрузке на диск.
+- **Решение**: Использовать `goAsync()` в `BroadcastReceiver` с исполнением корутины в `Dispatchers.IO`.
+
+---
+
+### 🟡 Средние и малые замечания (Logic & UI/UX Issues)
+
+#### 6. Сброс состояния навигации при повороте экрана или смене языка
+- **Файл**: [`MainActivity.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/MainActivity.kt)
+- **Проблема**: `backStack` инициализируется через `remember { mutableStateListOf(...) }`. При изменении конфигурации (поворот экрана, переключение языка через `recreate()`) стек навигации теряется и пользователь возвращается на главный экран.
+- **Решение**: Использовать `rememberSaveable` со специальным `Saver` для стека `Destination`.
+
+#### 7. Поведение яркости экрана по умолчанию в деталях карты
+- **Файл**: [`CardDetailScreen.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailScreen.kt)
+- **Проблема**: По умолчанию `cardBrightnessPercent = 100`. При каждом открытии детального экрана карты экран телефона автоматически переключается на 100% максимальную яркость, что может сслепить пользователя в темноте.
+- **Решение**: Рекомендуется сделать базовым значением системную яркость (0 или -1) или позволить пользователю гибче управлять этим параметром.
+
+#### 8. Необработанные жестко зашитые строки (Hardcoded Strings)
+- **Файл**: [`DiscountCardsWidgetConfigureActivity.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetConfigureActivity.kt)
+- **Проблема**: Тексты `"Нет доступных карточек"`, `"Сортировка"`, `"Отображение и стиль"` зашиты строковыми литералами на русском языке вместо ресурсов `R.string.*`.
+- **Решение**: Вынести их в `strings.xml` для всех поддерживаемых языков.
+
+#### 9. Необновление поля `updatedAt` при увеличении счетчика использования карты
+- **Файл**: [`DiscountCardDao.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/local/dao/DiscountCardDao.kt)
+- **Проблема**: Запрос `UPDATE discount_cards SET usageCount = usageCount + 1 WHERE id = :id` не обновляет метку времени `updatedAt`.
+
+---
+
+## 3. Проверка тестового покрытия (Test Coverage Audit)
+
+### 📊 Текущий статус
+- В проекте присутствуют **33 юнит-теста**, все они проходят успешно (`:app:testDebugUnitTest`).
+- Покрыты основные сценарии в:
+  - `CardRepositoryImplTest.kt` (импорт/экспорт, режимы MERGE/OVERWRITE, сортировка).
+  - `AddEditCardViewModelTest.kt` (создание, редактирование, дубликаты, валидация).
+  - `CardDetailViewModelTest.kt` (загрузка карты, удаление, обработка ошибок).
+  - `CardListViewModelTest.kt` (поиск, фильтрация, выбор карт для экспорта).
+  - `BackupManagerTest.kt` (сериализация, потоки).
+  - `BarcodeGeneratorTest.kt` (кодирование штрихкодов, проверка контрольных сумм).
+
+### ❌ Отсутствующие тесты (Missing Tests)
+
+1. **`SettingsViewModelTest.kt`** — полностью отсутствует.
+   - Не протестировано переключение темы, языков, сортировки, параметров отображения добавляемой кнопки и штрихкодов.
+2. **`UserPreferencesRepositoryTest.kt`** — протестированы только дефолтные значения `UserPreferences`.
+   - Не протестированы вызовы `getAppLanguageSynchronously()`, `getLocalizedContext()`, работа со `SharedPreferences` и `DataStore`.
+3. **Сериализаторы (`Serializers.kt`)**:
+   - Нет тестов для `ColorHexSerializer` (валидный hex, без `#`, невалидные строки, проверка альфа-канала).
+   - Нет тестов для `DateIso8601Serializer` (формат ISO-8601, обработка парсинга сырого `Long` и обработка ошибок).
+4. **Тесты виджетов (`WidgetPrefsTest.kt`)**:
+   - Не протестировано сохранение, загрузка и удаление конфигурации виджетов в `SharedPreferences`.
+5. **Тесты миграций БД Room (`AppDatabaseMigrationTest.kt`)**:
+   - Отсутствуют интеграционные/юнит-тесты миграций `MIGRATION_1_2`, `MIGRATION_2_3`, `MIGRATION_3_4`.
+6. **Инструментальные и UI-тесты (`androidTest`)**:
+   - В `androidTest` находится только стандартный шаблонный файл `ExampleInstrumentedTest.kt`. Отсутствуют UI-тесты на Compose и навигацию.
+
+---
+
+## 4. Сводная таблица найденных проблем и приоритеты
+
+| № | Компонент | Проблема | Приоритет |
+|---|---|---|---|
+| 1 | `CameraBarcodeScanner.kt` | Утечка `Executor` и `BarcodeScanner` при закрытии камеры | 🔴 Высокий |
+| 2 | `AddEditCardViewModel.kt` | Утечка `BarcodeScanner` при выборе фото из галереи | 🔴 Высокий |
+| 3 | `AppDatabase.kt` | Risk полной очистки БД при missing migration | 🔴 Высокий |
+| 4 | `BarcodeGenerator.kt` | OOM риск из-за нелимитированного по памяти `LruCache` | 🟡 Средний |
+| 5 | `DiscountCardsWidgetProvider.kt` | `runBlocking` обращение к БД на UI треде | 🟡 Средний |
+| 6 | `MainActivity.kt` | Потеря стека навигации при повороте экрана / смене языка | 🟡 Средний |
+| 7 | `DiscountCardsWidgetConfigureActivity.kt` | Захардкоженные русские строки без `strings.xml` | 🟢 Низкий |
+| 8 | `SettingsViewModel` / `Serializers` | Отсутствие юнит-тестов | 🟡 Средний |
+, absolutePath=C:\Users\Vadim_S\AppData\Local\Google\AndroidStudio2026.2.1\projects\discountcards.e9625bb0\.artifacts\f91e9017-f4c2-4cc4-b207-8f090d31294b\code_analysis_report.artifact.md)
+Response:
+  File was written
+Agent:  
+> Thought  
+> **Verifying the report**  
+>   
+> I've crafted the report artifact. Now, I'm meticulously verifying its contents, ensuring everything is accurate. My next step involves composing a concise, user-friendly summary in Russian for the expert, and I intend to direct them to the detailed report.  
+>   
+>   
+>   
+Проведен полный анализ исходного кода приложения **Discount Cards**, проверены алгоритмы, бизнес-логика, работа с ресурсами, а также проведен аудит тестового покрытия.
+
+Подробный отчет сохранен в артефакт: [code_analysis_report.artifact.md](file:///C:/Users/Vadim_S/AppData/Local/Google/AndroidStudio2026.2.1/projects/discountcards.e9625bb0/.artifacts/f91e9017-f4c2-4cc4-b207-8f090d31294b/code_analysis_report.artifact.md).
+
+---
+
+### 📋 Краткая выжимка результатов
+
+#### 1. Статус тестов
+- Текущие юнит-тесты **проходят успешно (33 из 33)**.
+- **Покрыты тестами**:
+  - `CardRepositoryImpl` (импорт/экспорт, стратегии объединения/перезаписи карт).
+  - `AddEditCardViewModel` (создание, редактирование, проверка дубликатов).
+  - `CardDetailViewModel` (загрузка детальной информации, удаление).
+  - `CardListViewModel` (поиск, фильтрация, выбор карт).
+  - `BackupManager` (сериализация/десериализация JSON и потоков).
+  - `BarcodeGenerator` (парсинг и генерация штрихкодов, контрольные суммы EAN/UPC).
+- **Отсутствуют тесты для**:
+  1. `SettingsViewModel` (переключение тем, языков, сортировок).
+  2. `UserPreferencesRepository` (синхронное чтение языка, создание локализованного контекста).
+  3. `Serializers` (`ColorHexSerializer` и `DateIso8601Serializer`).
+  4. Настроек виджетов (`WidgetPrefs`).
+  5. Миграций базы данных Room (`MIGRATION_1_2`, `MIGRATION_2_3`, `MIGRATION_3_4`).
+  6. Compose UI / UI-тестов в `src/androidTest`.
+
+---
+
+#### 2. Ключевые потенциальные ошибки и риски
+
+1. **Утечки ресурсов ML Kit и однопоточного Executor при сканировании камеры**:
+   - В [`CameraBarcodeScanner.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/addedit/components/CameraBarcodeScanner.kt#L91-L92) создаются `Executors.newSingleThreadExecutor()` и `BarcodeScanning.getClient()`, но вызовы `.shutdown()` и `.close()` при закрытии экрана отсутствуют.
+2. **Утечка `BarcodeScanning.getClient()` при распознавании из галереи**:
+   - В [`AddEditCardViewModel.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/addedit/AddEditCardViewModel.kt#L191) экземпляр сканера создается на каждый запрос и не закрывается после завершения.
+3. **Риск потери данных при сбое миграции Room**:
+   - В [`AppDatabase.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/local/AppDatabase.kt#L41) включен `fallbackToDestructiveMigration(dropAllTables = true)`. В случае отсутствия миграции базы данных при очередном обновлении все карты пользователя будут сброшены.
+4. **Риск OutOfMemory в кэше битмапов штрихкодов**:
+   - В [`BarcodeGenerator.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/util/BarcodeGenerator.kt#L30) `LruCache` ограничен 100 битмапами без лимита по физической памяти (KB/MB), что может вызывать OutOfMemory на устройствах с небольшим объемом ОЗУ.
+5. **Сброс состояния навигации при повороте экрана / смене языка**:
+   - В [`MainActivity.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/MainActivity.kt#L141) `backStack` обернут в обычный `remember`, а не `rememberSaveable`, из-за чего при перезапуске Activity стек возвращается на главный экран.
+6. **Вызов `runBlocking` на Main Thread во Widgеt Provider**:
+   - В [`DiscountCardsWidgetProvider.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetProvider.kt#L52) вызов обращения к Room производится через `runBlocking` в главном потоке.
+7. **Захардкоженные русские строки экранe настройки виджета**:
+   - В [`DiscountCardsWidgetConfigureActivity.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetConfigureActivity.kt#L173) тексты не вынесены в `strings.xml`.
+
+---
+
+Подробные рекомендации и строки кода приведены в созданном отчете [code_analysis_report.artifact.md](file:///C:/Users/Vadim_S/AppData/Local/Google/AndroidStudio2026.2.1/projects/discountcards.e9625bb0/.artifacts/f91e9017-f4c2-4cc4-b207-8f090d31294b/code_analysis_report.artifact.md).
+Файл перемещен в .agent/code_analysis_report.artifact.md
+
+---
+
+>   
+Все **критические ошибки и риски** успешно устранены:
+
+1. **Освобождение ресурсов сканера камеры (`CameraBarcodeScanner.kt`)**:
+   - Добавлен `DisposableEffect`, который при закрытии диалога сканера вызывает `analysisExecutor.shutdown()` и `barcodeScanner.close()`, устраняя утечку потоков и нативных ресурсов ML Kit.
+
+2. **Закрытие ML Kit клиентами при декодировании из галереи (`AddEditCardViewModel.kt`)**:
+   - Добавлен `.addOnCompleteListener { runCatching { scanner.close() } }` к обработчику галереи, гарантирующий закрытие `BarcodeScanning` после обработки файла.
+
+3. **Защита пользовательских данных в БД (`AppDatabase.kt`)**:
+   - Заменен `fallbackToDestructiveMigration(dropAllTables = true)` на `fallbackToDestructiveMigrationOnDowngrade(dropAllTables = true)`. Теперь при обычных обновлениях с созданием миграции данные пользователей не будут стираться при ошибках.
+
+4. **Защита от OutOfMemory при кэшировании штрихкодов (`BarcodeGenerator.kt`)**:
+   - `LruCache` переведен с лимита по количеству штрихкодов (100 шт) на динамический расчет по объему памяти в килобайтах (`sizeOf` в KB, не более 1/8 объёма RAM).
+
+5. **Асинхронное обновление виджетов без блокировки Main Thread (`DiscountCardsWidgetProvider.kt`)**:
+   - Добавлен вызов `goAsync()` с запуском корутины в `Dispatchers.IO` для обработчиков `onUpdate` и `onAppWidgetOptionsChanged`, исключая блокировку главного потока `BroadcastReceiver`.
+
+Все 33 юнит-теста прошли успешно!
+

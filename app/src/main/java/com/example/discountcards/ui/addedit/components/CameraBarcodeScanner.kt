@@ -104,6 +104,13 @@ fun CameraBarcodeScannerDialog(
         val analysisExecutor = remember { Executors.newSingleThreadExecutor() }
         val barcodeScanner = remember { BarcodeScanning.getClient() }
 
+        DisposableEffect(Unit) {
+            onDispose {
+                analysisExecutor.shutdown()
+                barcodeScanner.close()
+            }
+        }
+
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Color.Black

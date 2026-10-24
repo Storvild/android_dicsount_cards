@@ -24,7 +24,14 @@ object BarcodeGenerator {
         "PHONE"
     )
 
-    private val barcodeCache = LruCache<String, Bitmap>(100)
+    private val maxMemoryKb = (Runtime.getRuntime().maxMemory() / 1024).toInt()
+    private val cacheSizeKb = (maxMemoryKb / 8).coerceIn(2048, 16384)
+
+    private val barcodeCache = object : LruCache<String, Bitmap>(cacheSizeKb) {
+        override fun sizeOf(key: String, value: Bitmap): Int {
+            return value.byteCount / 1024
+        }
+    }
 
     fun generateBarcodeCached(
         content: String,
