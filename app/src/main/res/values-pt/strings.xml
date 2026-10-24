@@ -212,6 +212,7 @@ Versão 1.0</string>
     <string name="widget_save_button">Salvar</string>
     <string name="widget_1x1_warning">Para o widget 1x1, você pode escolher apenas um: nome ou código.</string>
     <string name="widget_settings_desc">Configurações do widget</string>
+    <string name="widget_edit_note">Para editar, toque no botão invisível no canto superior direito do widget.</string>
     <string name="card_action_edit">Editar</string>
     <string name="card_action_delete">Excluir</string>
     <string name="card_actions_title">Ações do cartão</string>

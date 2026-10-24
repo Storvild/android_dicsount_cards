@@ -212,6 +212,7 @@
     <string name="widget_save_button">सहेजें</string>
     <string name="widget_1x1_warning">1x1 विजेट के लिए, आप केवल एक चुन सकते हैं: नाम या कोड।</string>
     <string name="widget_settings_desc">विजेट सेटिंग्स</string>
+    <string name="widget_edit_note">संपादित करने के लिए, विजेट के ऊपरी दाएं कोने में अदृश्य बटन पर टैप करें।</string>
     <string name="card_action_edit">संपादित करें</string>
     <string name="card_action_delete">हटाएं</string>
     <string name="card_actions_title">कार्ड क्रियाएँ</string>

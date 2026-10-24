@@ -213,6 +213,7 @@
     <string name="widget_save_button">حفظ</string>
     <string name="widget_1x1_warning">بالنسبة لأداة 1x1، يمكنك اختيار واحد فقط: الاسم أو الرمز.</string>
     <string name="widget_settings_desc">إعدادات الأداة</string>
+    <string name="widget_edit_note">لتعديل، اضغط على الزر الخفي في الزاوية العلوية اليمنى للأداة.</string>
     <string name="card_action_edit">تعديل</string>
     <string name="card_action_delete">حذف</string>
     <string name="card_actions_title">إجراءات البطاقة</string>

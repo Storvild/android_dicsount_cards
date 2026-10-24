@@ -212,6 +212,7 @@ Version 1.0</string>
     <string name="widget_save_button">Save</string>
     <string name="widget_1x1_warning">For 1x1 widget, you can choose only one: name or code.</string>
     <string name="widget_settings_desc">Widget Settings</string>
+    <string name="widget_edit_note">To edit, tap the invisible button in the top right corner of the widget.</string>
     <string name="card_action_edit">Edit</string>
     <string name="card_action_delete">Delete</string>
     <string name="card_actions_title">Card Actions</string>

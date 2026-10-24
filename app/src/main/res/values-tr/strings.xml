@@ -212,6 +212,7 @@ Sürüm 1.0</string>
     <string name="widget_save_button">Kaydet</string>
     <string name="widget_1x1_warning">1x1 widget için yalnızca birini seçebilirsiniz: ad veya kod.</string>
     <string name="widget_settings_desc">Widget Ayarları</string>
+    <string name="widget_edit_note">Düzenlemek için widget\'ın sağ üst köşesindeki görünmez düğmeye dokunun.</string>
     <string name="card_action_edit">Düzenle</string>
     <string name="card_action_delete">Sil</string>
     <string name="card_actions_title">Kart İşlemleri</string>

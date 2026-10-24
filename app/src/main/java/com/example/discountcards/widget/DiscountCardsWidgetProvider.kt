@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.RemoteViews
 import com.example.discountcards.DiscountCardsApp
 import com.example.discountcards.MainActivity
@@ -68,14 +69,15 @@ class DiscountCardsWidgetProvider : AppWidgetProvider() {
             val cellsH = ((minHeight - 10) / 73).coerceAtLeast(1).coerceAtMost(5)
 
             val showCode = config.showCode
-            var showName = config.showStoreName
+            val showName = config.showStoreName
 
-            // Rule for 1x1: choose only one (name OR code)
-            if (cellsW == 1 && cellsH == 1) {
-                if (showCode && showName) {
-                    showName = false
-                }
-            }
+            val is1x1 = cellsW == 1 && cellsH == 1
+            val nameTextSizeSp = if (is1x1) 10f else 14f
+            views.setTextViewTextSize(
+                R.id.widget_store_name,
+                TypedValue.COMPLEX_UNIT_SP,
+                nameTextSizeSp
+            )
 
             if (card != null) {
                 if (showName && card.storeName.isNotBlank()) {

@@ -211,6 +211,7 @@
     <string name="widget_save_button">Сохранить</string>
     <string name="widget_1x1_warning">Для виджета 1х1 можно выбрать только одно: название или код.</string>
     <string name="widget_settings_desc">Настройки виджета</string>
+    <string name="widget_edit_note">Для редактирования нажмите на невидимую кнопку в верхнем правом углу виджета.</string>
     <string name="card_action_edit">Редактировать</string>
     <string name="card_action_delete">Удалить</string>
     <string name="card_actions_title">Действия с картой</string>

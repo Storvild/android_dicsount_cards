@@ -212,6 +212,7 @@
     <string name="widget_save_button">保存</string>
     <string name="widget_1x1_warning">对于 1x1 小部件，您只能选择一项：名称或代码。</string>
     <string name="widget_settings_desc">小部件设置</string>
+    <string name="widget_edit_note">要进行编辑，请点击小部件右上角的隐形按钮。</string>
     <string name="card_action_edit">编辑</string>
     <string name="card_action_delete">删除</string>
     <string name="card_actions_title">卡片操作</string>

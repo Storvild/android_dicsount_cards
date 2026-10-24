@@ -212,6 +212,7 @@
     <string name="widget_save_button">保存</string>
     <string name="widget_1x1_warning">1x1ウィジェットでは、名前またはコードのいずれか1つのみ選択できます。</string>
     <string name="widget_settings_desc">ウィジェットの設定</string>
+    <string name="widget_edit_note">編集するには、ウィジェットの右上隅にある非表示のボタンをタップします。</string>
     <string name="card_action_edit">編集</string>
     <string name="card_action_delete">削除</string>
     <string name="card_actions_title">カードのアクション</string>
