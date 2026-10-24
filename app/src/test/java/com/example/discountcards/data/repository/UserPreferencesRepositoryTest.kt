@@ -10,9 +10,18 @@ class UserPreferencesRepositoryTest {
         val prefs = UserPreferences()
         assertEquals(ThemeMode.SYSTEM, prefs.themeMode)
         assertEquals(SortOrder.ALPHABETICAL, prefs.sortOrder)
-        assertEquals(100, prefs.cardBrightnessPercent)
+        assertEquals(0, prefs.cardBrightnessPercent)
         assertEquals(true, prefs.showAddButton)
         assertEquals(true, prefs.showBarcodesInList)
+        assertEquals(AppLanguage.SYSTEM, prefs.appLanguage)
+    }
+
+    @Test
+    fun testAppLanguageFromOrdinal() {
+        assertEquals(AppLanguage.SYSTEM, AppLanguage.fromOrdinal(0))
+        assertEquals(AppLanguage.ENGLISH, AppLanguage.fromOrdinal(1))
+        assertEquals(AppLanguage.RUSSIAN, AppLanguage.fromOrdinal(2))
+        assertEquals(AppLanguage.SYSTEM, AppLanguage.fromOrdinal(999))
     }
 
     @Test

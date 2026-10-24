@@ -50,7 +50,7 @@ enum class AppLanguage {
 data class UserPreferences(
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val sortOrder: SortOrder = SortOrder.ALPHABETICAL,
-    val cardBrightnessPercent: Int = 100,
+    val cardBrightnessPercent: Int = 0,
     val showAddButton: Boolean = true,
     val showBarcodesInList: Boolean = true,
     val appLanguage: AppLanguage = AppLanguage.SYSTEM
@@ -58,7 +58,7 @@ data class UserPreferences(
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
-class UserPreferencesRepository(private val context: Context) {
+open class UserPreferencesRepository(private val context: Context? = null) {
 
     private object PreferencesKeys {
         val THEME_MODE = intPreferencesKey("theme_mode")
@@ -69,18 +69,19 @@ class UserPreferencesRepository(private val context: Context) {
         val APP_LANGUAGE = intPreferencesKey("app_language")
     }
 
-    private val sharedPreferences: SharedPreferences
-        get() = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences?
+        get() = context?.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
 
-    fun getAppLanguageSynchronously(): AppLanguage {
-        val ordinal = sharedPreferences.getInt("app_language", AppLanguage.SYSTEM.ordinal)
+    open fun getAppLanguageSynchronously(): AppLanguage {
+        val ordinal = sharedPreferences?.getInt("app_language", AppLanguage.SYSTEM.ordinal)
+            ?: AppLanguage.SYSTEM.ordinal
         return AppLanguage.fromOrdinal(ordinal)
     }
 
-    val userPreferencesFlow: Flow<UserPreferences> = context.dataStore.data.map { preferences ->
+    open val userPreferencesFlow: Flow<UserPreferences> = context?.dataStore?.data?.map { preferences ->
         val themeOrdinal = preferences[PreferencesKeys.THEME_MODE] ?: ThemeMode.SYSTEM.ordinal
         val sortOrdinal = preferences[PreferencesKeys.SORT_ORDER] ?: SortOrder.ALPHABETICAL.ordinal
-        val brightness = preferences[PreferencesKeys.CARD_BRIGHTNESS] ?: 100
+        val brightness = preferences[PreferencesKeys.CARD_BRIGHTNESS] ?: 0
         val showAddButton = preferences[PreferencesKeys.SHOW_ADD_BUTTON] ?: true
         val showBarcodesInList = preferences[PreferencesKeys.SHOW_BARCODES_IN_LIST] ?: true
         val languageOrdinal = preferences[PreferencesKeys.APP_LANGUAGE] ?: AppLanguage.SYSTEM.ordinal
@@ -93,46 +94,46 @@ class UserPreferencesRepository(private val context: Context) {
             showBarcodesInList = showBarcodesInList,
             appLanguage = AppLanguage.fromOrdinal(languageOrdinal)
         )
-    }
+    } ?: kotlinx.coroutines.flow.flowOf(UserPreferences())
 
-    suspend fun updateThemeMode(themeMode: ThemeMode) {
-        context.dataStore.edit { preferences ->
+    open suspend fun updateThemeMode(themeMode: ThemeMode) {
+        context?.dataStore?.edit { preferences ->
             preferences[PreferencesKeys.THEME_MODE] = themeMode.ordinal
         }
     }
 
-    suspend fun updateSortOrder(sortOrder: SortOrder) {
-        context.dataStore.edit { preferences ->
+    open suspend fun updateSortOrder(sortOrder: SortOrder) {
+        context?.dataStore?.edit { preferences ->
             preferences[PreferencesKeys.SORT_ORDER] = sortOrder.ordinal
         }
     }
 
-    suspend fun updateCardBrightnessPercent(percent: Int) {
-        context.dataStore.edit { preferences ->
+    open suspend fun updateCardBrightnessPercent(percent: Int) {
+        context?.dataStore?.edit { preferences ->
             preferences[PreferencesKeys.CARD_BRIGHTNESS] = percent.coerceIn(0, 100)
         }
     }
 
-    suspend fun updateShowAddButton(show: Boolean) {
-        context.dataStore.edit { preferences ->
+    open suspend fun updateShowAddButton(show: Boolean) {
+        context?.dataStore?.edit { preferences ->
             preferences[PreferencesKeys.SHOW_ADD_BUTTON] = show
         }
     }
 
-    suspend fun updateShowBarcodesInList(show: Boolean) {
-        context.dataStore.edit { preferences ->
+    open suspend fun updateShowBarcodesInList(show: Boolean) {
+        context?.dataStore?.edit { preferences ->
             preferences[PreferencesKeys.SHOW_BARCODES_IN_LIST] = show
         }
     }
 
-    suspend fun updateAppLanguage(language: AppLanguage) {
-        sharedPreferences.edit().putInt("app_language", language.ordinal).apply()
-        context.dataStore.edit { preferences ->
+    open suspend fun updateAppLanguage(language: AppLanguage) {
+        sharedPreferences?.edit()?.putInt("app_language", language.ordinal)?.apply()
+        context?.dataStore?.edit { preferences ->
             preferences[PreferencesKeys.APP_LANGUAGE] = language.ordinal
         }
     }
 
-    fun getLocalizedContext(base: Context): Context {
+    open fun getLocalizedContext(base: Context): Context {
         val language = getAppLanguageSynchronously()
         if (language == AppLanguage.SYSTEM) return base
         val locale = when (language) {

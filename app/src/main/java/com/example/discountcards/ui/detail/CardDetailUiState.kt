@@ -7,7 +7,7 @@ data class CardDetailUiState(
     val isLoading: Boolean = true,
     val card: DiscountCard? = null,
     val barcodeBitmap: Bitmap? = null,
-    val brightnessPercent: Int = 100,
+    val brightnessPercent: Int = 0,
     val isDeleteDialogVisible: Boolean = false,
     val isDeleted: Boolean = false,
     val isCvcVisible: Boolean = false,

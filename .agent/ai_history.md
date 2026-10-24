@@ -1232,3 +1232,43 @@ Agent:
 
 Все 33 юнит-теста прошли успешно!
 
+---
+
+Agent:  
+Исправления замечаний 6 и 7 и новые тесты успешно внесены:
+
+### 🛠 Внесенные исправления
+
+1. **Замечание №6 — Сохранение состояния навигации при повороте экрана и смене языка ([`MainActivity.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/MainActivity.kt))**:
+   - `remember` для `backStack` заменен на `rememberSaveable(saver = backStackSaver)`.
+   - Реализованы `destinationSaver()` и `backStackSaver` для сериализации и точного восстановления стека экранов (`CardList`, `CardDetail`, `AddEditCard`, `Settings`, `Archive`), их ключей и параметров при пересоздании Activity.
+
+2. **Замечание №7 — Корректировка яркости экрана по умолчанию ([`UserPreferencesRepository.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/data/repository/UserPreferencesRepository.kt))**:
+   - Значение яркости по умолчанию изменено с `100` на `0` (`0` означает системную яркость по умолчанию, а значения >0 — фиксированный процент). Теперь при открытии деталей карты экран больше не будет принудительно переключаться на 100% максимальную яркость, если пользователь сам не настроил слайдер в настройках.
+
+---
+
+### 🧪 Написанные тесты
+
+1. **[`SettingsViewModelTest.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/test/java/com/example/discountcards/ui/settings/SettingsViewModelTest.kt)**:
+   - Протестированы `setThemeMode`, `setSortOrder`, `setCardBrightness`, `setShowAddButton`, `setShowBarcodesInList`, `setAppLanguage` и синхронное чтение языка `getSyncAppLanguage`.
+
+2. **[`SerializersTest.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/test/java/com/example/discountcards/util/SerializersTest.kt)**:
+   - Протестирована сериализация и десериализация цвета (`ColorHexSerializer`), дат и меток времени (`DateIso8601Serializer` с поддержкой ISO-8601, сырых `Long` строк и обработки ошибок).
+
+3. **[`NavigationSaverTest.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/test/java/com/example/discountcards/ui/NavigationSaverTest.kt)**:
+   - Протестированы `destinationSaver()` и `backStackSaver` для всех типов экранов навигации.
+
+4. **Дополнен [`UserPreferencesRepositoryTest.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/test/java/com/example/discountcards/data/repository/UserPreferencesRepositoryTest.kt)**:
+   - Добавлены проверки для `AppLanguage.fromOrdinal()` и дефолтного уровня яркости `0`.
+
+Все **48 юнит-тестов** прошли успешно!
+
+---
+
+Agent:  
+Настройка яркости по умолчанию установлена в **`0` (Без изменений / системная яркость)** во всех компонентах приложения (`UserPreferences`, `UserPreferencesRepository` и `CardDetailUiState`). 
+
+При открытии любой дисконтной карты или при первом запуске приложения стандартная системная яркость устройства будет сохраняться, пока пользователь явно не изменит слайдер в настройках.
+
+Все 48 юнит-тестов успешно прошли, приложение протестировано и перезапущено.

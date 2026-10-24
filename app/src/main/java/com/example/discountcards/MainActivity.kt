@@ -64,7 +64,7 @@ sealed interface Destination {
 }
 
 fun destinationSaver(): Saver<Destination, String> = Saver(
-    save = { _, destination ->
+    save = { destination ->
         when (destination) {
             is Destination.CardList -> "CardList"
             is Destination.CardDetail -> "CardDetail:${destination.cardId}:${destination.key}"
@@ -96,9 +96,9 @@ fun destinationSaver(): Saver<Destination, String> = Saver(
 )
 
 val backStackSaver = Saver<SnapshotStateList<Destination>, List<String>>(
-    save = { scope, list ->
+    save = { list ->
         val destSaver = destinationSaver()
-        list.mapNotNull { with(destSaver) { scope.save(it) } }
+        list.mapNotNull { item -> with(destSaver) { save(item) } }
     },
     restore = { savedList ->
         val destSaver = destinationSaver()
@@ -190,7 +190,7 @@ fun DiscountCardsNavigation(
     val preferences by preferencesRepository.userPreferencesFlow
         .collectAsStateWithLifecycle(initialValue = UserPreferences())
 
-    val backStack = remember {
+    val backStack = rememberSaveable(saver = backStackSaver) {
         mutableStateListOf<Destination>().apply {
             add(Destination.CardList)
             if (initialCardId != -1L) {
