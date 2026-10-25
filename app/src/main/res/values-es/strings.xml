@@ -56,6 +56,7 @@ Versión 1.0</string>
     <string name="sort_dialog_title">Ordenar tarjetas</string>
 
     <!-- Settings -->
+    <string name="brightness_label">Brillo</string>
     <string name="brightness_setting_label">Brillo al abrir la tarjeta</string>
     <string name="brightness_no_change">0% — sin cambios</string>
     <string name="brightness_percent">%1$d%%</string>
@@ -193,6 +194,10 @@ Versión 1.0</string>
     <!-- Settings: Show Barcodes in List -->
     <string name="show_barcodes_in_list_label">Mostrar códigos de barras en la lista</string>
     <string name="show_barcodes_in_list_description">Mostrar códigos de barras y números de tarjeta en la pantalla principal</string>
+
+    <!-- Settings: Show Brightness in Card -->
+    <string name="show_brightness_in_card_label">Mostrar brillo en la tarjeta</string>
+    <string name="show_brightness_in_card_description">Mostrar deslizador de brillo en la pantalla de detalles</string>
 
     <!-- Language -->
     <string name="language_setting_label">Idioma</string>

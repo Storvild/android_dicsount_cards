@@ -56,6 +56,7 @@
     <string name="sort_dialog_title">فرز البطاقات</string>
 
     <!-- Settings -->
+    <string name="brightness_label">السطوع</string>
     <string name="brightness_setting_label">السطوع عند فتح البطاقة</string>
     <string name="brightness_no_change">0% — بدون تغيير</string>
     <string name="brightness_percent">%1$d%%</string>
@@ -194,6 +195,10 @@
     <!-- Settings: Show Barcodes in List -->
     <string name="show_barcodes_in_list_label">إظهار الرمز الشريطية في القائمة</string>
     <string name="show_barcodes_in_list_description">عرض الرمز الشريطية وأرقام البطاقات على الشاشة الرئيسية</string>
+
+    <!-- Settings: Show Brightness in Card -->
+    <string name="show_brightness_in_card_label">إظهار السطوع في البطاقة</string>
+    <string name="show_brightness_in_card_description">إظهار شريط السطوع في شاشة تفاصيل البطاقة</string>
 
     <!-- Language -->
     <string name="language_setting_label">اللغة</string>

@@ -56,6 +56,7 @@
     <string name="sort_dialog_title">卡片排序</string>
 
     <!-- Settings -->
+    <string name="brightness_label">亮度</string>
     <string name="brightness_setting_label">打开卡片时的屏幕亮度</string>
     <string name="brightness_no_change">0% — 不改变</string>
     <string name="brightness_percent">%1$d%%</string>
@@ -193,6 +194,10 @@
     <!-- Settings: Show Barcodes in List -->
     <string name="show_barcodes_in_list_label">在列表中显示条形码</string>
     <string name="show_barcodes_in_list_description">在主屏幕上显示条形码和卡号</string>
+
+    <!-- Settings: Show Brightness in Card -->
+    <string name="show_brightness_in_card_label">在卡片中显示亮度</string>
+    <string name="show_brightness_in_card_description">在卡片详情屏幕上显示亮度滑块</string>
 
     <!-- Language -->
     <string name="language_setting_label">语言</string>

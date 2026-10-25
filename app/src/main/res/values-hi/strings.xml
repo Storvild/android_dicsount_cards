@@ -56,6 +56,7 @@
     <string name="sort_dialog_title">कार्ड क्रमबद्ध करें</string>
 
     <!-- Settings -->
+    <string name="brightness_label">ब्राइटनेस</string>
     <string name="brightness_setting_label">कार्ड खोलते समय ब्राइटनेस</string>
     <string name="brightness_no_change">0% — कोई बदलाव नहीं</string>
     <string name="brightness_percent">%1$d%%</string>
@@ -193,6 +194,10 @@
     <!-- Settings: Show Barcodes in List -->
     <string name="show_barcodes_in_list_label">सूची में बारकोड दिखाएं</string>
     <string name="show_barcodes_in_list_description">मुख्य स्क्रीन पर बारकोड और कार्ड नंबर प्रदर्शित करें</string>
+
+    <!-- Settings: Show Brightness in Card -->
+    <string name="show_brightness_in_card_label">कार्ड में ब्राइटनेस दिखाएं</string>
+    <string name="show_brightness_in_card_description">कार्ड विवरण स्क्रीन पर ब्राइटनेस स्लाइडर दिखाएं</string>
 
     <!-- Language -->
     <string name="language_setting_label">भाषा</string>

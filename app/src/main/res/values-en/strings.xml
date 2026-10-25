@@ -56,6 +56,7 @@ Version 1.0</string>
     <string name="sort_dialog_title">Sort cards</string>
 
     <!-- Settings -->
+    <string name="brightness_label">Brightness</string>
     <string name="brightness_setting_label">Brightness when opening a card</string>
     <string name="brightness_no_change">0% — no change</string>
     <string name="brightness_percent">%1$d%%</string>
@@ -193,6 +194,10 @@ Version 1.0</string>
     <!-- Settings: Show Barcodes in List -->
     <string name="show_barcodes_in_list_label">Show barcodes in list</string>
     <string name="show_barcodes_in_list_description">Display barcodes and card numbers on the main screen</string>
+
+    <!-- Settings: Show Brightness in Card -->
+    <string name="show_brightness_in_card_label">Show brightness in card</string>
+    <string name="show_brightness_in_card_description">Show brightness slider on card details screen</string>
 
     <!-- Language -->
     <string name="language_setting_label">Language</string>

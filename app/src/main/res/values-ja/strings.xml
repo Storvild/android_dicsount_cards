@@ -56,6 +56,7 @@
     <string name="sort_dialog_title">カードの並べ替え</string>
 
     <!-- Settings -->
+    <string name="brightness_label">明るさ</string>
     <string name="brightness_setting_label">カード表示時の画面の明るさ</string>
     <string name="brightness_no_change">0% — 変更なし</string>
     <string name="brightness_percent">%1$d%%</string>
@@ -193,6 +194,10 @@
     <!-- Settings: Show Barcodes in List -->
     <string name="show_barcodes_in_list_label">リストにバーコードを表示</string>
     <string name="show_barcodes_in_list_description">メイン画面でバーコードとカード番号を表示します</string>
+
+    <!-- Settings: Show Brightness in Card -->
+    <string name="show_brightness_in_card_label">カード内に明るさを表示</string>
+    <string name="show_brightness_in_card_description">カード詳細画面で明るさスライダーを表示する</string>
 
     <!-- Language -->
     <string name="language_setting_label">言語</string>

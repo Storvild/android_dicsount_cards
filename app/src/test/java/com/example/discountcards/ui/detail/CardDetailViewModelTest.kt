@@ -3,10 +3,16 @@ package com.example.discountcards.ui.detail
 import com.example.discountcards.data.local.dao.DiscountCardDao
 import com.example.discountcards.data.local.entity.DiscountCard
 import com.example.discountcards.data.repository.CardRepositoryImpl
+import com.example.discountcards.data.repository.UserPreferences
+import com.example.discountcards.data.repository.UserPreferencesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -213,5 +219,39 @@ class CardDetailViewModelTest {
         assertFalse(state.isDeleteDialogVisible)
         assertTrue(state.isDeleted)
         assertEquals(0, dao.cards.size)
+    }
+
+    private class FakeUserPreferencesRepository : UserPreferencesRepository() {
+        private val _prefs = MutableStateFlow(UserPreferences())
+        override val userPreferencesFlow: Flow<UserPreferences> = _prefs.asStateFlow()
+
+        override suspend fun updateCardBrightnessPercent(percent: Int) {
+            _prefs.update { it.copy(cardBrightnessPercent = percent) }
+        }
+    }
+
+    @Test
+    fun testSetBrightness() = runTest {
+        val dao = FakeDao()
+        dao.cards.add(DiscountCard(id = 1, storeName = "Test", cardNumber = "111", barcodeFormat = "QR_CODE"))
+        val repository = CardRepositoryImpl(dao)
+        val prefsRepository = FakeUserPreferencesRepository()
+        val viewModel = CardDetailViewModel(
+            repository = repository,
+            cardId = 1,
+            preferencesRepository = prefsRepository,
+            ioDispatcher = testDispatcher
+        )
+
+        backgroundScope.launch { viewModel.uiState.collect {} }
+        advanceUntilIdle()
+
+        assertEquals(0, viewModel.uiState.value.brightnessPercent)
+
+        viewModel.setBrightness(75)
+        advanceUntilIdle()
+
+        assertEquals(75, viewModel.uiState.value.brightnessPercent)
+        assertEquals(75, prefsRepository.userPreferencesFlow.first().cardBrightnessPercent)
     }
 }

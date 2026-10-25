@@ -37,7 +37,12 @@ class CardDetailViewModel(
         preferencesRepository?.let { prefsRepo ->
             viewModelScope.launch {
                 prefsRepo.userPreferencesFlow.collect { prefs ->
-                    _uiState.update { it.copy(brightnessPercent = prefs.cardBrightnessPercent) }
+                    _uiState.update {
+                        it.copy(
+                            brightnessPercent = prefs.cardBrightnessPercent,
+                            showBrightnessInCard = prefs.showBrightnessInCard
+                        )
+                    }
                 }
             }
         }
@@ -121,6 +126,14 @@ class CardDetailViewModel(
 
     fun toggleCvcVisibility() {
         _uiState.update { it.copy(isCvcVisible = !it.isCvcVisible) }
+    }
+
+    fun setBrightness(percent: Int) {
+        val coerced = percent.coerceIn(0, 100)
+        _uiState.update { it.copy(brightnessPercent = coerced) }
+        viewModelScope.launch {
+            preferencesRepository?.updateCardBrightnessPercent(coerced)
+        }
     }
 
     fun deleteCard() {

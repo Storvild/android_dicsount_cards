@@ -53,6 +53,7 @@ data class UserPreferences(
     val cardBrightnessPercent: Int = 0,
     val showAddButton: Boolean = true,
     val showBarcodesInList: Boolean = true,
+    val showBrightnessInCard: Boolean = false,
     val appLanguage: AppLanguage = AppLanguage.SYSTEM
 )
 
@@ -66,6 +67,7 @@ open class UserPreferencesRepository(private val context: Context? = null) {
         val CARD_BRIGHTNESS = intPreferencesKey("card_brightness")
         val SHOW_ADD_BUTTON = booleanPreferencesKey("show_add_button")
         val SHOW_BARCODES_IN_LIST = booleanPreferencesKey("show_barcodes_in_list")
+        val SHOW_BRIGHTNESS_IN_CARD = booleanPreferencesKey("show_brightness_in_card")
         val APP_LANGUAGE = intPreferencesKey("app_language")
     }
 
@@ -84,6 +86,7 @@ open class UserPreferencesRepository(private val context: Context? = null) {
         val brightness = preferences[PreferencesKeys.CARD_BRIGHTNESS] ?: 0
         val showAddButton = preferences[PreferencesKeys.SHOW_ADD_BUTTON] ?: true
         val showBarcodesInList = preferences[PreferencesKeys.SHOW_BARCODES_IN_LIST] ?: true
+        val showBrightnessInCard = preferences[PreferencesKeys.SHOW_BRIGHTNESS_IN_CARD] ?: false
         val languageOrdinal = preferences[PreferencesKeys.APP_LANGUAGE] ?: AppLanguage.SYSTEM.ordinal
 
         UserPreferences(
@@ -92,6 +95,7 @@ open class UserPreferencesRepository(private val context: Context? = null) {
             cardBrightnessPercent = brightness.coerceIn(0, 100),
             showAddButton = showAddButton,
             showBarcodesInList = showBarcodesInList,
+            showBrightnessInCard = showBrightnessInCard,
             appLanguage = AppLanguage.fromOrdinal(languageOrdinal)
         )
     } ?: kotlinx.coroutines.flow.flowOf(UserPreferences())
@@ -123,6 +127,12 @@ open class UserPreferencesRepository(private val context: Context? = null) {
     open suspend fun updateShowBarcodesInList(show: Boolean) {
         context?.dataStore?.edit { preferences ->
             preferences[PreferencesKeys.SHOW_BARCODES_IN_LIST] = show
+        }
+    }
+
+    open suspend fun updateShowBrightnessInCard(show: Boolean) {
+        context?.dataStore?.edit { preferences ->
+            preferences[PreferencesKeys.SHOW_BRIGHTNESS_IN_CARD] = show
         }
     }
 

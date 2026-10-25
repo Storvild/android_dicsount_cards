@@ -13,6 +13,7 @@ class UserPreferencesRepositoryTest {
         assertEquals(0, prefs.cardBrightnessPercent)
         assertEquals(true, prefs.showAddButton)
         assertEquals(true, prefs.showBarcodesInList)
+        assertEquals(false, prefs.showBrightnessInCard)
         assertEquals(AppLanguage.SYSTEM, prefs.appLanguage)
     }
 
@@ -31,12 +32,14 @@ class UserPreferencesRepositoryTest {
             sortOrder = SortOrder.FREQUENCY,
             cardBrightnessPercent = 80,
             showAddButton = false,
-            showBarcodesInList = false
+            showBarcodesInList = false,
+            showBrightnessInCard = true
         )
         assertEquals(ThemeMode.DARK, prefs.themeMode)
         assertEquals(SortOrder.FREQUENCY, prefs.sortOrder)
         assertEquals(80, prefs.cardBrightnessPercent)
         assertEquals(false, prefs.showAddButton)
         assertEquals(false, prefs.showBarcodesInList)
+        assertEquals(true, prefs.showBrightnessInCard)
     }
 }

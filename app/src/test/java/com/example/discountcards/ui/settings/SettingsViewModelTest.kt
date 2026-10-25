@@ -55,6 +55,10 @@ class SettingsViewModelTest {
             _prefs.update { it.copy(showBarcodesInList = show) }
         }
 
+        override suspend fun updateShowBrightnessInCard(show: Boolean) {
+            _prefs.update { it.copy(showBrightnessInCard = show) }
+        }
+
         override suspend fun updateAppLanguage(language: AppLanguage) {
             _prefs.update { it.copy(appLanguage = language) }
         }
@@ -122,10 +126,12 @@ class SettingsViewModelTest {
 
         viewModel.setShowAddButton(false)
         viewModel.setShowBarcodesInList(false)
+        viewModel.setShowBrightnessInCard(false)
         advanceUntilIdle()
 
         assertEquals(false, viewModel.userPreferences.value.showAddButton)
         assertEquals(false, viewModel.userPreferences.value.showBarcodesInList)
+        assertEquals(false, viewModel.userPreferences.value.showBrightnessInCard)
     }
 
     @Test

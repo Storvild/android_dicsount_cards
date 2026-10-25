@@ -54,6 +54,7 @@
     <string name="sort_dialog_title">Сортировка карт</string>
 
     <!-- Settings -->
+    <string name="brightness_label">Яркость</string>
     <string name="brightness_setting_label">Яркость при открытии карточки</string>
     <string name="brightness_no_change">0% — без изменений</string>
     <string name="brightness_percent">%1$d%%</string>
@@ -192,6 +193,10 @@
     <!-- Settings: Show Barcodes in List -->
     <string name="show_barcodes_in_list_label">Показывать штрихкоды в списке</string>
     <string name="show_barcodes_in_list_description">Отображать штрихкоды и номера карт на главном экране</string>
+
+    <!-- Settings: Show Brightness in Card -->
+    <string name="show_brightness_in_card_label">Показывать яркость в карточке</string>
+    <string name="show_brightness_in_card_description">Отображать ползунок яркости на экране детализации карты</string>
 
     <!-- Language -->
     <string name="language_setting_label">Язык</string>

@@ -53,6 +53,12 @@ class SettingsViewModel(
         }
     }
 
+    fun setShowBrightnessInCard(show: Boolean) {
+        viewModelScope.launch {
+            preferencesRepository.updateShowBrightnessInCard(show)
+        }
+    }
+
     fun setAppLanguage(language: AppLanguage) {
         viewModelScope.launch {
             preferencesRepository.updateAppLanguage(language)

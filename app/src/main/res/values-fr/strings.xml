@@ -56,6 +56,7 @@ Version 1.0</string>
     <string name="sort_dialog_title">Trier les cartes</string>
 
     <!-- Settings -->
+    <string name="brightness_label">Luminosité</string>
     <string name="brightness_setting_label">Luminosité lors de l\'ouverture de la carte</string>
     <string name="brightness_no_change">0% — aucun changement</string>
     <string name="brightness_percent">%1$d%%</string>
@@ -193,6 +194,10 @@ Version 1.0</string>
     <!-- Settings: Show Barcodes in List -->
     <string name="show_barcodes_in_list_label">Afficher les codes-barres dans la liste</string>
     <string name="show_barcodes_in_list_description">Afficher les codes-barres et numéros de carte sur l\'écran principal</string>
+
+    <!-- Settings: Show Brightness in Card -->
+    <string name="show_brightness_in_card_label">Afficher la luminosité dans la carte</string>
+    <string name="show_brightness_in_card_description">Afficher le curseur de luminosité sur l\'écran de détail</string>
 
     <!-- Language -->
     <string name="language_setting_label">Langue</string>
