@@ -1381,3 +1381,177 @@ Agent:
 - Все unit-тесты обновлены и успешно пройдены (49/49).
 
 
+---
+
+Интерактивный предпросмотр виджета с поддержкой выбора размеров успешно реализован!
+
+### Что было сделано
+
+1. **Реализован live-блок предпросмотра (`WidgetPreviewSection`)**
+   * Размещён в верхней части экрана настройки [DiscountCardsWidgetConfigureActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetConfigureActivity.kt).
+   * Отрисовывается поверх имитации обоев рабочего стола (тёмный градиент), благодаря чему **эффект прозрачности сразу виден**.
+   * Мгновенно реагирует на любые изменения:
+     * Выбор карточки
+     * Включение/выключение названия магазина
+     * Включение/выключение штрихкода/номера
+     * Включение/выключение прозрачного фона
+
+2. **Выбор размеров предпросмотра (`1×1`, `2×1`, `2×2`, `3×2`)**
+   * Добавлены чипы выбора размера (`WidgetSizeOption`).
+   * При открытии экрана настройки автоматически определяется текущий реальный размер виджета с рабочего стола пользователя (`OPTION_APPWIDGET_MIN_WIDTH` / `MIN_HEIGHT`) и выбирается соответствующий чип размера.
+   * При переключении чипа предпросмотр пересчитывает пропорции и отрисовывает штрихкод и название в нужном масштабе.
+
+3. **Исправлен режим прозрачности**
+   * Создан ресурс [widget_bg_transparent.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/drawable/widget_bg_transparent.xml) с полупрозрачной белой плашкой (`#80FFFFFF`, стиль Frosted Glass).
+   * В [DiscountCardsWidgetProvider.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetProvider.kt) переключена логика: теперь при включении «Прозрачного фона» виджет становится красиво полупрозрачным, а не сплошным белым, сохраняя высокий контраст для сканирования штрихкодов.
+
+4. **Локализация**
+   * Добавлены строки предпросмотра во все 11 файлов локализации (`values/strings.xml`, `values-en/`, `values-de/` и т.д.).
+
+### Модифицированные файлы:
+* [DiscountCardsWidgetConfigureActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetConfigureActivity.kt)
+* [DiscountCardsWidgetProvider.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetProvider.kt)
+* [widget_bg_transparent.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/drawable/widget_bg_transparent.xml)
+* [strings.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml)
+
+---
+
+
+Agent:  
+Все запрошенные изменения успешно внесены:
+
+1. **Полностью удалена настройка прозрачности**
+   * Параметр `isTransparent` удалён из `WidgetPrefs.kt`, `DiscountCardsWidgetConfigureActivity.kt` и `DiscountCardsWidgetProvider.kt`.
+   * Виджет теперь всегда имеет сплошной контрастный белый фон для 100% считываемости штрихкодов.
+
+2. **Настройки стиля перенесены наверх**
+   * Раздел «Отображение и стиль» в [DiscountCardsWidgetConfigureActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetConfigureActivity.kt) поднят вверх и находится сразу после предпросмотра виджета.
+
+3. **Добавлена настройка «Минимальный фон» (`isMinimalBg`)**
+   * В настройки добавлен переключатель **«Минимальный фон»**.
+   * При его включении белая карточка виджета уменьшается в размерах с увеличением внешних отступов (padding `18dp` в виджете и `14dp` в предпросмотре), из-за чего фон смотрится компактным внутри сетки виджета.
+
+4. **Добавлены размеры от 1×1 до 5×5**
+   * В перечисление `WidgetSizeOption` добавлены все комбинации размеров от `1×1` до `5×5` (`1×1`, `2×1`, `3×1`, `4×1`, `5×1`, `2×2`, `3×2`, `4×2`, `5×2`, `3×3`, `4×4`, `5×5`).
+   * В блоке предпросмотра они отображаются в удобной горизонтально скроллируемой ленте чипов (`LazyRow`).
+
+
+### Изменённые файлы:
+* [WidgetPrefs.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/WidgetPrefs.kt)
+* [DiscountCardsWidgetProvider.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetProvider.kt)
+* [DiscountCardsWidgetConfigureActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetConfigureActivity.kt)
+* Локализованные ресурсы `strings.xml` (все 11 языков)
+
+---
+
+Agent:  
+Все требуемые изменения успешно внесены:
+
+1. **Удалена настройка «Минимальный фон»**
+   * Фон виджета теперь всегда растягивается на весь размер виджета (стандартные отступы `4dp`).
+   * Параметр `isMinimalBg` удалён из [WidgetPrefs.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/WidgetPrefs.kt), [DiscountCardsWidgetProvider.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetProvider.kt) и [DiscountCardsWidgetConfigureActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetConfigureActivity.kt).
+
+2. **Удалены размеры `5×1`, `5×2`, `5×5`**
+   * В перечислении `WidgetSizeOption` оставлены только актуальные сетки: `1×1`, `2×1`, `3×1`, `4×1`, `2×2`, `3×2`, `4×2`, `3×3`, `4×4`.
+
+3. **Предпросмотр, выбор размеров и стиль перенесены в конец экрана**
+   * Новая последовательность на экране настройки:
+     1. Информационная подсказка
+     2. Выбор дисконтной карточки («Выберите карточку»)
+     3. Сортировка списков («Сортировка»)
+     4. Настройки стиля («Отображение и стиль»: название магазина, код)
+     5. Блок Предпросмотра (Preview) и перечисление чипов выбора размеров — в самом конце экрана.
+
+
+---
+
+Agent:  
+Все заголовки и строки в настройках виджета переведены на все поддерживаемые языки:
+
+1. **Заголовок «Сортировка»** — заменён с жёстко завязанной строки на `stringResource(R.string.menu_sort)` (уже переведён во всех 11 локалях: *Sort*, *Sortieren*, *Ordenar*, *Trier*, *فرز*, *並べ替え*, *Sırala*, *排序* и др.).
+2. **Заголовок «Отображение и стиль»** — добавлен строковый ресурс `widget_display_style` во все 11 языковых файлов (`strings.xml`):
+   * 🇬🇧 English: *Display & style*
+   * 🇩🇪 German: *Anzeige & Stil*
+   * 🇪🇸 Spanish: *Visualización y estilo*
+   * 🇫🇷 French: *Affichage et style*
+   * 🇮🇹/🇵🇹 Portuguese: *Exibição e estilo*
+   * 🇹🇷 Turkish: *Görünüm ve stil*
+   * 🇯🇵 Japanese: *表示とスタイル*
+   * 🇨🇳 Chinese: *显示与样式*
+   * 🇸🇦 Arabic: *العرض والنمط*
+   * 🇮🇳 Hindi: *डिस्पले और स्टाइल*
+3. **Сообщение «Нет доступных карточек»** — также переведено во всех локалях через `R.string.widget_no_cards`.
+
+
+### Модифицированные файлы:
+* [DiscountCardsWidgetConfigureActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/widget/DiscountCardsWidgetConfigureActivity.kt)
+* Локализованные файлы [strings.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml) (все 11 языков)
+
+
+---
+
+Настройка GitHub Actions для сборки и подписи APK с использованием готового Action (`r3d-buck/sign-android-release@v1`) обновлена в файле [.github/workflows/release.yml](file:///E:/virtualenvs/discount_cards/DiscountCards/.github/workflows/release.yml).
+
+---
+
+Настройка GitHub Actions для сборки и подписи APK с использованием готового Action (`r3d-buck/sign-android-release@v1`) обновлена в файле [.github/workflows/release.yml](file:///E:/virtualenvs/discount_cards/DiscountCards/.github/workflows/release.yml).
+
+
+### Что было настроено в workflow
+
+1. **Сборка релизного APK**: Выполняется команда `./gradlew assembleRelease`, создающая неоптимизированный/неподписанный APK в папке `app/build/outputs/apk/release/`.
+2. **Подпись через Action**: Используется готовый Action `r3d-buck/sign-android-release@v1`. Он расшифровывает Base64-ключ, подписывает APK утилитой `apksigner` и выравнивает с помощью `zipalign`.
+3. **Сохранение артефакта**: Подписанный APK загружается в артефакты сборки GitHub Actions.
+4. **Создание GitHub Release**: При пуше тега (например, `v1.0.0`) автоматически создаётся релиз на GitHub с прикреплённым подписанным APK.
+5. **Ручной запуск (`workflow_dispatch`)**: Добавлена возможность запускать сборку вручную через вкладку **Actions** в интерфейсе GitHub.
+
+
+### Что необходимо настроить на GitHub
+
+Для работы подписи вам нужно добавить **4 секретных переменных (Secrets)** в вашем репозитории на GitHub:
+
+#### 1. Перейдите в настройки репозитория:
+> **Settings** → **Secrets and variables** → **Actions** → нажмите **New repository secret**.
+
+#### 2. Создайте следующие секреты:
+
+| Имя секрета | Описание |
+| :--- | :--- |
+| `KEYSTORE_BASE64` | Ключ подписи (`.jks` / `.keystore`), закодированный в строку **Base64**. |
+| `KEY_ALIAS` | Псевдоним (Alias) вашего ключа в keystore. |
+| `KEYSTORE_PASSWORD` | Пароль от файла хранилища ключей (Keystore password). |
+| `KEY_PASSWORD` | Пароль от конкретного ключа (Key password). |
+
+
+### Как закодировать ваш `.jks` / `.keystore` файл в Base64
+
+Для создания значения `KEYSTORE_BASE64` выполните команду в терминале:
+
+* **Windows (PowerShell)**:
+  ```powershell
+  [Convert]::ToBase64String([IO.File]::ReadAllBytes("path/to/your_keystore.jks")) | Set-Content keystore_base64.txt
+  ```
+* **Linux**:
+  ```bash
+  base64 -w 0 path/to/your_keystore.jks > keystore_base64.txt
+  ```
+* **macOS**:
+  ```bash
+  base64 -i path/to/your_keystore.jks -o keystore_base64.txt
+  ```
+
+Скопируйте всё содержимое созданного файла `keystore_base64.txt` и вставьте его в секрет `KEYSTORE_BASE64` на GitHub.
+
+
+### Как запустить сборку
+
+* **Автоматически (при релизе)**:
+  ```bash
+  git tag v1.0.0
+  git push origin v1.0.0
+  ```
+* **Вручную**:
+  Перейдите во вкладку **Actions** → выберите **Build and Create Release** → нажмите **Run workflow**.
+  
+  
+  
