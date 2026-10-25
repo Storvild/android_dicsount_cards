@@ -5,6 +5,11 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      versionName:
+        description: 'Version name (e.g. 1.2.0, leave empty to read from gradle.properties)'
+        required: false
+        default: ''
 
 jobs:
   build-and-release:
@@ -28,13 +33,20 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build Release APK
+      - name: Determine Version and Build Release APK
         run: |
           if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            # 1. Triggered by Git Tag push (e.g., v1.1.2 -> 1.1.2)
             VERSION="${GITHUB_REF_NAME#v}"
+          elif [[ -n "${{ github.event.inputs.versionName }}" ]]; then
+            # 2. Triggered manually with explicit input in GitHub UI
+            VERSION="${{ github.event.inputs.versionName }}"
           else
-            VERSION="1.0.0"
+            # 3. Triggered manually without input -> parse version from gradle.properties
+            VERSION=$(grep 'versionName=' gradle.properties | cut -d'=' -f2 | tr -d '\r\n ')
           fi
+
+          echo "Building APK for version: ${VERSION}"
           ./gradlew assembleRelease -PversionName=${VERSION}
 
       - name: Sign APK with apksigner
@@ -47,9 +59,10 @@ jobs:
           # 1. Safely decode keystore from Base64
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > release.jks
 
-          # 2. Locate built APK
+          # 2. Locate built APK and construct signed APK name with version
           UNSIGNED_APK=$(ls app/build/outputs/apk/release/*.apk | head -n 1)
-          SIGNED_APK="app/build/outputs/apk/release/discount_cards-signed.apk"
+          APK_BASENAME=$(basename "$UNSIGNED_APK" .apk)
+          SIGNED_APK="app/build/outputs/apk/release/${APK_BASENAME}-signed.apk"
 
           # 3. Get Android Build-Tools path
           BUILD_TOOLS_DIR=$(ls -d $ANDROID_HOME/build-tools/* | tail -n 1)
