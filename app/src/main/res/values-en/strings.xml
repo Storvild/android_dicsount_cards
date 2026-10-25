@@ -90,6 +90,12 @@ Version 1.0</string>
     <string name="scan_camera_desc">Scan barcode with camera</string>
     <string name="format_label">Barcode format</string>
     <string name="card_color_label">Card color</string>
+    <string name="custom_color_title">Custom Color</string>
+    <string name="custom_color_hex_label">Color HEX Code</string>
+    <string name="custom_color_hex_placeholder">#FF5722 or FF5722</string>
+    <string name="custom_color_invalid_hex">Invalid HEX code</string>
+    <string name="custom_color_button_desc">Select custom color</string>
+    <string name="select_button">Select</string>
     <string name="category_icon_label">Category icon</string>
     <string name="cvc_label">CVC code</string>
     <string name="cvc_placeholder">e.g. 123</string>
