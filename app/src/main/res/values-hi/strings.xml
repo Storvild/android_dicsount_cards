@@ -90,6 +90,12 @@
     <string name="scan_camera_desc">कैमरे से बारकोड स्कैन करें</string>
     <string name="format_label">बारकोड प्रारूप</string>
     <string name="card_color_label">कार्ड का रंग</string>
+    <string name="custom_color_title">कस्टम रंग</string>
+    <string name="custom_color_hex_label">रंग HEX कोड</string>
+    <string name="custom_color_hex_placeholder">#FF5722 या FF5722</string>
+    <string name="custom_color_invalid_hex">अमान्य HEX कोड</string>
+    <string name="custom_color_button_desc">कस्टम रंग चुनें</string>
+    <string name="select_button">चुनें</string>
     <string name="category_icon_label">श्रेणी आइकन</string>
     <string name="cvc_label">CVC कोड</string>
     <string name="cvc_placeholder">उदा: 123</string>

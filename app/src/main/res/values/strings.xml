@@ -88,12 +88,12 @@
     <string name="scan_camera_desc">Сканировать штрихкод камерой</string>
     <string name="format_label">Формат штрихкода</string>
     <string name="card_color_label">Цвет карты</string>
-    <string name="custom_color_title" tools:ignore="MissingTranslation">Свой цвет</string>
-    <string name="custom_color_hex_label" tools:ignore="MissingTranslation">HEX-код цвета</string>
-    <string name="custom_color_hex_placeholder" tools:ignore="MissingTranslation">#FF5722 или FF5722</string>
-    <string name="custom_color_invalid_hex" tools:ignore="MissingTranslation">Некорректный HEX-код</string>
-    <string name="custom_color_button_desc" tools:ignore="MissingTranslation">Выбрать свой цвет</string>
-    <string name="select_button" tools:ignore="MissingTranslation">Выбрать</string>
+    <string name="custom_color_title">Свой цвет</string>
+    <string name="custom_color_hex_label">HEX-код цвета</string>
+    <string name="custom_color_hex_placeholder">#FF5722 или FF5722</string>
+    <string name="custom_color_invalid_hex">Некорректный HEX-код</string>
+    <string name="custom_color_button_desc">Выбрать свой цвет</string>
+    <string name="select_button">Выбрать</string>
     <string name="category_icon_label">Иконка категории</string>
     <string name="cvc_label">Код CVC</string>
     <string name="cvc_placeholder">Например: 123</string>

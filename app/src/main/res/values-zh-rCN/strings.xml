@@ -90,6 +90,12 @@
     <string name="scan_camera_desc">使用相机扫描条形码</string>
     <string name="format_label">条形码格式</string>
     <string name="card_color_label">卡片颜色</string>
+    <string name="custom_color_title">自定义颜色</string>
+    <string name="custom_color_hex_label">颜色 HEX 代码</string>
+    <string name="custom_color_hex_placeholder">#FF5722 或 FF5722</string>
+    <string name="custom_color_invalid_hex">无效的 HEX 代码</string>
+    <string name="custom_color_button_desc">选择自定义颜色</string>
+    <string name="select_button">选择</string>
     <string name="category_icon_label">分类图标</string>
     <string name="cvc_label">CVC 安全码</string>
     <string name="cvc_placeholder">例如: 123</string>

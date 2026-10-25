@@ -90,6 +90,12 @@ Versão 1.0</string>
     <string name="scan_camera_desc">Digitalizar código de barras com a câmara</string>
     <string name="format_label">Formato do código de barras</string>
     <string name="card_color_label">Cor do cartão</string>
+    <string name="custom_color_title">Cor personalizada</string>
+    <string name="custom_color_hex_label">Código HEX de cor</string>
+    <string name="custom_color_hex_placeholder">#FF5722 ou FF5722</string>
+    <string name="custom_color_invalid_hex">Código HEX inválido</string>
+    <string name="custom_color_button_desc">Selecionar cor personalizada</string>
+    <string name="select_button">Selecionar</string>
     <string name="category_icon_label">Ícone da categoria</string>
     <string name="cvc_label">Código CVC</string>
     <string name="cvc_placeholder">Ex: 123</string>

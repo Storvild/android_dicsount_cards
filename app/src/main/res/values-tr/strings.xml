@@ -90,6 +90,12 @@ Sürüm 1.0</string>
     <string name="scan_camera_desc">Kamera ile barkod tara</string>
     <string name="format_label">Barkod formatı</string>
     <string name="card_color_label">Kart rengi</string>
+    <string name="custom_color_title">Özel Renk</string>
+    <string name="custom_color_hex_label">Renk HEX Kodu</string>
+    <string name="custom_color_hex_placeholder">#FF5722 veya FF5722</string>
+    <string name="custom_color_invalid_hex">Geçersiz HEX kodu</string>
+    <string name="custom_color_button_desc">Özel renk seç</string>
+    <string name="select_button">Seç</string>
     <string name="category_icon_label">Kategori simgesi</string>
     <string name="cvc_label">CVC kodu</string>
     <string name="cvc_placeholder">Örn: 123</string>

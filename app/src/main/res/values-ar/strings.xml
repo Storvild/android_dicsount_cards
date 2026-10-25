@@ -91,6 +91,12 @@
     <string name="scan_camera_desc">مسح الرمز الشريطي بواسطة الكاميرا</string>
     <string name="format_label">صيغة الرمز الشريطي</string>
     <string name="card_color_label">لون البطاقة</string>
+    <string name="custom_color_title">لون مخصص</string>
+    <string name="custom_color_hex_label">رمز HEX للون</string>
+    <string name="custom_color_hex_placeholder">#FF5722 أو FF5722</string>
+    <string name="custom_color_invalid_hex">رمز HEX غير صالح</string>
+    <string name="custom_color_button_desc">تحديد لون مخصص</string>
+    <string name="select_button">تحديد</string>
     <string name="category_icon_label">أيقونة الفئة</string>
     <string name="cvc_label">رمز CVC</string>
     <string name="cvc_placeholder">مثال: 123</string>

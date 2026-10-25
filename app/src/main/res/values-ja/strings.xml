@@ -90,6 +90,12 @@
     <string name="scan_camera_desc">カメラでバーコードをスキャン</string>
     <string name="format_label">バーコードの形式</string>
     <string name="card_color_label">カードの色</string>
+    <string name="custom_color_title">カスタムカラー</string>
+    <string name="custom_color_hex_label">カラーHEXコード</string>
+    <string name="custom_color_hex_placeholder">#FF5722 または FF5722</string>
+    <string name="custom_color_invalid_hex">無効なHEXコード</string>
+    <string name="custom_color_button_desc">カスタムカラーを選択</string>
+    <string name="select_button">選択</string>
     <string name="category_icon_label">カテゴリーアイコン</string>
     <string name="cvc_label">CVCコード</string>
     <string name="cvc_placeholder">例: 123</string>

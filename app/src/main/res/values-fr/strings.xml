@@ -90,6 +90,12 @@ Version 1.0</string>
     <string name="scan_camera_desc">Scanner le code-barres avec l\'appareil photo</string>
     <string name="format_label">Format du code-barres</string>
     <string name="card_color_label">Couleur de la carte</string>
+    <string name="custom_color_title">Couleur personnalisée</string>
+    <string name="custom_color_hex_label">Code HEX de couleur</string>
+    <string name="custom_color_hex_placeholder">#FF5722 ou FF5722</string>
+    <string name="custom_color_invalid_hex">Code HEX non valide</string>
+    <string name="custom_color_button_desc">Sélectionner une couleur personnalisée</string>
+    <string name="select_button">Sélectionner</string>
     <string name="category_icon_label">Icône de catégorie</string>
     <string name="cvc_label">Code CVC</string>
     <string name="cvc_placeholder">Ex : 123</string>
