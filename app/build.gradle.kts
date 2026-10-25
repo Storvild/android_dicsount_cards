@@ -23,7 +23,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.discountcards"
+        applicationId = "ru.storvild.discountcards"
         minSdk = 24
         targetSdk = 37
         versionName = appVersionName
