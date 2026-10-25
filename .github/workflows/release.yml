@@ -37,27 +37,49 @@ jobs:
           fi
           ./gradlew assembleRelease -PversionName=${VERSION}
 
-      - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
-        id: sign_app
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: Sign APK with apksigner
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          # 1. Decode keystore
+          echo "$KEYSTORE_BASE64" | base64 --decode > release.jks
+
+          # 2. Locate built APK
+          UNSIGNED_APK=$(ls app/build/outputs/apk/release/*.apk | head -n 1)
+          SIGNED_APK="app/build/outputs/apk/release/discount_cards-signed.apk"
+
+          # 3. Get Android Build-Tools path
+          BUILD_TOOLS_DIR=$(ls -d $ANDROID_HOME/build-tools/* | tail -n 1)
+
+          # 4. ZipAlign and Sign using official Android SDK tools
+          $BUILD_TOOLS_DIR/zipalign -v -p 4 "$UNSIGNED_APK" "$SIGNED_APK"
+          $BUILD_TOOLS_DIR/apksigner sign \
+            --ks release.jks \
+            --ks-key-alias "$KEY_ALIAS" \
+            --ks-pass env:KEYSTORE_PASSWORD \
+            --key-pass env:KEY_PASSWORD \
+            "$SIGNED_APK"
+
+          # 5. Clean up sensitive keystore file
+          rm -f release.jks
+
+          # Export variable for next steps
+          echo "SIGNED_APK_PATH=$SIGNED_APK" >> $GITHUB_ENV
 
       - name: Upload Signed APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: discount_cards-signed-apk
-          path: ${{ steps.sign_app.outputs.signedFile }}
+          path: ${{ env.SIGNED_APK_PATH }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{ steps.sign_app.outputs.signedFile }}
+          files: ${{ env.SIGNED_APK_PATH }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
