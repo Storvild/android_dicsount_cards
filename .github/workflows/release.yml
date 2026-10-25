@@ -44,8 +44,8 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          # 1. Decode keystore
-          echo "$KEYSTORE_BASE64" | base64 --decode > release.jks
+          # 1. Safely decode keystore from Base64
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > release.jks
 
           # 2. Locate built APK
           UNSIGNED_APK=$(ls app/build/outputs/apk/release/*.apk | head -n 1)
@@ -54,16 +54,19 @@ jobs:
           # 3. Get Android Build-Tools path
           BUILD_TOOLS_DIR=$(ls -d $ANDROID_HOME/build-tools/* | tail -n 1)
 
-          # 4. ZipAlign and Sign using official Android SDK tools
+          # 4. Fallback KEY_PASS to KEYSTORE_PASSWORD if empty
+          export KEY_PASS="${KEY_PASSWORD:-$KEYSTORE_PASSWORD}"
+
+          # 5. ZipAlign and Sign using official Android SDK tools
           $BUILD_TOOLS_DIR/zipalign -v -p 4 "$UNSIGNED_APK" "$SIGNED_APK"
           $BUILD_TOOLS_DIR/apksigner sign \
             --ks release.jks \
             --ks-key-alias "$KEY_ALIAS" \
             --ks-pass env:KEYSTORE_PASSWORD \
-            --key-pass env:KEY_PASSWORD \
+            --key-pass env:KEY_PASS \
             "$SIGNED_APK"
 
-          # 5. Clean up sensitive keystore file
+          # 6. Clean up sensitive keystore file
           rm -f release.jks
 
           # Export variable for next steps
