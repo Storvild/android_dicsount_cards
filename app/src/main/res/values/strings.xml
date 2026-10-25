@@ -215,10 +215,14 @@
 
     <!-- Widget & Card Actions -->
     <string name="widget_configure_title">Настройка виджета</string>
+    <string name="widget_preview_title">Предпросмотр</string>
+    <string name="widget_size_title">Размер предпросмотра</string>
     <string name="widget_select_card">Выберите карточку</string>
+    <string name="widget_no_cards">Нет доступных карточек</string>
+    <string name="widget_display_style">Отображение и стиль</string>
     <string name="widget_show_code">Показать код</string>
     <string name="widget_show_name">Показать название магазина</string>
-    <string name="widget_transparent_bg">Прозрачный фон</string>
+    <string name="widget_minimal_bg">Минимальный фон</string>
     <string name="widget_save_button">Сохранить</string>
     <string name="widget_1x1_warning">Для виджета 1х1 можно выбрать только одно: название или код.</string>
     <string name="widget_settings_desc">Настройки виджета</string>

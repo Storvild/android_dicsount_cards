@@ -217,10 +217,14 @@
 
     <!-- Widget & Card Actions -->
     <string name="widget_configure_title">تكوين الأداة</string>
+    <string name="widget_preview_title">المعاينة</string>
+    <string name="widget_size_title">حجم المعاينة</string>
     <string name="widget_select_card">حدد البطاقة</string>
+    <string name="widget_no_cards">لا توجد بطاقات متاحة</string>
+    <string name="widget_display_style">العرض والنمط</string>
     <string name="widget_show_code">إظهار الرمز</string>
     <string name="widget_show_name">إظهار اسم المتجر</string>
-    <string name="widget_transparent_bg">خلفية شفافة</string>
+    <string name="widget_minimal_bg">خلفية دنيا</string>
     <string name="widget_save_button">حفظ</string>
     <string name="widget_1x1_warning">بالنسبة لأداة 1x1، يمكنك اختيار واحد فقط: الاسم أو الرمز.</string>
     <string name="widget_settings_desc">إعدادات الأداة</string>

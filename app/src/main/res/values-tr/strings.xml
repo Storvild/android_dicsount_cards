@@ -216,10 +216,14 @@ Sürüm 1.0</string>
 
     <!-- Widget & Card Actions -->
     <string name="widget_configure_title">Widget Yapılandır</string>
+    <string name="widget_preview_title">Önizleme</string>
+    <string name="widget_size_title">Önizleme boyutu</string>
     <string name="widget_select_card">Kart Seç</string>
+    <string name="widget_no_cards">Kullanılabilir kart yok</string>
+    <string name="widget_display_style">Görünüm ve stil</string>
     <string name="widget_show_code">Kodu Göster</string>
     <string name="widget_show_name">Mağaza Adını Göster</string>
-    <string name="widget_transparent_bg">Şeffaf Arka Plan</string>
+    <string name="widget_minimal_bg">Minimum arka plan</string>
     <string name="widget_save_button">Kaydet</string>
     <string name="widget_1x1_warning">1x1 widget için yalnızca birini seçebilirsiniz: ad veya kod.</string>
     <string name="widget_settings_desc">Widget Ayarları</string>

@@ -216,10 +216,14 @@ Version 1.0</string>
 
     <!-- Widget & Card Actions -->
     <string name="widget_configure_title">Configurer le widget</string>
+    <string name="widget_preview_title">Aperçu</string>
+    <string name="widget_size_title">Taille de l\'aperçu</string>
     <string name="widget_select_card">Sélectionner une carte</string>
+    <string name="widget_no_cards">Aucune carte disponible</string>
+    <string name="widget_display_style">Affichage et style</string>
     <string name="widget_show_code">Afficher le code</string>
     <string name="widget_show_name">Afficher le nom du magasin</string>
-    <string name="widget_transparent_bg">Arrière-plan transparent</string>
+    <string name="widget_minimal_bg">Arrière-plan minimal</string>
     <string name="widget_save_button">Enregistrer</string>
     <string name="widget_1x1_warning">Pour le widget 1x1, vous ne pouvez choisir qu\'un seul élément : nom ou code.</string>
     <string name="widget_settings_desc">Paramètres du widget</string>

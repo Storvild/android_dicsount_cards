@@ -15,14 +15,14 @@ object WidgetPrefs {
         appWidgetId: Int,
         cardId: Long,
         showCode: Boolean,
-        showStoreName: Boolean,
-        isTransparent: Boolean
+        showStoreName: Boolean
     ) {
         getPrefs(context).edit().apply {
             putLong("card_id_$appWidgetId", cardId)
             putBoolean("show_code_$appWidgetId", showCode)
             putBoolean("show_name_$appWidgetId", showStoreName)
-            putBoolean("is_transparent_$appWidgetId", isTransparent)
+            remove("is_minimal_bg_$appWidgetId")
+            remove("is_transparent_$appWidgetId")
             apply()
         }
     }
@@ -32,8 +32,7 @@ object WidgetPrefs {
         return WidgetConfig(
             cardId = prefs.getLong("card_id_$appWidgetId", -1L),
             showCode = prefs.getBoolean("show_code_$appWidgetId", true),
-            showStoreName = prefs.getBoolean("show_name_$appWidgetId", true),
-            isTransparent = prefs.getBoolean("is_transparent_$appWidgetId", false)
+            showStoreName = prefs.getBoolean("show_name_$appWidgetId", true)
         )
     }
 
@@ -42,6 +41,7 @@ object WidgetPrefs {
             remove("card_id_$appWidgetId")
             remove("show_code_$appWidgetId")
             remove("show_name_$appWidgetId")
+            remove("is_minimal_bg_$appWidgetId")
             remove("is_transparent_$appWidgetId")
             apply()
         }
@@ -51,6 +51,5 @@ object WidgetPrefs {
 data class WidgetConfig(
     val cardId: Long,
     val showCode: Boolean,
-    val showStoreName: Boolean,
-    val isTransparent: Boolean
+    val showStoreName: Boolean
 )

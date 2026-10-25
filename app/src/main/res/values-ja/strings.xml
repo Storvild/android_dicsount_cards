@@ -216,10 +216,14 @@
 
     <!-- Widget & Card Actions -->
     <string name="widget_configure_title">ウィジェットの設定</string>
+    <string name="widget_preview_title">プレビュー</string>
+    <string name="widget_size_title">プレビューサイズ</string>
     <string name="widget_select_card">カードを選択</string>
+    <string name="widget_no_cards">利用可能なカードがありません</string>
+    <string name="widget_display_style">表示とスタイル</string>
     <string name="widget_show_code">コードを表示</string>
     <string name="widget_show_name">店名を表示</string>
-    <string name="widget_transparent_bg">透明な背景</string>
+    <string name="widget_minimal_bg">最小背景</string>
     <string name="widget_save_button">保存</string>
     <string name="widget_1x1_warning">1x1ウィジェットでは、名前またはコードのいずれか1つのみ選択できます。</string>
     <string name="widget_settings_desc">ウィジェットの設定</string>

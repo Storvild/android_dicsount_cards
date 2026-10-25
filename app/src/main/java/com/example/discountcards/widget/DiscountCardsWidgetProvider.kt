@@ -132,13 +132,11 @@ class DiscountCardsWidgetProvider : AppWidgetProvider() {
                     views.setViewVisibility(R.id.widget_card_number_text, android.view.View.GONE)
                 }
 
-                if (config.isTransparent) {
-                    views.setInt(R.id.widget_root_layout, "setBackgroundColor", Color.TRANSPARENT)
-                    views.setInt(R.id.widget_content_container, "setBackgroundResource", R.drawable.widget_bg_rounded)
-                } else {
-                    views.setInt(R.id.widget_root_layout, "setBackgroundResource", R.drawable.widget_bg_rounded)
-                    views.setInt(R.id.widget_content_container, "setBackgroundColor", Color.TRANSPARENT)
-                }
+                val padPx = (4 * context.resources.displayMetrics.density).toInt()
+                views.setViewPadding(R.id.widget_root_layout, padPx, padPx, padPx, padPx)
+
+                views.setInt(R.id.widget_root_layout, "setBackgroundColor", Color.TRANSPARENT)
+                views.setInt(R.id.widget_content_container, "setBackgroundResource", R.drawable.widget_bg_rounded)
             }
 
             // Click intent to open app detail (on content container)
