@@ -1539,6 +1539,21 @@ Agent:
   ```bash
   base64 -i path/to/your_keystore.jks -o keystore_base64.txt
   ```
+  
+* **Скрипт на Python для перекодировки в base64**  
+```python
+import base64
+import os
+filename = "discount_cards_sign.jks"
+if not os.path.isfile(filename):
+    raise FileNotFoundError(f"Файл '{filename}' не найден")
+with open(filename, "rb") as f:
+    encoded = base64.b64encode(f.read())
+output_filename = filename + ".b64"
+with open(output_filename, "wb") as f:
+    f.write(encoded)
+print(f"Готово: '{filename}' -> '{output_filename}' ({len(encoded)} байт base64)")
+```  
 
 Скопируйте всё содержимое созданного файла `keystore_base64.txt` и вставьте его в секрет `KEYSTORE_BASE64` на GitHub.
 
@@ -1554,4 +1569,72 @@ Agent:
   Перейдите во вкладку **Actions** → выберите **Build and Create Release** → нажмите **Run workflow**.
   
   
-  
+---
+
+### 1. Почему не был проставлен номер версии в названии файла?
+
+В скрипте шаг подписи жестко задавал имя итогового файла: `discount_cards-signed.apk`, игнорируя имя, которое сгенерировал Gradle (`discount_cards_v1.1.2.apk`).
+
+**Что мы исправили в [.github/workflows/release.yml](file:///E:/virtualenvs/discount_cards/DiscountCards/.github/workflows/release.yml):**
+Теперь скрипт подписи автоматически берёт имя собранного Gradle файла с версией и добавляет к нему суффикс `-signed`.
+* Например, при сборке версии `v1.1.2` файл теперь будет называться **`discount_cards_v1.1.2-signed.apk`**.
+
+---
+
+### 2. Почему размер файла уменьшился с 50 МБ до 25 МБ?
+
+Это **нормальное и правильное поведение для релизной сборки (Release APK)**. Уменьшение размера в 2 раза происходит благодаря следующим факторам:
+
+1. **R8 / ProGuard (Сжатие кода и ресурсов)**:
+   В [app/build.gradle.kts](file:///E:/virtualenvs/discount_cards/DiscountCards/app/build.gradle.kts#L37) для релизной сборки включены опции:
+   ```kotlin
+   isMinifyEnabled = true
+   isShrinkResources = true
+   ```
+   * **`isMinifyEnabled = true`**: Оптимизирует и удаляет весь неиспользуемый код из тяжелых сторонних библиотек (CameraX, MLKit Barcode Scanning, ZXing, Compose и др.).
+   * **`isShrinkResources = true`**: Удаляет неиспользуемые графические ресурсы и макеты из подтягиваемых библиотек.
+   * В **Debug**-сборке (которая весила ~50 МБ) оптимизации отключены, и всё содержимое библиотек включается «как есть».
+
+2. **Оптимизация выравнивания (`zipalign`)**:
+   Утилита `zipalign` выравнивает несжатые данные (изображения, ресурсы, нативные `.so` библиотеки) по 4-байтовым границам, что делает итоговый архив компактнее и позволяет Android загружать ресурсы из APK напрямую в память без предварительного извлечения.
+
+3. **Удаление отладочной информации**:
+   Из релизного APK удаляются таблицы отладки, номера строк для отладчика и метаданные Kotlin, используемые только во время разработки.
+
+---
+
+### Итог
+Уменьшение размера до 25 МБ означает, что ProGuard и сжатие ресурсов работают идеально! Файл во вложениях следующих релизов теперь будет именоваться с содержанием версии (например, `discount_cards_v1.1.2-signed.apk`).
+
+---
+
+Жесткое значение `1.1.2` находилось в блоке `else` как временный **запасной вариант (fallback)** на случай ручного запуска сборки.
+
+### Как работала эта логика:
+
+1. **При создании релиза через Git Tag (`if`)**:
+   Когда вы пушите тег (например, `git push origin v1.1.2`), переменная `GITHUB_REF` равна `refs/tags/v1.1.2`. Выполняется ветка `if`, и версия берется динамически из тега (`1.1.2`).
+2. **При ручном запуске (`else`)**:
+   Если запустить сборку вручную через кнопку **Run workflow** на GitHub, у сборки нет связанного тега `v*`. Блок `else` срабатывал, чтобы передать Gradle хоть какую-то версию.
+
+---
+
+### Как мы это исправили (убрали жесткое значение полностью)
+
+В файле [.github/workflows/release.yml](file:///E:/virtualenvs/discount_cards/DiscountCards/.github/workflows/release.yml) мы обновили логику так, чтобы версия определилась **полностью динамически в 3 сценариях**:
+
+```bash
+if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+  # 1. Автоматически при пуше тега (например, v1.2.0 -> 1.2.0)
+  VERSION="${GITHUB_REF_NAME#v}"
+elif [[ -n "${{ github.event.inputs.versionName }}" ]]; then
+  # 2. При ручном запуске через кнопку Run workflow, если вы ввели версию в поле
+  VERSION="${{ github.event.inputs.versionName }}"
+else
+  # 3. При ручном запуске с пустым значением — автоматически считывается из gradle.properties
+  VERSION=$(grep 'versionName=' gradle.properties | cut -d'=' -f2 | tr -d '\r\n ')
+fi
+```
+
+Теперь ничего вручную зашивать в файлы не нужно — версия всегда берётся либо из тега Git, либо из поля ввода при ручном запуске, либо автоматически читается из параметра `versionName` в [gradle.properties](file:///E:/virtualenvs/discount_cards/DiscountCards/gradle.properties#L20).
+
