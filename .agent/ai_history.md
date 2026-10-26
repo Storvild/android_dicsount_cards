@@ -1638,3 +1638,98 @@ fi
 
 Теперь ничего вручную зашивать в файлы не нужно — версия всегда берётся либо из тега Git, либо из поля ввода при ручном запуске, либо автоматически читается из параметра `versionName` в [gradle.properties](file:///E:/virtualenvs/discount_cards/DiscountCards/gradle.properties#L20).
 
+---
+
+Сейчас информация о номере версии для окна «О программе» берется из файла настроек Gradle по следующей цепочке:
+
+1. **`gradle.properties`**: В корне проекта в этом файле задано свойство `versionName` (например, `versionName=1.1.2`).
+2. **`app/build.gradle.kts`**: Скрипт сборки читает это свойство при помощи `project.findProperty("versionName")` и передает его в конфигурацию Android-приложения (`defaultConfig { versionName = appVersionName }`).
+3. **`BuildConfig`**: При сборке плагин Android генерирует класс `BuildConfig`, в котором создается константа `VERSION_NAME` с этим значением.
+4. **`SearchBarComponent.kt`**: В момент отрисовки диалога «О программе» Compose-функция считывает значение через `BuildConfig.VERSION_NAME` и подставляет его в строковый ресурс:
+```kotlin
+val appVersion = BuildConfig.VERSION_NAME
+val aboutDialogText = stringResource(R.string.about_dialog_text, appVersion)
+```
+
+Таким образом, чтобы изменить версию, которая там отображается (и версию самого приложения), вам достаточно поменять значение `versionName` в открытом у вас файле [`gradle.properties`](file:///E:/virtualenvs/discount_cards/DiscountCards/gradle.properties).
+
+---
+
+Agent:  
+Причина в том, что в файлах переводов для других языков (английский, испанский, немецкий и т.д.) номер версии «1.0» был жестко зашит в тексте ресурса `about_dialog_text`.
+
+В основном (русском) файле [`values/strings.xml`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml) строка задана правильно, с использованием плейсхолдера `%1$s`:
+```xml
+<string name="about_dialog_text">...Версия %1$s</string>
+```
+
+Однако, если язык вашего устройства (или эмулятора) отличается от русского, Android брал локализованную версию строки из соответствующей папки (например, `values-en/strings.xml`), а там было жестко указано:
+```xml
+<string name="about_dialog_text">...Version 1.0</string>
+```
+Из-за этого переданный аргумент версии из `BuildConfig.VERSION_NAME` просто игнорировался и выводился хардкод «1.0».
+
+Я только что **автоматически исправил это во всех 10 файлах локализации** (`values-en`, `values-de`, `values-es`, `values-fr` и др.). Заменил жестко зашитую версию на плейсхолдер `%1$s` (например, `Version %1$s`). 
+
+Теперь, если вы пересоберете и запустите приложение, оно будет корректно отображать текущую версию (1.1.2) из вашего файла `gradle.properties` на любом языке устройства.
+
+---
+
+В файле `app/build.gradle.kts` есть несколько зависимостей (модулей), которые добавлены, но **вообще не используются** в исходном коде приложения. Их можно смело удалять для ускорения сборки и уменьшения размера APK.
+
+Вот список неиспользуемых зависимостей:
+
+1. **Сетевой стек (Retrofit + OkHttp)**
+   - `implementation(libs.retrofit)`
+   - `implementation(libs.okhttp)`
+   - `implementation(libs.logging.interceptor)`
+   *Почему не нужны:* Приложение полностью локальное и не выполняет сетевых запросов через эти библиотеки.
+
+2. **Парсер JSON (Moshi)**
+   - `implementation(libs.converter.moshi)`
+   - `implementation(libs.moshi.kotlin)`
+   - `"ksp"(libs.moshi.kotlin.codegen)`
+   *Почему не нужны:* В вашем проекте изначально было добавлено две библиотеки для работы с JSON. По факту в коде (например, в `Serializers.kt` и аннотациях классов БД) используется исключительно **`kotlinx.serialization`**. Moshi просто "висит" мертвым грузом, поэтому сам парсер и его ksp-генератор можно удалить.
+
+3. **Геолокация (Play Services Location)**
+   - `implementation(libs.play.services.location)`
+   *Почему не нужны:* В приложении нет работы с картами или `FusedLocationProviderClient`. Приложение скидочных карт пока не запрашивает местоположение пользователя (например, для поиска ближайших магазинов).
+
+4. **Загрузка изображений (Coil)**
+   - `implementation(libs.coil.compose)`
+   *Почему не нужны:* Несмотря на то, что библиотека упоминается в вашем `README.md` (для загрузки иконок магазинов), в самом Kotlin-коде нигде нет импортов Coil или использования функции `AsyncImage`.
+
+5. **Accompanist Permissions**
+   - `implementation(libs.accompanist.permissions)`
+   *Почему не нужны:* Запрос разрешений (например, на использование камеры в `CameraBarcodeScanner.kt`) реализован стандартными средствами платформы и Compose (`ContextCompat.checkSelfPermission` + `rememberLauncherForActivityResult`). Библиотека `Accompanist` для этого не используется.
+
+*(Остальные подозрительные библиотеки, такие как `zxing.core` и `mlkit.barcode.scanning`, действительно используются в проекте для генерации и сканирования штрихкодов соответственно).*
+
+**Хотите, я уберу эти лишние зависимости из вашего `app/build.gradle.kts` (а также из `libs.versions.toml`)?**
+
+---
+
+Agent:  
+Готово! Я удалил все неиспользуемые зависимости:
+
+- `libs.retrofit` (и конвертеры Moshi)
+- `libs.okhttp` (и его интерцепторы логирования)
+- `libs.moshi.kotlin` (и KSP кодогенератор, так как у вас успешно работает `kotlinx.serialization`)
+- `libs.play.services.location` (геолокация)
+- `libs.coil.compose` (загрузчик картинок)
+- `libs.accompanist.permissions` (для разрешений)
+
+Изменения затронули два файла:
+1. `app/build.gradle.kts` (удалены строчки `implementation(...)` и `ksp(...)`)
+2. `gradle/libs.versions.toml` (удалены соответствующие определения версий и путей к библиотекам)
+
+Также я успешно запустил синхронизацию Gradle, всё прошло отлично (сборка успешна). Ваше приложение теперь собирается быстрее, а APK будет немного меньше весить.
+
+---
+
+Agent:  
+Готово! Я удалил разрешение `<uses-permission android:name="android.permission.INTERNET" />` из файла манифеста (`AndroidManifest.xml`). 
+
+Так как мы чуть раньше удалили библиотеку Coil и сетевой стек (Retrofit), приложение действительно перестало нуждаться в доступе в интернет, что делает его полностью безопасным с точки зрения хранения данных локально на устройстве пользователя.
+
+Также я обновил файлы `README.md` и `README_.md`, удалив оттуда упоминания `INTERNET` из таблиц с разрешениями.

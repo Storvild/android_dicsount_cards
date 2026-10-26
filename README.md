@@ -107,7 +107,6 @@
 | Разрешение | Назначение |
 |---|---|
 | `android.permission.CAMERA` | Сканирование штрих-кодов с физических карт (необязательное, `uses-feature required="false"`) |
-| `android.permission.INTERNET` | Загрузка иконки/изображений магазинов через Coil |
 
 ---
 
