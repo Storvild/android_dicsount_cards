@@ -21,7 +21,7 @@
     <string name="about_dialog_title">À propos</string>
     <string name="about_dialog_text">L\'application Discount Cards est un moyen pratique de conserver les cartes de fidélité de vos magasins préférés.
 
-Version 1.0</string>
+Version %1$s</string>
     <string name="about_github_link">Le projet est disponible sur GitHub : https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">Exporter en fichier JSON</string>
     <string name="share_json_action">Partager…</string>

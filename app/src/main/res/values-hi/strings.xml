@@ -21,7 +21,7 @@
     <string name="about_dialog_title">ऐप के बारे में</string>
     <string name="about_dialog_text">"Discount Cards" ऐप आपके पसंदीदा स्टोर के डिस्काउंट कार्ड रखने का सुविधाजनक तरीका है।
 
-संस्करण 1.0</string>
+संस्करण %1$s</string>
     <string name="about_github_link">प्रोजेक्ट GitHub पर उपलब्ध है: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">JSON फ़ाइल में निर्यात करें</string>
     <string name="share_json_action">साझा करें…</string>

@@ -21,7 +21,7 @@
     <string name="about_dialog_title">关于</string>
     <string name="about_dialog_text">“Discount Cards”应用是存储和管理您喜爱的商店折扣卡/会员卡的好帮手。
 
-版本 1.0</string>
+版本 %1$s</string>
     <string name="about_github_link">项目代码已开源至 GitHub: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">导出为 JSON 文件</string>
     <string name="share_json_action">分享…</string>

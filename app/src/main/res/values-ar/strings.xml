@@ -21,7 +21,7 @@
     <string name="about_dialog_title">حول التطبيق</string>
     <string name="about_dialog_text">تطبيق "Discount Cards" وسيلة مريحة لحفظ بطاقات الخصم الخاصة بمتاجركم المفضلة.
 
-الإصدار 1.0</string>
+الإصدار %1$s</string>
     <string name="about_github_link">المشروع متاح على GitHub: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">تصدير إلى ملف JSON</string>
     <string name="share_json_action">مشاركة…</string>

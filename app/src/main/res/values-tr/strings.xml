@@ -21,7 +21,7 @@
     <string name="about_dialog_title">Hakkında</string>
     <string name="about_dialog_text">"Discount Cards" uygulaması, en sevdiğiniz mağazaların indirim kartlarını saklamanın pratik bir yoludur.
 
-Sürüm 1.0</string>
+Sürüm %1$s</string>
     <string name="about_github_link">Proje GitHub\'da mevcuttur: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">JSON dosyasına aktar</string>
     <string name="share_json_action">Paylaş…</string>
