@@ -54,6 +54,13 @@
             </intent-filter>
         </activity>
 
+        <!-- Fullscreen Barcode Overlay Activity (max brightness, no text) -->
+        <activity
+            android:name=".BarcodeOverlayActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DiscountCards"
+            android:excludeFromRecents="true" />
+
         <!-- Widget Provider -->
         <receiver
             android:name=".widget.DiscountCardsWidgetProvider"
