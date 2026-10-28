@@ -73,6 +73,7 @@
     <string name="empty_subtitle">添加您常用商店的会员卡，随时方便使用。</string>
     <string name="empty_search_subtitle">请尝试更换搜索词或添加新卡片。</string>
     <string name="add_first_card">添加卡片</string>
+    <string name="import_from_file">从文件导入…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">备注:</string>

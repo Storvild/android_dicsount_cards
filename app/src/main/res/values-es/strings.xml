@@ -73,6 +73,7 @@
     <string name="empty_subtitle">Añade las tarjetas de descuento de tus tiendas favoritas para tenerlas siempre a mano.</string>
     <string name="empty_search_subtitle">Intenta cambiar tu búsqueda o añade una nueva tarjeta.</string>
     <string name="add_first_card">Añadir tarjeta</string>
+    <string name="import_from_file">Importar desde archivo…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Notas:</string>

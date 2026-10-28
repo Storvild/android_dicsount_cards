@@ -73,6 +73,7 @@
     <string name="empty_subtitle">Ajoutez les cartes de fidélité de vos magasins préférés pour les avoir toujours à portée de main.</string>
     <string name="empty_search_subtitle">Essayez de modifier votre recherche ou ajoutez une nouvelle carte.</string>
     <string name="add_first_card">Ajouter une carte</string>
+    <string name="import_from_file">Importer depuis un fichier…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Notes :</string>

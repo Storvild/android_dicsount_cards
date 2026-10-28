@@ -73,6 +73,7 @@
     <string name="empty_subtitle">よく使うお店のポイントカードを追加して、いつでも使えるようにしましょう。</string>
     <string name="empty_search_subtitle">検索ワードを変更するか、新しいカードを追加してください。</string>
     <string name="add_first_card">カードを追加</string>
+    <string name="import_from_file">ファイルからインポート…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">メモ:</string>

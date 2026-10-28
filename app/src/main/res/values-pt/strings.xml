@@ -73,6 +73,7 @@
     <string name="empty_subtitle">Adicione os cartões de fidelização das suas lojas favoritas para os ter sempre à mão.</string>
     <string name="empty_search_subtitle">Tente alterar a sua pesquisa ou adicione um novo cartão.</string>
     <string name="add_first_card">Adicionar cartão</string>
+    <string name="import_from_file">Importar de ficheiro…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Notas:</string>

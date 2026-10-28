@@ -74,6 +74,7 @@
     <string name="empty_subtitle">أضف بطاقات الخصم الخاصة بمتاجرك المفضلة لتكون دائماً في متناول يدك.</string>
     <string name="empty_search_subtitle">جرب تغيير بحثك أو أضف بطاقة جديدة.</string>
     <string name="add_first_card">إضافة بطاقة</string>
+    <string name="import_from_file">استيراد من ملف…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">ملاحظات:</string>

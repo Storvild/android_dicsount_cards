@@ -73,6 +73,7 @@
     <string name="empty_subtitle">Add discount cards from your favorite stores so they\'re always at your fingertips.</string>
     <string name="empty_search_subtitle">Try changing your search query or add a new card.</string>
     <string name="add_first_card">Add a card</string>
+    <string name="import_from_file">Import from file…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Notes:</string>

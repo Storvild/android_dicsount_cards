@@ -73,6 +73,7 @@
     <string name="empty_subtitle">En sevdiğiniz mağazaların indirim kartlarını ekleyin, her zaman elinizin altında olsun.</string>
     <string name="empty_search_subtitle">Aramayı değiştirmeyi deneyin veya yeni bir kart ekleyin.</string>
     <string name="add_first_card">Kart ekle</string>
+    <string name="import_from_file">Dosyadan içe aktar…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Notlar:</string>

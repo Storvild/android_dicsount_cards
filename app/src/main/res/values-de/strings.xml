@@ -73,6 +73,7 @@
     <string name="empty_subtitle">Fügen Sie Kundenkarten Ihrer Lieblingsgeschäfte hinzu, damit Sie sie immer zur Hand haben.</string>
     <string name="empty_search_subtitle">Versuchen Sie Ihre Suche zu ändern oder fügen Sie eine neue Karte hinzu.</string>
     <string name="add_first_card">Karte hinzufügen</string>
+    <string name="import_from_file">Aus Datei importieren…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Notizen:</string>

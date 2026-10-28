@@ -165,7 +165,8 @@ fun CardListScreen(
                 } else if (uiState.cards.isEmpty()) {
                     EmptyState(
                         isSearching = uiState.searchQuery.isNotBlank(),
-                        onAddCardClick = onAddCardClick
+                        onAddCardClick = onAddCardClick,
+                        onImportClick = { importLauncher.launch(arrayOf("application/json", "*/*")) }
                     )
                 } else {
                     LazyVerticalGrid(

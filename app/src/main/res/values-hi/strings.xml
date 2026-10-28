@@ -73,6 +73,7 @@
     <string name="empty_subtitle">अपने पसंदीदा स्टोर के डिस्काउंट कार्ड जोड़ें ताकि वे हमेशा आपके पास रहें।</string>
     <string name="empty_search_subtitle">अपनी खोज बदलने का प्रयास करें या नया कार्ड जोड़ें।</string>
     <string name="add_first_card">कार्ड जोड़ें</string>
+    <string name="import_from_file">फ़ाइल से आयात करें…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">नोट्स:</string>

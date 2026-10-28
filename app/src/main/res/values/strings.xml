@@ -73,6 +73,7 @@
     <string name="empty_subtitle">Добавьте скидочные карты ваших любимых магазинов, чтобы они всегда были под рукой.</string>
     <string name="empty_search_subtitle">Попробуйте изменить поисковый запрос или добавьте новую карточку.</string>
     <string name="add_first_card">Добавить карточку</string>
+    <string name="import_from_file">Импортировать из файла…</string>
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Примечания:</string>
