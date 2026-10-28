@@ -74,10 +74,14 @@ fun SearchBarComponent(
     query: String,
     onQueryChange: (String) -> Unit,
     onClearQuery: () -> Unit,
-    onExportClick: () -> Unit,
+    onExportClick: () -> Unit = {},
+    onExportJsonClick: () -> Unit = onExportClick,
+    onExportCsvClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
     onAddCardClick: () -> Unit = {},
-    onImportClick: () -> Unit,
+    onImportClick: () -> Unit = {},
+    onImportJsonClick: () -> Unit = onImportClick,
+    onImportCsvClick: () -> Unit = {},
     onDeleteClick: () -> Unit = {},
     onArchiveClick: () -> Unit = {},
     modifier: Modifier = Modifier,
@@ -165,7 +169,7 @@ fun SearchBarComponent(
                         onClick = {
                             menuExpanded = false
                             fileSubmenuExpanded = false
-                            onExportClick()
+                            onExportJsonClick()
                         },
                         leadingIcon = {
                             Icon(
@@ -180,7 +184,37 @@ fun SearchBarComponent(
                         onClick = {
                             menuExpanded = false
                             fileSubmenuExpanded = false
-                            onImportClick()
+                            onImportJsonClick()
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Download,
+                                contentDescription = null,
+                                modifier = Modifier.padding(start = 12.dp)
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.export_csv_action)) },
+                        onClick = {
+                            menuExpanded = false
+                            fileSubmenuExpanded = false
+                            onExportCsvClick()
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Upload,
+                                contentDescription = null,
+                                modifier = Modifier.padding(start = 12.dp)
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.import_csv_action)) },
+                        onClick = {
+                            menuExpanded = false
+                            fileSubmenuExpanded = false
+                            onImportCsvClick()
                         },
                         leadingIcon = {
                             Icon(

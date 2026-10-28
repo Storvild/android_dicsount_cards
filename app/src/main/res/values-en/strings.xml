@@ -28,6 +28,8 @@
     <string name="share_action">Share…</string>
     <string name="add_card_action">Add card…</string>
     <string name="import_json_action">Import from JSON file</string>
+    <string name="export_csv_action">Export to CSV file</string>
+    <string name="import_csv_action">Import from CSV file</string>
     <string name="delete_cards_action">Delete cards…</string>
     <string name="archive_cards_action">Archive…</string>
     <string name="menu_archive">Archive</string>
@@ -137,7 +139,7 @@
     <string name="export_title">Export cards</string>
     <string name="export_copy">Copy JSON</string>
     <string name="import_title">Import cards</string>
-    <string name="import_hint">Paste card JSON data here…</string>
+    <string name="import_hint">Paste card JSON or CSV data here…</string>
     <string name="import_button">Import</string>
     <string name="export_success">Cards exported successfully</string>
     <string name="export_failed">Export error: %1$s</string>

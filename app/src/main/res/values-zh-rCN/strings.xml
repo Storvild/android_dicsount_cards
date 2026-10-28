@@ -28,6 +28,8 @@
     <string name="share_action">分享…</string>
     <string name="add_card_action">添加卡片…</string>
     <string name="import_json_action">从 JSON 文件导入</string>
+    <string name="export_csv_action">导出为 CSV 文件</string>
+    <string name="import_csv_action">从 CSV 文件导入</string>
     <string name="delete_cards_action">删除卡片…</string>
     <string name="archive_cards_action">归档…</string>
     <string name="menu_archive">归档</string>

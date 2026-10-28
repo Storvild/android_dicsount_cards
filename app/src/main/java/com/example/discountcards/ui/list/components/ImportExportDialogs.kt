@@ -609,6 +609,7 @@ fun ExportDialog(
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
+    val copiedMessage = stringResource(R.string.copied_to_clipboard)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -641,7 +642,7 @@ fun ExportDialog(
                     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText("DiscountCards Export", jsonText)
                     clipboard.setPrimaryClip(clip)
-                    Toast.makeText(context, context.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, copiedMessage, Toast.LENGTH_SHORT).show()
                     onDismiss()
                 }
             ) {
@@ -813,7 +814,7 @@ fun ImportDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(min = 120.dp, max = 200.dp),
-                    placeholder = { Text("[{ \"storeName\": \"Sample Store\", ... }]") },
+                    placeholder = { Text("JSON или CSV:\nНазвание;Код;Тип кода;CVC;Примечание") },
                     textStyle = MaterialTheme.typography.bodySmall.copy(
                         fontFamily = FontFamily.Monospace,
                         fontSize = 11.sp

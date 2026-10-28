@@ -28,6 +28,8 @@
     <string name="share_action">مشاركة…</string>
     <string name="add_card_action">إضافة بطاقة…</string>
     <string name="import_json_action">استيراد من ملف JSON</string>
+    <string name="export_csv_action">تصدير إلى ملف CSV</string>
+    <string name="import_csv_action">استيراد من ملف CSV</string>
     <string name="delete_cards_action">حذف البطاقات…</string>
     <string name="archive_cards_action">الأرشيف…</string>
     <string name="menu_archive">الأرشيف</string>

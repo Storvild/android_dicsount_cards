@@ -9,6 +9,7 @@ import com.example.discountcards.data.repository.CardRepository
 import com.example.discountcards.data.repository.SortOrder
 import com.example.discountcards.data.repository.UserPreferencesRepository
 import com.example.discountcards.util.DuplicateStrategy
+import com.example.discountcards.util.ExportFormat
 import com.example.discountcards.util.ImportMode
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,6 +35,7 @@ class CardListViewModel(
     private val pendingImportUri = MutableStateFlow<Uri?>(null)
 
     // Export selection
+    private val currentExportFormat = MutableStateFlow(ExportFormat.JSON)
     private val showExportSelectionDialog = MutableStateFlow(false)
     private val exportSelectionCards = MutableStateFlow<List<DiscountCard>>(emptyList())
     private val selectedExportCardIds = MutableStateFlow<Set<Long>>(emptySet())
@@ -154,13 +156,14 @@ class CardListViewModel(
     }
 
     // Export Selection Methods
-    fun prepareExportSelection() {
+    fun prepareExportSelection(format: ExportFormat = ExportFormat.JSON) {
         viewModelScope.launch {
             val allCards = repository.getAllCardsIncludingArchived().first()
             if (allCards.isEmpty()) {
                 userMessage.value = "EXPORT_FAILED:No cards to export"
                 return@launch
             }
+            currentExportFormat.value = format
             exportSelectionCards.value = allCards
             // Select only non-archived cards by default
             selectedExportCardIds.value = allCards.filter { !it.isArchived }.map { it.id }.toSet() 
@@ -219,9 +222,12 @@ class CardListViewModel(
                 val cardsToExport = selectedCards.map {
                     it.redact(exportIncludeCvc.value, exportIncludeUsageCount.value)
                 }
-                val json = repository.exportToJson(cardsToExport)
+                val content = when (currentExportFormat.value) {
+                    ExportFormat.JSON -> repository.exportToJson(cardsToExport)
+                    ExportFormat.CSV -> repository.exportToCsv(cardsToExport)
+                }
                 cancelExportSelection()
-                exportedJson.value = json
+                exportedJson.value = content
             } catch (e: Exception) {
                 userMessage.value = "EXPORT_FAILED:${e.localizedMessage ?: "Error"}"
             }
@@ -240,7 +246,7 @@ class CardListViewModel(
             val cardsToExport = selectedCards.map {
                 it.redact(exportIncludeCvc.value, exportIncludeUsageCount.value)
             }
-            val result = repository.exportToUri(contentResolver, uri, cardsToExport)
+            val result = repository.exportToUri(contentResolver, uri, cardsToExport, currentExportFormat.value)
             result.fold(
                 onSuccess = {
                     cancelExportSelection()

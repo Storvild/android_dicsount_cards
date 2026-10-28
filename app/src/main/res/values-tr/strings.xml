@@ -28,6 +28,8 @@
     <string name="share_action">Paylaş…</string>
     <string name="add_card_action">Kart ekle…</string>
     <string name="import_json_action">JSON dosyasından içe aktar</string>
+    <string name="export_csv_action">CSV dosyasına aktar</string>
+    <string name="import_csv_action">CSV dosyasından içe aktar</string>
     <string name="delete_cards_action">Kartları sil…</string>
     <string name="archive_cards_action">Arşiv…</string>
     <string name="menu_archive">Arşiv</string>

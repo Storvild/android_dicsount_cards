@@ -44,6 +44,7 @@ import com.example.discountcards.ui.list.components.ShareSelectionDialog
 import com.example.discountcards.ui.list.components.ImportDialog
 import com.example.discountcards.ui.list.components.ImportSelectionDialog
 import com.example.discountcards.ui.list.components.SearchBarComponent
+import com.example.discountcards.util.ExportFormat
 
 @Composable
 fun CardListScreen(
@@ -66,10 +67,19 @@ fun CardListScreen(
     val resources = context.resources
 
     var showTextImportDialog by remember { mutableStateOf(false) }
+    var pendingExportFormat by remember { mutableStateOf(ExportFormat.JSON) }
 
     // SAF Launchers for Export and Import
-    val exportLauncher = rememberLauncherForActivityResult(
+    val exportJsonLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/json")
+    ) { uri ->
+        if (uri != null) {
+            viewModel.confirmExportToUri(context.contentResolver, uri)
+        }
+    }
+
+    val exportCsvLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("text/csv")
     ) { uri ->
         if (uri != null) {
             viewModel.confirmExportToUri(context.contentResolver, uri)
@@ -82,6 +92,27 @@ fun CardListScreen(
         if (uri != null) {
             viewModel.onImportFileSelected(uri, context.contentResolver)
         }
+    }
+
+    val jsonMimeTypes = remember { arrayOf("application/json") }
+    val csvMimeTypes = remember {
+        arrayOf(
+            "text/csv",
+            "text/comma-separated-values",
+            "application/csv",
+            "text/x-csv",
+            "text/plain"
+        )
+    }
+    val allMimeTypes = remember {
+        arrayOf(
+            "application/json",
+            "text/csv",
+            "text/comma-separated-values",
+            "application/csv",
+            "text/x-csv",
+            "text/plain"
+        )
     }
 
     // Toast notifications for actions
@@ -140,10 +171,18 @@ fun CardListScreen(
                 query = uiState.searchQuery,
                 onQueryChange = viewModel::onSearchQueryChange,
                 onClearQuery = viewModel::onClearSearch,
-                onExportClick = { viewModel.prepareExportSelection() },
+                onExportJsonClick = {
+                    pendingExportFormat = ExportFormat.JSON
+                    viewModel.prepareExportSelection(ExportFormat.JSON)
+                },
+                onExportCsvClick = {
+                    pendingExportFormat = ExportFormat.CSV
+                    viewModel.prepareExportSelection(ExportFormat.CSV)
+                },
+                onImportJsonClick = { importLauncher.launch(jsonMimeTypes) },
+                onImportCsvClick = { importLauncher.launch(csvMimeTypes) },
                 onShareClick = { viewModel.prepareShareSelection() },
                 onAddCardClick = onAddCardClick,
-                onImportClick = { importLauncher.launch(arrayOf("application/json", "*/*")) },
                 onDeleteClick = { viewModel.prepareDeleteSelection() },
                 onArchiveClick = onArchiveClick,
                 currentThemeMode = currentThemeMode,
@@ -166,7 +205,7 @@ fun CardListScreen(
                     EmptyState(
                         isSearching = uiState.searchQuery.isNotBlank(),
                         onAddCardClick = onAddCardClick,
-                        onImportClick = { importLauncher.launch(arrayOf("application/json", "*/*")) }
+                        onImportClick = { importLauncher.launch(allMimeTypes) }
                     )
                 } else {
                     LazyVerticalGrid(
@@ -209,7 +248,13 @@ fun CardListScreen(
             includeUsageCount = uiState.exportIncludeUsageCount,
             onIncludeCvcChange = viewModel::setExportIncludeCvc,
             onIncludeUsageCountChange = viewModel::setExportIncludeUsageCount,
-            onConfirm = { exportLauncher.launch("discount_cards_backup.json") },
+            onConfirm = {
+                if (pendingExportFormat == ExportFormat.JSON) {
+                    exportJsonLauncher.launch("discount_cards_backup.json")
+                } else {
+                    exportCsvLauncher.launch("discount_cards_backup.csv")
+                }
+            },
             onDismiss = viewModel::cancelExportSelection
         )
     }
@@ -283,4 +328,3 @@ fun CardListScreen(
         )
     }
 }
-

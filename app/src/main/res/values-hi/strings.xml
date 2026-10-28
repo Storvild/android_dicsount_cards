@@ -28,6 +28,8 @@
     <string name="share_action">साझा करें…</string>
     <string name="add_card_action">कार्ड जोड़ें…</string>
     <string name="import_json_action">JSON फ़ाइल से आयात करें</string>
+    <string name="export_csv_action">CSV फ़ाइल में निर्यात करें</string>
+    <string name="import_csv_action">CSV फ़ाइल से आयात करें</string>
     <string name="delete_cards_action">कार्ड हटाएं…</string>
     <string name="archive_cards_action">संग्रह…</string>
     <string name="menu_archive">संग्रह</string>

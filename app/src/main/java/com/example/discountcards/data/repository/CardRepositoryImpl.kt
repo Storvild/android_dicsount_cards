@@ -6,6 +6,7 @@ import com.example.discountcards.data.local.dao.DiscountCardDao
 import com.example.discountcards.data.local.entity.DiscountCard
 import com.example.discountcards.util.BackupManager
 import com.example.discountcards.util.DuplicateStrategy
+import com.example.discountcards.util.ExportFormat
 import com.example.discountcards.util.ImportMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -75,7 +76,12 @@ class CardRepositoryImpl(
 
     override suspend fun exportToJson(cardsToExport: List<DiscountCard>?): String {
         val cards = cardsToExport ?: dao.getAllCards().first()
-        return backupManager.serialize(cards)
+        return backupManager.serialize(cards, ExportFormat.JSON)
+    }
+
+    override suspend fun exportToCsv(cardsToExport: List<DiscountCard>?): String {
+        val cards = cardsToExport ?: dao.getAllCards().first()
+        return backupManager.serialize(cards, ExportFormat.CSV)
     }
 
     override suspend fun importFromJson(
@@ -92,11 +98,12 @@ class CardRepositoryImpl(
     override suspend fun exportToUri(
         contentResolver: ContentResolver,
         uri: Uri,
-        cardsToExport: List<DiscountCard>?
+        cardsToExport: List<DiscountCard>?,
+        format: ExportFormat
     ): Result<Unit> {
         return runCatching {
             val cards = cardsToExport ?: dao.getAllCards().first()
-            backupManager.writeToUri(contentResolver, uri, cards).getOrThrow()
+            backupManager.writeToUri(contentResolver, uri, cards, format).getOrThrow()
         }
     }
 
@@ -184,4 +191,3 @@ class CardRepositoryImpl(
         return count
     }
 }
-

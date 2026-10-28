@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import com.example.discountcards.data.local.entity.DiscountCard
 import com.example.discountcards.util.DuplicateStrategy
+import com.example.discountcards.util.ExportFormat
 import com.example.discountcards.util.ImportMode
 import kotlinx.coroutines.flow.Flow
 
@@ -27,6 +28,7 @@ interface CardRepository {
     suspend fun insertAll(cards: List<DiscountCard>)
 
     suspend fun exportToJson(cardsToExport: List<DiscountCard>? = null): String
+    suspend fun exportToCsv(cardsToExport: List<DiscountCard>? = null): String
     suspend fun importFromJson(
         jsonString: String,
         mode: ImportMode = ImportMode.MERGE,
@@ -35,7 +37,8 @@ interface CardRepository {
     suspend fun exportToUri(
         contentResolver: ContentResolver,
         uri: Uri,
-        cardsToExport: List<DiscountCard>? = null
+        cardsToExport: List<DiscountCard>? = null,
+        format: ExportFormat = ExportFormat.JSON
     ): Result<Unit>
     suspend fun importFromUri(
         contentResolver: ContentResolver,
@@ -51,4 +54,3 @@ interface CardRepository {
     suspend fun parseJsonCards(jsonString: String): Result<List<DiscountCard>>
     suspend fun readJsonCardsFromUri(contentResolver: ContentResolver, uri: Uri): Result<List<DiscountCard>>
 }
-

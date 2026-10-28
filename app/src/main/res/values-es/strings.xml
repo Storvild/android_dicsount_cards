@@ -28,6 +28,8 @@
     <string name="share_action">Compartir…</string>
     <string name="add_card_action">Añadir tarjeta…</string>
     <string name="import_json_action">Importar de archivo JSON</string>
+    <string name="export_csv_action">Exportar a archivo CSV</string>
+    <string name="import_csv_action">Importar de archivo CSV</string>
     <string name="delete_cards_action">Eliminar tarjetas…</string>
     <string name="archive_cards_action">Archivo…</string>
     <string name="menu_archive">Archivo</string>
