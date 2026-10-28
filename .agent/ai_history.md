@@ -1733,3 +1733,87 @@ Agent:
 Так как мы чуть раньше удалили библиотеку Coil и сетевой стек (Retrofit), приложение действительно перестало нуждаться в доступе в интернет, что делает его полностью безопасным с точки зрения хранения данных локально на устройстве пользователя.
 
 Также я обновил файлы `README.md` и `README_.md`, удалив оттуда упоминания `INTERNET` из таблиц с разрешениями.
+
+---
+
+Доработано окно "О программе"
+- Добавлено имя автора
+- Номер версии в языках кроме английского не переносился на новую строку
+- Добавлена кнопка копирования названия программы
+- Добавлен QR-код
+
+Исправлено. В XML-ресурсах Android переводы строк внутри строкового значения игнорируются — нужно использовать явный \n. Теперь текст в английском (и всех остальных) языках будет отображаться на отдельных строках
+
+---
+
+Agent:  
+Готово. Подменю «Оформление» в выпадающем меню заменено на пункт «Темная тема» с чекбоксом.
+
+Что изменено:
+
+**[SearchBarComponent.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt#L253-L272)** — пункт меню теперь показывает `Checkbox` с галочкой (включена при `ThemeMode.DARK`). Клик по пункту переключает тему: тёмная → светлая и наоборот. Диалог `ThemeSelectionDialog` удалён из файла и не используется.
+
+**[SettingsScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/settings/SettingsScreen.kt#L240-L266)** — карточка «Оформление» с тремя радио-кнопками заменена на строку с `Checkbox` под тем же заголовком `menu_appearance`.
+
+**[strings.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml#L17)** (и все 10 локализаций) — `menu_appearance` переименован:
+- ru: «Темная тема»
+- en: «Dark theme»
+- de: «Dunkles Design»
+- fr: «Thème sombre»
+- es: «Tema oscuro»
+- tr: «Koyu tema»
+- ja: 「ダークテーマ」
+- zh-rCN: 「深色模式」
+- hi: 「डार्क थीम」
+- ar: 「مظهر داكن」
+
+Проверено: `:app:testDebugUnitTest` — 49 тестов пройдено, `:app:assembleDebug` — сборка успешна.
+
+---
+
+Agent:  
+Готово. Карточка в [SettingsScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/settings/SettingsScreen.kt#L239-L278) возвращена к исходному виду с тремя радио-кнопками (Системная / Светлая / Тёмная). Это позволяет пользователю вернуть «Как в системе» — режим, который чекбокс в меню не может выразить.
+
+Меню в [SearchBarComponent.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt) остаётся в новом виде: пункт «Темная тема» с чекбоксом, клик переключает DARK ↔ LIGHT.
+
+Тесты: 49 passed. Сборка: успешна.
+
+---
+
+You:  
+Почему при нажатии именно на галочку в меню Темная тема ничего не происходит?
+
+Agent:  
+Причина: в `trailingIcon` у `DropdownMenuItem` рендерится обычный `Checkbox` со своим собственным кликабельным модификатором (внутренний `clickable`). Этот клик перехватывает жест до того, как он дойдёт до `onClick` у пункта меню, а `onCheckedChange = { }` пустой — поэтому визуально ничего не происходит: меню не закрывается, тема не меняется, галочка не переключается.
+
+Исправление: добавлен `Modifier.semantics(mergeDescendants = true) { }` в [SearchBarComponent.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt#L270-L278). Он склеивает семантику Checkbox с семантикой самого пункта меню, и теперь тап по галочке вызывает `onClick` пункта, который:
+- закрывает меню (`menuExpanded = false` через `onDismissRequest` — меню закрывается само, потому что `onClick` выполнен),
+- вызывает `onThemeModeSelected(newMode)` → `preferencesRepository.updateThemeMode(...)`,
+- Flow обновляет `preferences.themeMode` → `currentThemeMode` в `SearchBarComponent` пересчитывается → `checked` у Checkbox переключается, и `DiscountCardsTheme` в `MainActivity` меняет цветовую схему.
+
+Сборка `:app:assembleDebug` успешна.
+
+---
+
+Почему если в системе стоит темная тема. в приложении выбрана системная тема. при загрузке тема приложения правильная - темная. но в меню темная тема галочка не стоит?
+
+Причина: галочка в меню проверяет currentThemeMode == ThemeMode.DARK. Это значение — сохранённый режим из DataStore, а не фактическая текущая тема. Если режим SYSTEM и система в тёмной теме, isDarkTheme в  MainActivity.kt равно true (тема приложения тёмная), но currentThemeMode остаётся SYSTEM, и чекбокс показывает false.
+Фикс: в SearchBarComponent считаем эффективное тёмное состояние через isSystemInDarkTheme() и передаём его в DropdownMenuItem
+
+Agent:  
+Готово. Галочка теперь показывает **фактическую** тему приложения, а не сохранённый режим.
+
+Изменения в [SearchBarComponent.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt#L257-L259):
+- Добавлен `import androidx.compose.foundation.isSystemInDarkTheme`.
+- Вычислен `isDarkThemeEffective` по тем же правилам, что и `isDarkTheme` в [MainActivity.onCreate](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/MainActivity.kt#L136-L140):
+  ```kotlin
+  val isDarkThemeEffective = when (currentThemeMode) {
+      ThemeMode.LIGHT -> false
+      ThemeMode.DARK -> true
+      ThemeMode.SYSTEM -> isSystemInDarkTheme()
+  }
+  ```
+- `Checkbox(checked = isDarkThemeEffective, …)` и `onClick` тоже используют `isDarkThemeEffective`: клик ставит `DARK` при светлом состоянии и `LIGHT` при тёмном — поведение соответствует реальному визуальному состоянию.
+
+Сборка `:app:assembleDebug` успешна.
+
