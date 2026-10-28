@@ -354,7 +354,7 @@ fun SearchBarComponent(
         val appName = stringResource(R.string.app_name)
         val copyDesc = stringResource(R.string.copy_name_to_clipboard_desc)
         val qrDesc = stringResource(R.string.qr_code_desc)
-        val githubUrl = "https://github.com/Storvild/android_dicsount_cards"
+        val githubUrl = "https://github.com/Storvild/android_discount_cards"
 
         // QR code bitmap for the GitHub URL
         val qrBitmap: Bitmap? = remember(githubUrl) {

@@ -22,7 +22,7 @@
     <string name="copy_name_to_clipboard_desc">Copiar o nome da aplicação</string>
     <string name="qr_code_desc">Código QR com o link do GitHub</string>
     <string name="about_dialog_text">A aplicação Discount Cards é uma forma conveniente de guardar os cartões de fidelização das suas lojas favoritas.\nAutor: Vadim_S\n\nVersão %1$s</string>
-    <string name="about_github_link">O projeto está disponível no GitHub: https://github.com/Storvild/android_dicsount_cards</string>
+    <string name="about_github_link">O projeto está disponível no GitHub: https://github.com/Storvild/android_discount_cards</string>
     <string name="export_json_action">Exportar para ficheiro JSON</string>
     <string name="share_json_action">Partilhar…</string>
     <string name="share_action">Partilhar…</string>
