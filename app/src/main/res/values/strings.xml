@@ -14,7 +14,7 @@
     <string name="clear_search_desc">Очистить поиск</string>
     <string name="menu_options_desc">Меню опций</string>
     <string name="menu_file">Файл</string>
-    <string name="menu_appearance">Оформление</string>
+    <string name="menu_appearance">Темная тема</string>
     <string name="menu_sort">Сортировка</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_about">О программе</string>

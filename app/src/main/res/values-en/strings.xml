@@ -14,7 +14,7 @@
     <string name="clear_search_desc">Clear search</string>
     <string name="menu_options_desc">Options menu</string>
     <string name="menu_file">File</string>
-    <string name="menu_appearance">Appearance</string>
+    <string name="menu_appearance">Dark theme</string>
     <string name="menu_sort">Sort</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_about">About</string>

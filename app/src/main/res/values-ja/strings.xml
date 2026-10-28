@@ -14,7 +14,7 @@
     <string name="clear_search_desc">検索をクリア</string>
     <string name="menu_options_desc">オプションメニュー</string>
     <string name="menu_file">ファイル</string>
-    <string name="menu_appearance">外観</string>
+    <string name="menu_appearance">ダークテーマ</string>
     <string name="menu_sort">並べ替え</string>
     <string name="menu_settings">設定</string>
     <string name="menu_about">アプリについて</string>

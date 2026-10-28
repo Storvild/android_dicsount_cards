@@ -9,6 +9,7 @@ import android.net.Uri
 import android.widget.Toast
 import com.example.discountcards.BuildConfig
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,6 +42,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
@@ -54,6 +56,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -86,7 +89,6 @@ fun SearchBarComponent(
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
     var fileSubmenuExpanded by remember { mutableStateOf(false) }
-    var showThemeDialog by remember { mutableStateOf(false) }
     var showSortDialog by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
 
@@ -253,17 +255,31 @@ fun SearchBarComponent(
                     }
                 )
 
-                // 3. Оформление (единый пункт меню выбора темы)
+                // 3. Темная тема (checkbox: включение/выключение тёмной темы)
+                val isDarkThemeEffective = when (currentThemeMode) {
+                    ThemeMode.LIGHT -> false
+                    ThemeMode.DARK -> true
+                    ThemeMode.SYSTEM -> isSystemInDarkTheme()
+                }
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.menu_appearance)) },
                     onClick = {
-                        menuExpanded = false
-                        showThemeDialog = true
+                        val newMode = if (isDarkThemeEffective) ThemeMode.LIGHT else ThemeMode.DARK
+                        onThemeModeSelected(newMode)
                     },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Outlined.Palette,
                             contentDescription = null
+                        )
+                    },
+                    trailingIcon = {
+                        Checkbox(
+                            checked = isDarkThemeEffective,
+                            onCheckedChange = {},
+                            modifier = Modifier
+                                .padding(end = 4.dp)
+                                .semantics(mergeDescendants = true) { }
                         )
                     }
                 )
@@ -314,18 +330,6 @@ fun SearchBarComponent(
                 )
             }
         }
-    }
-
-    // Theme Selection Dialog
-    if (showThemeDialog) {
-        ThemeSelectionDialog(
-            currentThemeMode = currentThemeMode,
-            onDismiss = { showThemeDialog = false },
-            onSelect = { mode ->
-                onThemeModeSelected(mode)
-                showThemeDialog = false
-            }
-        )
     }
 
     // Sort Selection Dialog
@@ -450,42 +454,6 @@ fun SearchBarComponent(
             }
         )
     }
-}
-
-@Composable
-fun ThemeSelectionDialog(
-    currentThemeMode: ThemeMode,
-    onDismiss: () -> Unit,
-    onSelect: (ThemeMode) -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.theme_dialog_title)) },
-        text = {
-            Column {
-                ThemeOptionRow(
-                    title = stringResource(R.string.theme_system),
-                    selected = currentThemeMode == ThemeMode.SYSTEM,
-                    onClick = { onSelect(ThemeMode.SYSTEM) }
-                )
-                ThemeOptionRow(
-                    title = stringResource(R.string.theme_light),
-                    selected = currentThemeMode == ThemeMode.LIGHT,
-                    onClick = { onSelect(ThemeMode.LIGHT) }
-                )
-                ThemeOptionRow(
-                    title = stringResource(R.string.theme_dark),
-                    selected = currentThemeMode == ThemeMode.DARK,
-                    onClick = { onSelect(ThemeMode.DARK) }
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel_button))
-            }
-        }
-    )
 }
 
 @Composable
