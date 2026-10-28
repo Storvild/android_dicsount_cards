@@ -19,6 +19,8 @@
     <string name="menu_settings">الإعدادات</string>
     <string name="menu_about">حول التطبيق</string>
     <string name="about_dialog_title">حول التطبيق</string>
+    <string name="copy_name_to_clipboard_desc">نسخ اسم التطبيق</string>
+    <string name="qr_code_desc">رمز QR يربط بـ GitHub</string>
     <string name="about_dialog_text">تطبيق "Discount Cards" وسيلة مريحة لحفظ بطاقات الخصم الخاصة بمتاجركم المفضلة.
 
 الإصدار %1$s</string>

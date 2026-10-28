@@ -19,6 +19,8 @@
     <string name="menu_settings">設定</string>
     <string name="menu_about">アプリについて</string>
     <string name="about_dialog_title">アプリについて</string>
+    <string name="copy_name_to_clipboard_desc">アプリ名をコピー</string>
+    <string name="qr_code_desc">GitHubへのQRコード</string>
     <string name="about_dialog_text">「Discount Cards」アプリは、お気に入りの店舗のポイントカードを整理・保存する便利ツールです。
 
 バージョン %1$s</string>

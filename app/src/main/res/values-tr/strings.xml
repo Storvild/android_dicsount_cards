@@ -19,6 +19,8 @@
     <string name="menu_settings">Ayarlar</string>
     <string name="menu_about">Hakkında</string>
     <string name="about_dialog_title">Hakkında</string>
+    <string name="copy_name_to_clipboard_desc">Uygulama adını kopyala</string>
+    <string name="qr_code_desc">GitHub bağlantılı QR kod</string>
     <string name="about_dialog_text">"Discount Cards" uygulaması, en sevdiğiniz mağazaların indirim kartlarını saklamanın pratik bir yoludur.
 
 Sürüm %1$s</string>

@@ -19,6 +19,8 @@
     <string name="menu_settings">Paramètres</string>
     <string name="menu_about">À propos</string>
     <string name="about_dialog_title">À propos</string>
+    <string name="copy_name_to_clipboard_desc">Copier le nom de l\'application</string>
+    <string name="qr_code_desc">Code QR avec le lien GitHub</string>
     <string name="about_dialog_text">L\'application Discount Cards est un moyen pratique de conserver les cartes de fidélité de vos magasins préférés.
 
 Version %1$s</string>

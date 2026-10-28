@@ -19,6 +19,8 @@
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
     <string name="about_dialog_title">关于</string>
+    <string name="copy_name_to_clipboard_desc">复制应用名称</string>
+    <string name="qr_code_desc">指向 GitHub 的二维码</string>
     <string name="about_dialog_text">“Discount Cards”应用是存储和管理您喜爱的商店折扣卡/会员卡的好帮手。
 
 版本 %1$s</string>

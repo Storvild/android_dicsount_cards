@@ -19,6 +19,8 @@
     <string name="menu_settings">Настройки</string>
     <string name="menu_about">О программе</string>
     <string name="about_dialog_title">О программе</string>
+    <string name="copy_name_to_clipboard_desc">Скопировать название</string>
+    <string name="qr_code_desc">QR-код со ссылкой на GitHub</string>
     <string name="about_dialog_text">Приложение Discount Cards (Скидочные карты) — удобный способ хранить скидочные карты ваших любимых магазинов.\n\nВерсия %1$s</string>
     <string name="about_github_link">Проект доступен на GitHub: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">Экспорт в JSON-файл</string>

@@ -19,6 +19,8 @@
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_about">Über die App</string>
     <string name="about_dialog_title">Über die App</string>
+    <string name="copy_name_to_clipboard_desc">App-Bezeichnung kopieren</string>
+    <string name="qr_code_desc">QR-Code mit GitHub-Link</string>
     <string name="about_dialog_text">Die App „Discount Cards“ ist eine praktische Möglichkeit, Kundenkarten Ihrer Lieblingsgeschäfte aufzubewahren.
 
 Version %1$s</string>
