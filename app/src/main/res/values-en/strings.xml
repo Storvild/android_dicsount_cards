@@ -21,9 +21,7 @@
     <string name="about_dialog_title">About</string>
     <string name="copy_name_to_clipboard_desc">Copy app name</string>
     <string name="qr_code_desc">QR code linking to GitHub</string>
-    <string name="about_dialog_text">Discount Cards — a convenient way to keep discount cards from your favorite stores.
-
-Version %1$s</string>
+    <string name="about_dialog_text">Discount Cards — a convenient way to keep discount cards from your favorite stores.\nAuthor: Vadim_S\n\nVersion %1$s</string>
     <string name="about_github_link">Project is available on GitHub: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">Export to JSON file</string>
     <string name="share_json_action">Share…</string>

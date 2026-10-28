@@ -21,9 +21,7 @@
     <string name="about_dialog_title">حول التطبيق</string>
     <string name="copy_name_to_clipboard_desc">نسخ اسم التطبيق</string>
     <string name="qr_code_desc">رمز QR يربط بـ GitHub</string>
-    <string name="about_dialog_text">تطبيق "Discount Cards" وسيلة مريحة لحفظ بطاقات الخصم الخاصة بمتاجركم المفضلة.
-
-الإصدار %1$s</string>
+    <string name="about_dialog_text">تطبيق "Discount Cards" وسيلة مريحة لحفظ بطاقات الخصم الخاصة بمتاجركم المفضلة.\nالمؤلف: Vadim_S\n\nالإصدار %1$s</string>
     <string name="about_github_link">المشروع متاح على GitHub: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">تصدير إلى ملف JSON</string>
     <string name="share_json_action">مشاركة…</string>

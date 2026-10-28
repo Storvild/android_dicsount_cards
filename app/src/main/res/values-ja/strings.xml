@@ -21,9 +21,7 @@
     <string name="about_dialog_title">アプリについて</string>
     <string name="copy_name_to_clipboard_desc">アプリ名をコピー</string>
     <string name="qr_code_desc">GitHubへのQRコード</string>
-    <string name="about_dialog_text">「Discount Cards」アプリは、お気に入りの店舗のポイントカードを整理・保存する便利ツールです。
-
-バージョン %1$s</string>
+    <string name="about_dialog_text">「Discount Cards」アプリは、お気に入りの店舗のポイントカードを整理・保存する便利ツールです。\n著者: Vadim_S\n\nバージョン %1$s</string>
     <string name="about_github_link">プロジェクトはGitHubで公開されています: https://github.com/Storvild/android_dicsount_cards</string>
     <string name="export_json_action">JSONファイルにエクスポート</string>
     <string name="share_json_action">共有…</string>
