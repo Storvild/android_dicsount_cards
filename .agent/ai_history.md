@@ -1817,3 +1817,73 @@ Agent:
 
 Сборка `:app:assembleDebug` успешна.
 
+---
+
+В компонент [EmptyState.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/EmptyState.kt) и экран [CardListScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt) добавлена кнопка **«Импортировать из файла…»**, которая отображается при отсутствии карточек.
+
+### Внесённые изменения:
+
+1. **Ресурсы строк** ([`strings.xml`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml)):
+   - Добавлен строковый ресурс `import_from_file` («Импортировать из файла…») с локализацией для всех поддерживаемых языков.
+
+2. **Компонент пустого состояния** ([`EmptyState.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/EmptyState.kt)):
+   - Добавлен параметр `onImportClick: (() -> Unit)? = null`.
+   - Добавлена кнопка `OutlinedButton` с иконкой импорта под кнопкой «Добавить карточку».
+
+3. **Главный экран** ([`CardListScreen.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt)):
+   - Передан обработчик запуска выбора файла (`importLauncher.launch(...)`) в компонент `EmptyState`.
+   
+---
+
+Agent:  
+Ссылка на GitHub обновлена с `https://github.com/Storvild/android_dicsount_cards` на `https://github.com/Storvild/android_discount_cards` во всех локализациях и компонентах проекта:
+
+1. **Строковые ресурсы (`about_github_link`)**: исправлена опечатка во всех 10 переведенных файлах `strings.xml` (`values-ar`, `values-de`, `values-en`, `values-es`, `values-fr`, `values-hi`, `values-ja`, `values-pt`, `values-tr`, `values-zh-rCN`).
+2. **Код генерирования QR-кода** ([`SearchBarComponent.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/SearchBarComponent.kt#L357)): обновлён URL для отображения QR-кода в диалоге «О программе».
+
+---
+
+Возможность импортировать скидочные карты из CSV-файлов была успешно реализована.
+
+### Что сделано:
+
+1. **Поддержка формата CSV в `BackupManager`**:
+   - **Колонки CSV**:
+     1. Название магазина (Store Name / Title)
+     2. Код карты / Штрихкод (Card Number)
+     3. Тип кода (Barcode Format / Code Type, например: `CODE_128`, `EAN_13`, `EAN_8`, `QR_CODE`, `PHONE` и т. д.)
+     4. CVC (опционально)
+     5. Примечание (опционально)
+   - **Автоопределение разделителей**: Поддерживаются разделители `,`, `;` и символ табуляции `\t` (актуально для экспорта из Excel и таблицы Google).
+   - **Нормализация формата кода**: Текстовые названия форматов штрихкодов автоматически приводятся к внутренним типам приложения (при отсутствии типа по умолчанию используется `CODE_128`).
+   - **Пропуск заголовков**: Автоматически распознаются и пропускаются строки-заголовки (например, `Название;Код;Тип кода;CVC;Примечание`).
+   - **Универсальное автоопределение типа файла**: Функция `deserialize` в `BackupManager` автоматически распознаёт, является ли файл/текст структурой JSON или CSV.
+
+2. **Фильтрация файлов при выборе**:
+   - При выборе файла через меню импорта системному проводнику передаются MIME-типы для JSON и CSV (`application/json`, `text/csv`, `text/comma-separated-values`, `application/csv`, `text/x-csv`). Показываются только файлы этих форматов.
+
+3. **Обновление интерфейса и локализации**:
+   - Пункт меню обновлён на «Импорт из JSON/CSV-файла».
+   - Подсказка и placeholder в диалоге ручного ввода текста обновлены с указанием формата CSV.
+
+4. **Тестирование**:
+   - Добавлены модульные тесты в [BackupManagerTest.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/test/java/com/example/discountcards/util/BackupManagerTest.kt) для проверки CSV разной структуры, с кавычками, с разделителями-точкой с запятой и через потоки ввода. Все 54 юнит-теста и сборка успешны.
+
+---
+
+Agent:  
+В меню **Файл** добавлены раздельные опции для работы с JSON и CSV:
+
+1. **Новые пункты меню**:
+   - `Файл -> Экспорт в JSON-файл`
+   - `Файл -> Импорт из JSON-файла`
+   - `Файл -> Экспорт в CSV-файл`
+   - `Файл -> Импорт из CSV-файла`
+
+2. **Реализация экспорта в CSV**:
+   - Добавлен метод `serializeCsv` в `BackupManager`, формирующий файл с заголовками `Название,Код,Тип кода,CVC,Примечание`.
+   - При создании документа задаётся подходящий тип файла (`.csv`, MIME-тип `text/csv`).
+   - Имена, коды и примечания с кавычками и запятыми корректно экранируются по стандарту RFC 4180.
+
+3. **Локализация**:
+   - Строки `export_csv_action` и `import_csv_action` добавлены во все поддерживаемые языковые ресурсы приложения.   
