@@ -61,6 +61,7 @@ android {
 
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.core)
@@ -85,12 +86,19 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.coil.compose)
+    implementation(libs.converter.moshi)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.zxing.core)
     implementation(libs.mlkit.barcode.scanning)
+    implementation(libs.logging.interceptor)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.okhttp)
+    implementation(libs.play.services.location)
+    implementation(libs.retrofit)
     testImplementation(libs.androidx.core)
     testImplementation(libs.androidx.junit)
     testImplementation(libs.junit)
@@ -103,6 +111,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
     "ksp"(libs.androidx.room.compiler)
+    "ksp"(libs.moshi.kotlin.codegen)
 }
 
 androidComponents {
