@@ -58,7 +58,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.discountcards.BarcodeOverlayActivity
 import com.example.discountcards.R
 import com.example.discountcards.ui.detail.components.BarcodeDisplay
 import com.example.discountcards.ui.detail.components.DeleteConfirmDialog
@@ -223,16 +222,7 @@ fun CardDetailScreen(
                     BarcodeDisplay(
                         bitmap = uiState.barcodeBitmap,
                         cardNumber = card.cardNumber,
-                        barcodeFormat = card.barcodeFormat,
-                        onClick = {
-                            context.startActivity(
-                                BarcodeOverlayActivity.newIntent(
-                                    context,
-                                    card.cardNumber,
-                                    card.barcodeFormat
-                                )
-                            )
-                        }
+                        barcodeFormat = card.barcodeFormat
                     )
 
                     // CVC Code Toggle (only shown if CVC is not empty)
