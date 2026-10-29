@@ -23,13 +23,13 @@
     <string name="qr_code_desc">رمز QR يربط بـ GitHub</string>
     <string name="about_dialog_text">تطبيق "Discount Cards" وسيلة مريحة لحفظ بطاقات الخصم الخاصة بمتاجركم المفضلة.\nالمؤلف: Vadim_S\n\nالإصدار %1$s</string>
     <string name="about_github_link">المشروع متاح على GitHub: https://github.com/Storvild/android_discount_cards</string>
-    <string name="export_json_action">تصدير إلى ملف JSON</string>
+    <string name="export_file_action">تصدير إلى ملف…</string>
+    <string name="export_format_json">JSON</string>
+    <string name="export_format_csv">CSV</string>
     <string name="share_json_action">مشاركة…</string>
     <string name="share_action">مشاركة…</string>
     <string name="add_card_action">إضافة بطاقة…</string>
-    <string name="import_json_action">استيراد من ملف JSON</string>
-    <string name="export_csv_action">تصدير إلى ملف CSV</string>
-    <string name="import_csv_action">استيراد من ملف CSV</string>
+    <string name="import_file_action">استيراد من ملف…</string>
     <string name="delete_cards_action">حذف البطاقات…</string>
     <string name="archive_cards_action">الأرشيف…</string>
     <string name="menu_archive">الأرشيف</string>

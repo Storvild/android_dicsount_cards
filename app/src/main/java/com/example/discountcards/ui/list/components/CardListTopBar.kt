@@ -1,7 +1,5 @@
 package com.example.discountcards.ui.list.components
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -63,10 +61,8 @@ fun CardListTopBar(
     query: String,
     onQueryChange: (String) -> Unit,
     onClearQuery: () -> Unit,
-    onExportJsonClick: () -> Unit,
-    onExportCsvClick: () -> Unit,
-    onImportJsonClick: () -> Unit,
-    onImportCsvClick: () -> Unit,
+    onExportClick: () -> Unit,
+    onImportClick: () -> Unit,
     onShareClick: () -> Unit,
     onAddCardClick: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -95,10 +91,8 @@ fun CardListTopBar(
         )
 
         CardListOverflowMenu(
-            onExportJsonClick = onExportJsonClick,
-            onExportCsvClick = onExportCsvClick,
-            onImportJsonClick = onImportJsonClick,
-            onImportCsvClick = onImportCsvClick,
+            onExportClick = onExportClick,
+            onImportClick = onImportClick,
             onShareClick = onShareClick,
             onAddCardClick = onAddCardClick,
             onDeleteClick = onDeleteClick,
@@ -171,10 +165,8 @@ internal fun SearchField(
 
 @Composable
 private fun CardListOverflowMenu(
-    onExportJsonClick: () -> Unit,
-    onExportCsvClick: () -> Unit,
-    onImportJsonClick: () -> Unit,
-    onImportCsvClick: () -> Unit,
+    onExportClick: () -> Unit,
+    onImportClick: () -> Unit,
     onShareClick: () -> Unit,
     onAddCardClick: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -219,11 +211,11 @@ private fun CardListOverflowMenu(
 
             if (fileSubmenuExpanded) {
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.export_json_action)) },
+                    text = { Text(stringResource(R.string.export_file_action)) },
                     onClick = {
                         menuExpanded = false
                         fileSubmenuExpanded = false
-                        onExportJsonClick()
+                        onExportClick()
                     },
                     leadingIcon = {
                         Icon(
@@ -234,41 +226,11 @@ private fun CardListOverflowMenu(
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.import_json_action)) },
+                    text = { Text(stringResource(R.string.import_file_action)) },
                     onClick = {
                         menuExpanded = false
                         fileSubmenuExpanded = false
-                        onImportJsonClick()
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Outlined.Download,
-                            contentDescription = null,
-                            modifier = Modifier.padding(start = 12.dp)
-                        )
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.export_csv_action)) },
-                    onClick = {
-                        menuExpanded = false
-                        fileSubmenuExpanded = false
-                        onExportCsvClick()
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Outlined.Upload,
-                            contentDescription = null,
-                            modifier = Modifier.padding(start = 12.dp)
-                        )
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.import_csv_action)) },
-                    onClick = {
-                        menuExpanded = false
-                        fileSubmenuExpanded = false
-                        onImportCsvClick()
+                        onImportClick()
                     },
                     leadingIcon = {
                         Icon(

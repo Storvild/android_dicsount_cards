@@ -23,13 +23,13 @@
     <string name="qr_code_desc">QR-код со ссылкой на GitHub</string>
     <string name="about_dialog_text">Приложение Discount Cards (Скидочные карты) — удобный способ хранить скидочные карты ваших любимых магазинов.\nАвтор: Vadim_S\n\nВерсия %1$s</string>
     <string name="about_github_link">Проект доступен на GitHub: https://github.com/Storvild/android_discount_cards</string>
-    <string name="export_json_action">Экспорт в JSON-файл</string>
+    <string name="export_file_action">Экспорт в файл…</string>
+    <string name="import_file_action">Импорт из файла…</string>
     <string name="share_json_action">Поделиться…</string>
     <string name="share_action">Поделиться…</string>
     <string name="add_card_action">Добавить карточку…</string>
-    <string name="import_json_action">Импорт из JSON-файла</string>
-    <string name="export_csv_action">Экспорт в CSV-файл</string>
-    <string name="import_csv_action">Импорт из CSV-файла</string>
+    <string name="export_format_json">JSON</string>
+    <string name="export_format_csv">CSV</string>
     <string name="delete_cards_action">Удаление карточек…</string>
     <string name="archive_cards_action">Архив…</string>
     <string name="menu_archive">Архив</string>

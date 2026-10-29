@@ -23,13 +23,14 @@
     <string name="qr_code_desc">GitHubへのQRコード</string>
     <string name="about_dialog_text">「Discount Cards」アプリは、お気に入りの店舗のポイントカードを整理・保存する便利ツールです。\n著者: Vadim_S\n\nバージョン %1$s</string>
     <string name="about_github_link">プロジェクトはGitHubで公開されています: https://github.com/Storvild/android_discount_cards</string>
-    <string name="export_json_action">JSONファイルにエクスポート</string>
+    <string name="export_file_action">ファイルにエクスポート…</string>
+    <string name="export_format_json">JSON</string>
+    <string name="export_format_csv">CSV</string>
     <string name="share_json_action">共有…</string>
     <string name="share_action">共有…</string>
     <string name="add_card_action">カードを追加…</string>
-    <string name="import_json_action">JSONファイルからインポート</string>
-    <string name="export_csv_action">CSVファイルにエクスポート</string>
-    <string name="import_csv_action">CSVファイルからインポート</string>
+    <string name="import_file_action">ファイルからインポート…</string>
+
     <string name="delete_cards_action">カードを削除…</string>
     <string name="archive_cards_action">アーカイブ…</string>
     <string name="menu_archive">アーカイブ</string>

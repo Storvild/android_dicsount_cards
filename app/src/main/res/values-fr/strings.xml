@@ -23,13 +23,14 @@
     <string name="qr_code_desc">Code QR avec le lien GitHub</string>
     <string name="about_dialog_text">L\'application Discount Cards est un moyen pratique de conserver les cartes de fidélité de vos magasins préférés.\nAuteur : Vadim_S\n\nVersion %1$s</string>
     <string name="about_github_link">Le projet est disponible sur GitHub : https://github.com/Storvild/android_discount_cards</string>
-    <string name="export_json_action">Exporter en fichier JSON</string>
+    <string name="export_file_action">Exporter dans un fichier…</string>
+    <string name="export_format_json">JSON</string>
+    <string name="export_format_csv">CSV</string>
     <string name="share_json_action">Partager…</string>
     <string name="share_action">Partager…</string>
     <string name="add_card_action">Ajouter une carte…</string>
-    <string name="import_json_action">Importer depuis un fichier JSON</string>
-    <string name="export_csv_action">Exporter en fichier CSV</string>
-    <string name="import_csv_action">Importer depuis un fichier CSV</string>
+    <string name="import_file_action">Importer depuis un fichier…</string>
+
     <string name="delete_cards_action">Supprimer des cartes…</string>
     <string name="archive_cards_action">Archives…</string>
     <string name="menu_archive">Archives</string>

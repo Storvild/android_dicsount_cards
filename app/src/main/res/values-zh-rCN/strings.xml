@@ -23,13 +23,14 @@
     <string name="qr_code_desc">指向 GitHub 的二维码</string>
     <string name="about_dialog_text">“Discount Cards”应用是存储和管理您喜爱的商店折扣卡/会员卡的好帮手。\n作者: Vadim_S\n\n版本 %1$s</string>
     <string name="about_github_link">项目代码已开源至 GitHub: https://github.com/Storvild/android_discount_cards</string>
-    <string name="export_json_action">导出为 JSON 文件</string>
+    <string name="export_file_action">导出到文件…</string>
+    <string name="export_format_json">JSON</string>
+    <string name="export_format_csv">CSV</string>
     <string name="share_json_action">分享…</string>
     <string name="share_action">分享…</string>
     <string name="add_card_action">添加卡片…</string>
-    <string name="import_json_action">从 JSON 文件导入</string>
-    <string name="export_csv_action">导出为 CSV 文件</string>
-    <string name="import_csv_action">从 CSV 文件导入</string>
+    <string name="import_file_action">从文件导入…</string>
+
     <string name="delete_cards_action">删除卡片…</string>
     <string name="archive_cards_action">归档…</string>
     <string name="menu_archive">归档</string>

@@ -22,8 +22,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -42,8 +45,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.SegmentedButton
 import com.example.discountcards.R
 import com.example.discountcards.data.local.entity.DiscountCard
+import com.example.discountcards.util.ExportFormat
 
 @Composable
 private fun SelectionControlBar(
@@ -99,6 +106,8 @@ fun ExportSelectionDialog(
     includeUsageCount: Boolean = false,
     onIncludeCvcChange: (Boolean) -> Unit = {},
     onIncludeUsageCountChange: (Boolean) -> Unit = {},
+    selectedFormat: ExportFormat = ExportFormat.JSON,
+    onFormatChange: (ExportFormat) -> Unit = {},
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -158,6 +167,49 @@ fun ExportSelectionDialog(
                             Text(
                                 text = stringResource(R.string.export_include_usage_count_label),
                                 style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        SingleChoiceSegmentedButtonRow {
+                            SegmentedButton(
+                                selected = selectedFormat == ExportFormat.JSON,
+                                onClick = { onFormatChange(ExportFormat.JSON) },
+                                shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
+                                label = {
+                                    Text(
+                                        text = stringResource(R.string.export_format_json),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Folder,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                }
+                            )
+                            SegmentedButton(
+                                selected = selectedFormat == ExportFormat.CSV,
+                                onClick = { onFormatChange(ExportFormat.CSV) },
+                                shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
+                                label = {
+                                    Text(
+                                        text = stringResource(R.string.export_format_csv),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Folder,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                }
                             )
                         }
 

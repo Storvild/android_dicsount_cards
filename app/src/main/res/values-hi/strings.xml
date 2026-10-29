@@ -23,13 +23,14 @@
     <string name="qr_code_desc">GitHub के लिए QR कोड</string>
     <string name="about_dialog_text">"Discount Cards" ऐप आपके पसंदीदा स्टोर के डिस्काउंट कार्ड रखने का सुविधाजनक तरीका है।\nलेखक: Vadim_S\n\nसंस्करण %1$s</string>
     <string name="about_github_link">प्रोजेक्ट GitHub पर उपलब्ध है: https://github.com/Storvild/android_discount_cards</string>
-    <string name="export_json_action">JSON फ़ाइल में निर्यात करें</string>
+    <string name="export_file_action">फ़ाइल में निर्यात करें…</string>
+    <string name="export_format_json">JSON</string>
+    <string name="export_format_csv">CSV</string>
     <string name="share_json_action">साझा करें…</string>
     <string name="share_action">साझा करें…</string>
     <string name="add_card_action">कार्ड जोड़ें…</string>
-    <string name="import_json_action">JSON फ़ाइल से आयात करें</string>
-    <string name="export_csv_action">CSV फ़ाइल में निर्यात करें</string>
-    <string name="import_csv_action">CSV फ़ाइल से आयात करें</string>
+    <string name="import_file_action">फ़ाइल से आयात करें…</string>
+
     <string name="delete_cards_action">कार्ड हटाएं…</string>
     <string name="archive_cards_action">संग्रह…</string>
     <string name="menu_archive">संग्रह</string>

@@ -23,13 +23,13 @@
     <string name="qr_code_desc">QR code linking to GitHub</string>
     <string name="about_dialog_text">Discount Cards — a convenient way to keep discount cards from your favorite stores.\nAuthor: Vadim_S\n\nVersion %1$s</string>
     <string name="about_github_link">Project is available on GitHub: https://github.com/Storvild/android_discount_cards</string>
-    <string name="export_json_action">Export to JSON file</string>
+    <string name="export_file_action">Export to file…</string>
+    <string name="import_file_action">Import from file…</string>
     <string name="share_json_action">Share…</string>
     <string name="share_action">Share…</string>
     <string name="add_card_action">Add card…</string>
-    <string name="import_json_action">Import from JSON file</string>
-    <string name="export_csv_action">Export to CSV file</string>
-    <string name="import_csv_action">Import from CSV file</string>
+    <string name="export_format_json">JSON</string>
+    <string name="export_format_csv">CSV</string>
     <string name="delete_cards_action">Delete cards…</string>
     <string name="archive_cards_action">Archive…</string>
     <string name="menu_archive">Archive</string>

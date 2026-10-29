@@ -41,7 +41,6 @@ import com.example.discountcards.ui.list.components.CardListTopBar
 import com.example.discountcards.ui.list.components.FallbackDialogs
 import com.example.discountcards.ui.list.components.dialogs.DeleteSelectionDialog
 import com.example.discountcards.ui.list.components.dialogs.ExportSelectionDialog
-import com.example.discountcards.ui.list.components.dialogs.ImportDialog
 import com.example.discountcards.ui.list.components.dialogs.ImportSelectionDialog
 import com.example.discountcards.ui.list.components.dialogs.ShareSelectionDialog
 import com.example.discountcards.util.ExportFormat
@@ -93,16 +92,6 @@ fun CardListScreen(
         }
     }
 
-    val jsonMimeTypes = remember { arrayOf("application/json") }
-    val csvMimeTypes = remember {
-        arrayOf(
-            "text/csv",
-            "text/comma-separated-values",
-            "application/csv",
-            "text/x-csv",
-            "text/plain"
-        )
-    }
     val allMimeTypes = remember {
         arrayOf(
             "application/json",
@@ -170,16 +159,10 @@ fun CardListScreen(
                 query = uiState.searchQuery,
                 onQueryChange = viewModel::onSearchQueryChange,
                 onClearQuery = viewModel::onClearSearch,
-                onExportJsonClick = {
-                    pendingExportFormat = ExportFormat.JSON
-                    viewModel.prepareExportSelection(ExportFormat.JSON)
+                onExportClick = {
+                    viewModel.prepareExportSelection(pendingExportFormat)
                 },
-                onExportCsvClick = {
-                    pendingExportFormat = ExportFormat.CSV
-                    viewModel.prepareExportSelection(ExportFormat.CSV)
-                },
-                onImportJsonClick = { importLauncher.launch(jsonMimeTypes) },
-                onImportCsvClick = { importLauncher.launch(csvMimeTypes) },
+                onImportClick = { importLauncher.launch(allMimeTypes) },
                 onShareClick = { viewModel.prepareShareSelection() },
                 onAddCardClick = onAddCardClick,
                 onDeleteClick = { viewModel.prepareDeleteSelection() },
@@ -247,6 +230,11 @@ fun CardListScreen(
             includeUsageCount = uiState.exportIncludeUsageCount,
             onIncludeCvcChange = viewModel::setExportIncludeCvc,
             onIncludeUsageCountChange = viewModel::setExportIncludeUsageCount,
+            selectedFormat = pendingExportFormat,
+            onFormatChange = { format ->
+                pendingExportFormat = format
+                viewModel.prepareExportSelection(format)
+            },
             onConfirm = {
                 if (pendingExportFormat == ExportFormat.JSON) {
                     exportJsonLauncher.launch("discount_cards_backup.json")

@@ -2090,3 +2090,35 @@ Agent:
 ### Проверка
 - `analyze_file` на `BarcodeDisplay.kt` — только одно стилистическое предупреждение про trailing comma (как и было до изменений).
 - `find_usages("copy_card_number")` и `grep` по `app/src` — совпадений нет, строка полностью удалена.
+
+---
+
+Объединение импорта csv и json и также экспорта
+
+### Изменения
+
+**[CardListTopBar.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/CardListTopBar.kt)**
+- Сигнатуры `CardListTopBar` и `CardListOverflowMenu`: 4 callback'а (`onExportJsonClick`, `onExportCsvClick`, `onImportJsonClick`, `onImportCsvClick`) заменены на 2: `onExportClick` и `onImportClick`
+- В подменю «Файл» 4 пункта заменены на 2: «Экспорт в файл…» и «Импорт из файла…»
+- Убран неиспользуемый импорт `android.content.Intent`
+
+**[CardListScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt)**
+- Callback'ы TopBar: `onExportClick` открывает диалог выбора экспорта, `onImportClick` открывает файловый пикер с `allMimeTypes` (JSON + CSV)
+- Передаёт в `ExportSelectionDialog` новый формат (`selectedFormat`, `onFormatChange`)
+- Убраны `jsonMimeTypes`, `csvMimeTypes` (теперь не нужны — формат определяет `BackupManager.deserialize` автоматически)
+- Убран неиспользуемый импорт `ImportDialog`
+
+**[ExportSelectionDialog.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/dialogs/ExportSelectionDialog.kt)**
+- Добавлены параметры `selectedFormat: ExportFormat` и `onFormatChange: (ExportFormat) -> Unit`
+- В диалоге добавлен сегментированный переключатель **JSON / CSV** (Material 3 `SingleChoiceSegmentedButtonRow`)
+
+**[strings.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml)** и все 10 локализаций
+- Добавлены: `export_file_action`, `import_file_action`, `export_format_json`, `export_format_csv`
+- Удалены: `export_json_action`, `import_json_action`, `export_csv_action`, `import_csv_action`
+
+### Как это работает
+
+- **Импорт**: пользователь выбирает один пункт «Импорт из файла…» → открывается стандартный файловый пикер, принимающий и JSON, и CSV → `BackupManager.deserialize()` автоматически определяет формат по содержмому (JSON начинается с `[`/`{`, иначе — CSV).
+- **Экспорт**: пользователь выбирает один пункт «Экспорт в файл…» → в диалоге выбора карточек добавился сегмент-переключатель JSON/CSV → после нажатия «Экспортировать» открывается `CreateDocument` с MIME-типом выбранного формата и именем файла `.json` или `.csv`.
+
+Сборка `:app:assembleDebug` прошла успешно.
