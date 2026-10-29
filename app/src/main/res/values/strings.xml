@@ -79,8 +79,7 @@
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Примечания:</string>
-    <string name="copy_card_number">Скопировать номер</string>
-    <string name="copied_to_clipboard">Скопировано в буфер обмена</string>
+      <string name="copied_to_clipboard">Скопировано в буфер обмена</string>
     <string name="barcode_error">Ошибка генерации штрихкода</string>
 
     <!-- Add / Edit Card Screen -->

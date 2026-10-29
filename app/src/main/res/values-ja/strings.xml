@@ -79,8 +79,7 @@
 
     <!-- Card Detail Screen -->
     <string name="notes_label">メモ:</string>
-    <string name="copy_card_number">番号をコピー</string>
-    <string name="copied_to_clipboard">クリップボードにコピーしました</string>
+      <string name="copied_to_clipboard">クリップボードにコピーしました</string>
     <string name="barcode_error">バーコード生成エラー</string>
 
     <!-- Add / Edit Card Screen -->

@@ -2066,3 +2066,27 @@ Agent:
 Agent:  
 Готово. Теперь TopAppBar в detail-экране **без текста** — только иконки (назад, избранное, редактирование, архив, шаринг, удаление). Название магазина отображается ниже на всю ширину экрана.
 
+---
+
+Убрать в detail тип кода и кнопку копирования числового кода
+
+Agent:  
+## Итоги изменений
+
+### 1. Удаление элементов в detail-экране карточки
+**[BarcodeDisplay.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/components/BarcodeDisplay.kt)**
+- Убрана `AssistChip` с отображением типа кода (например, "Code 128", "QR", "PHONE").
+- Убрана кнопка копирования номера карты (иконка `ContentCopy` + логика работы с `ClipboardManager` и `Toast`).
+- Убраны неиспользуемые импорты: `ClipData`, `ClipboardManager`, `Context`, `Toast`, `AssistChip`, `Row`, `width`, `ContentCopy`, `LocalContext`, `getFormatDisplayName`.
+- Номер карты по-прежнему отображается под штрих-кодом.
+
+### 2. Чистка неиспользуемых строк
+Строка `copy_card_number` больше не используется нигде в коде, поэтому удалена из всех 11 файлов переводов:
+- `values/strings.xml` (RU)
+- `values-ar`, `values-de`, `values-en`, `values-es`, `values-fr`, `values-hi`, `values-ja`, `values-pt`, `values-tr`, `values-zh-rCN`
+
+Другие связанные ресурсы (`copied_to_clipboard`, `getFormatDisplayName`) оставлены — они ещё используются в `AboutDialog.kt`, `ExportSelectionDialog.kt`, `AddEditCardScreen.kt`, `FormatSelector.kt`, `CardListItem.kt`.
+
+### Проверка
+- `analyze_file` на `BarcodeDisplay.kt` — только одно стилистическое предупреждение про trailing comma (как и было до изменений).
+- `find_usages("copy_card_number")` и `grep` по `app/src` — совпадений нет, строка полностью удалена.

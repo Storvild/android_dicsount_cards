@@ -79,8 +79,7 @@
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Notlar:</string>
-    <string name="copy_card_number">Numarayı kopyala</string>
-    <string name="copied_to_clipboard">Panoya kopyalandı</string>
+      <string name="copied_to_clipboard">Panoya kopyalandı</string>
     <string name="barcode_error">Barkod oluşturma hatası</string>
 
     <!-- Add / Edit Card Screen -->

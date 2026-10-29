@@ -80,8 +80,7 @@
 
     <!-- Card Detail Screen -->
     <string name="notes_label">ملاحظات:</string>
-    <string name="copy_card_number">نسخ الرقم</string>
-    <string name="copied_to_clipboard">تم النسخ إلى الحافظة</string>
+      <string name="copied_to_clipboard">تم النسخ إلى الحافظة</string>
     <string name="barcode_error">خطأ في إنشاء الرمز شريطي</string>
 
     <!-- Add / Edit Card Screen -->

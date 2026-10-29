@@ -79,8 +79,7 @@
 
     <!-- Card Detail Screen -->
     <string name="notes_label">Notes :</string>
-    <string name="copy_card_number">Copier le numéro</string>
-    <string name="copied_to_clipboard">Copié dans le presse-papiers</string>
+      <string name="copied_to_clipboard">Copié dans le presse-papiers</string>
     <string name="barcode_error">Erreur de génération du code-barres</string>
 
     <!-- Add / Edit Card Screen -->

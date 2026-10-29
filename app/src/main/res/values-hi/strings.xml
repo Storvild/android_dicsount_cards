@@ -79,8 +79,7 @@
 
     <!-- Card Detail Screen -->
     <string name="notes_label">नोट्स:</string>
-    <string name="copy_card_number">नंबर कॉपी करें</string>
-    <string name="copied_to_clipboard">क्लिपबोर्ड पर कॉपी किया गया</string>
+      <string name="copied_to_clipboard">क्लिपबोर्ड पर कॉपी किया गया</string>
     <string name="barcode_error">बारकोड जनरेशन त्रुटि</string>
 
     <!-- Add / Edit Card Screen -->
