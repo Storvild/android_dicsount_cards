@@ -37,13 +37,13 @@ import com.example.discountcards.data.repository.SortOrder
 import com.example.discountcards.data.repository.ThemeMode
 import com.example.discountcards.ui.list.components.CardListItem
 import com.example.discountcards.ui.list.components.EmptyState
-import com.example.discountcards.ui.list.components.ExportDialog
-import com.example.discountcards.ui.list.components.DeleteSelectionDialog
-import com.example.discountcards.ui.list.components.ExportSelectionDialog
-import com.example.discountcards.ui.list.components.ShareSelectionDialog
-import com.example.discountcards.ui.list.components.ImportDialog
-import com.example.discountcards.ui.list.components.ImportSelectionDialog
-import com.example.discountcards.ui.list.components.SearchBarComponent
+import com.example.discountcards.ui.list.components.CardListTopBar
+import com.example.discountcards.ui.list.components.FallbackDialogs
+import com.example.discountcards.ui.list.components.dialogs.DeleteSelectionDialog
+import com.example.discountcards.ui.list.components.dialogs.ExportSelectionDialog
+import com.example.discountcards.ui.list.components.dialogs.ImportDialog
+import com.example.discountcards.ui.list.components.dialogs.ImportSelectionDialog
+import com.example.discountcards.ui.list.components.dialogs.ShareSelectionDialog
 import com.example.discountcards.util.ExportFormat
 
 @Composable
@@ -66,7 +66,6 @@ fun CardListScreen(
     val context = LocalContext.current
     val resources = context.resources
 
-    var showTextImportDialog by remember { mutableStateOf(false) }
     var pendingExportFormat by remember { mutableStateOf(ExportFormat.JSON) }
 
     // SAF Launchers for Export and Import
@@ -167,7 +166,7 @@ fun CardListScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            SearchBarComponent(
+            CardListTopBar(
                 query = uiState.searchQuery,
                 onQueryChange = viewModel::onSearchQueryChange,
                 onClearQuery = viewModel::onClearSearch,
@@ -310,21 +309,9 @@ fun CardListScreen(
         )
     }
 
-    // Fallback Text Export Dialog
-    uiState.exportedJson?.let { json ->
-        ExportDialog(
-            jsonText = json,
-            onDismiss = viewModel::clearExportedJson
-        )
-    }
-
-    // Fallback Text Import Dialog
-    if (showTextImportDialog) {
-        ImportDialog(
-            onDismiss = { showTextImportDialog = false },
-            onImport = { json ->
-                viewModel.onImportTextEntered(json)
-            }
-        )
-    }
+    // Fallback dialogs
+    FallbackDialogs(
+        exportedJson = uiState.exportedJson,
+        onClearExportedJson = viewModel::clearExportedJson
+    )
 }

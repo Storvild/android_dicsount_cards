@@ -61,7 +61,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.discountcards.R
 import com.example.discountcards.ui.detail.components.BarcodeDisplay
 import com.example.discountcards.ui.detail.components.DeleteConfirmDialog
-import com.example.discountcards.ui.list.components.ShareSelectionDialog
+import com.example.discountcards.ui.list.components.dialogs.ShareSelectionDialog
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -32,9 +32,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.discountcards.R
 import com.example.discountcards.data.local.entity.DiscountCard
-import com.example.discountcards.data.repository.SortOrder
 import com.example.discountcards.ui.list.components.CardListItem
-import com.example.discountcards.ui.list.components.SearchBarComponent
+import com.example.discountcards.ui.list.components.SearchField
 
 /**
  * A screen that lists cards moved to the archive.
@@ -105,17 +104,11 @@ fun ArchiveScreen(
                 .padding(innerPadding)
         ) {
             // Search bar (no menu, since the menu is owned by the main screen)
-            SearchBarComponent(
+            SearchField(
                 query = searchQuery,
                 onQueryChange = onSearchQueryChange,
                 onClearQuery = { onSearchQueryChange("") },
-                onExportClick = {},
-                onShareClick = {},
-                onAddCardClick = onAddCardClick,
-                onImportClick = {},
-                onDeleteClick = {},
-                currentThemeMode = com.example.discountcards.data.repository.ThemeMode.SYSTEM,
-                currentSortOrder = SortOrder.ALPHABETICAL
+                modifier = Modifier.fillMaxWidth()
             )
 
             Box(
