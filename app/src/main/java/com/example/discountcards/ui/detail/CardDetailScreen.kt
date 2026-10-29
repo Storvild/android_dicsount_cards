@@ -56,6 +56,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.discountcards.R
@@ -126,12 +127,7 @@ fun CardDetailScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title = {
-                    Text(
-                        text = card?.storeName ?: stringResource(R.string.card_details_title),
-                        fontWeight = FontWeight.Bold
-                    )
-                },
+                title = {},
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
@@ -217,6 +213,21 @@ fun CardDetailScreen(
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
+
+                    // Store Name — full width
+                    Text(
+                        text = card.storeName,
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     // Main Barcode Container
                     BarcodeDisplay(
