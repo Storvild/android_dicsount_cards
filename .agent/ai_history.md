@@ -1887,3 +1887,61 @@ Agent:
 
 3. **Локализация**:
    - Строки `export_csv_action` и `import_csv_action` добавлены во все поддерживаемые языковые ресурсы приложения.   
+   
+---
+
+Agent:  
+Готово. Вот что я привёл в соответствие с текущим кодом:
+
+**Основные изменения:**
+
+1. **Навигация**: уточнил описание — `sealed interface Destination` + `rememberSaveable` + `Saver`, а не абстрактное "stack state"
+2. **Архитектура**:
+   - Добавил **DI** (ленивая инициализация через `by lazy` в `DiscountCardsApp`)
+   - Перечислил все 4 ViewModel и их `ViewModelProvider.Factory` из [ViewModelFactory.kt](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/ViewModelFactory.kt)
+   - Уточнил, что репозиторий работает с **JSON и CSV**
+3. **Структура проекта**:
+   - Добавил `ui/ViewModelFactory.kt`
+   - Добавил `util/Serializers.kt` (кастомные сериализаторы)
+   - Добавил папку `widget/` с тремя файлами
+   - Уточнил `MainActivity` (обработка Intent'ов `ACTION_VIEW`/`ACTION_SEND`)
+   - Уточнил `UserPreferencesRepository` (DataStore + SharedPreferences для locale)
+4. **Формат данных**:
+   - Добавил раздел **CSV**
+   - Описал кастомные сериализаторы `ColorHexSerializer` и `DateIso8601Serializer`
+5. **Новый раздел** — "Открытие JSON-файлов («Открыть с помощью»)" — описывает intent-фильтры
+6. **Предварительные требования**:
+   - `JDK 17` (рекомендуется, совпадает с CI)
+   - Убрал "JDK 11" — в `build.gradle.kts` `compileSdk` = 37, а CI использует JDK 17
+7. **Убрал упоминание "Clean Architecture"** — это не совсем Clean, а Layered (MVVM)
+
+---
+
+Agent:  
+Готово. Внесены точечные правки в [README.md](E:/virtualenvs/discount_cards/DiscountCards/README.md):
+
+**Изменения:**
+1. **Ключевые преимущества** — "в формате JSON" → "в формате JSON или CSV"
+2. **Основной пункт "Резервное копирование"** — "в JSON-формате" → "в формате **JSON** или **CSV**"; уточнил, что "Открыть с помощью" поддерживает именно JSON-файлы
+3. **Заголовок раздела** — "Резервное копирование и формат данных JSON" → "Резервное копирование и формат данных"
+4. **Описание** — добавлена фраза "Приложение поддерживает два формата: **JSON** и **CSV**"
+
+**Что проверил и подтвердил как корректное:**
+- ✅ 11 языков (русская папка `values/` + 10 папок `values-*`: ar, de, en, es, fr, hi, ja, pt, tr, zh-rCN)
+- ✅ 9 форматов штрих-кодов
+- ✅ Режимы импорта MERGE/OVERWRITE
+- ✅ Стратегии UPDATE_EXISTING / ADD_AS_NEW / SKIP
+- ✅ Разрешение CAMERA с `uses-feature required="false"`
+- ✅ Нет `android.permission.INTERNET` в манифесте
+- ✅ Все скриншоты в `docs/screenshots/` на месте
+- ✅ Файл `LICENSE` существует
+- ✅ Ссылка на `docs/DEVELOPMENT.md` валидна
+
+---
+
+Agent:  
+Готово. Теперь раздел "💾 Резервное копирование и формат данных" содержит оба формата с примерами:
+
+- **JSON** — полный пример структуры с кастомными сериализаторами (HEX-цвет, ISO-даты)
+- **CSV** — таблица с заголовком `Название,Код,Тип кода,CVC,Примечание` и примером строк, соответствующий реализации в [BackupManager.kt](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/util/BackupManager.kt#L27)
+
