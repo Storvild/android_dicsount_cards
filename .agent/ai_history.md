@@ -1945,3 +1945,104 @@ Agent:
 - **JSON** — полный пример структуры с кастомными сериализаторами (HEX-цвет, ISO-даты)
 - **CSV** — таблица с заголовком `Название,Код,Тип кода,CVC,Примечание` и примером строк, соответствующий реализации в [BackupManager.kt](E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/util/BackupManager.kt#L27)
 
+---
+
+Рефакторинг кода
+План и задачи:
+.agent\implementation_plan.artifact (SearchBarComponent).md
+.agent\task.artifact.md 
+
+План уже обновлён — изменения внесены:
+
+1. **Screenshot-тесты** — добавлен `ScreenshotTests.kt` с 10 тестами (TopBar, CardListScreen, AboutDialog, SortSelectionDialog, CardListItem, EmptyState). Используется нативный `createScreenshot` из `ui-test-junit4` (BOM 2024.09+ уже подключён).
+
+2. **`ImportModeDialog`** — подтверждён как мёртвый код, из структуры файлов удалён. В `Open Questions` теперь: «**Удалить** `ImportModeDialog` из `ImportDialogs.kt` — подтверждено как мёртвый код».
+
+
+## Итоги выполненных шагов
+
+### Step 2: Вынос диалогов из `ImportExportDialogs.kt` ✅
+- Созданы 4 файла в `dialogs/`:
+  - [ExportSelectionDialog.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/dialogs/ExportSelectionDialog.kt) — `SelectionControlBar` (private) + `ExportSelectionDialog` + `ExportDialog`
+  - [ImportDialogs.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/dialogs/ImportDialogs.kt) — `SelectionControlBar` (private) + `ImportSelectionDialog` + `ImportDialog` (без `ImportModeDialog` — мёртвый код удалён)
+  - [DeleteSelectionDialog.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/dialogs/DeleteSelectionDialog.kt) — `SelectionControlBar` (private) + `DeleteSelectionDialog`
+  - [ShareSelectionDialog.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/dialogs/ShareSelectionDialog.kt) — `SelectionControlBar` (private) + `ShareSelectionDialog`
+- Удалён `ImportExportDialogs.kt`
+- Обновлены импорты в [CardListScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt) и [CardDetailScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailScreen.kt)
+- `app:assembleDebug` — зелёный
+
+### Step 3: Рефакторинг `SearchBarComponent.kt` ✅
+- Созданы новые файлы:
+  - [CardListTopBar.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/CardListTopBar.kt) — `CardListTopBar` (public) + `SearchField` (internal) + `CardListOverflowMenu` (private)
+  - [SortSelectionDialog.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/SortSelectionDialog.kt) — `SortSelectionDialog` + `ThemeOptionRow` (private)
+  - [AboutDialog.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/AboutDialog.kt) — `AboutDialog`
+  - [FallbackDialogs.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/FallbackDialogs.kt) — `FallbackDialogs` (обёртка над `ExportDialog`)
+- Удалён `SearchBarComponent.kt`
+- Обновлён [CardListScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListScreen.kt): `SearchBarComponent` → `CardListTopBar`, fallback-блоки → `FallbackDialogs`
+- Тесты переименованы: `SearchBarComponentTest.kt` → [CardListTopBarTest.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/androidTest/java/com/example/discountcards/ui/list/CardListTopBarTest.kt)
+- [AboutDialogTest.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/androidTest/java/com/example/discountcards/ui/list/AboutDialogTest.kt) разкомментирован
+- `app:assembleDebug` — зелёный
+
+### Step 4: ArchiveScreen ✅
+- [ArchiveScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/archive/ArchiveScreen.kt): `SearchBarComponent` → `SearchField`, убраны лишние коллбэки
+- `app:assembleDebug` — зелёный
+
+### Step 5: Финальная верификация ⚠️
+- `app:connectedDebugAndroidTest` — не запустился из-за network error (недоступен `dl.google.com`). Это проблема сети, а не кода.
+- Ручная проверка — осталась на пользователя.
+
+> [!IMPORTANT]
+> Connected-тесты нужно перезапустить, когда сеть станет доступна. Код полностью компилируется и все рефакторинговые шаги завершены.
+
+---
+
+Agent:  
+**Connected Android Tests** — это инструментальные тесты (instrumented tests), которые запускаются **на реальном устройстве или эмуляторе**. В отличие от unit-тестов (`app:testDebugUnitTest`), которые работают в JVM без Android-окружения, connected-тесты имеют доступ к реальным Android API (UI, clipboard, SAF, SharedPreferences и т.д.).
+
+## Конкретно для вашего проекта
+
+В папке `app/src/androidTest/` у вас лежат тесты, которые используют `createComposeRule()` — они **не могут** работать в JVM, потому что Compose UI требует реального Android-окружения (display, window, input). Поэтому их можно запускать только через:
+
+```
+gradle connectedDebugAndroidTest
+```
+
+## Почему он не запустился
+
+Gradle не смог скачать зависимость `com.android.tools.utp:gradle-work-action` — это часть **Unified Test Platform**, которой AGP 9.x использует для управления подключением к устройству и запуском instrumented-тестов. Сеть до `dl.google.com` была недоступна (connection timeout).
+
+## Что нужно сделать, чтобы они запустились
+
+1. **Убедиться, что устройство/эмулятор подключено** — `adb devices` должен показать подключённое устройство.
+2. **Сеть должна работать** — Gradle должен донести зависимости до `dl.google.com` и `maven.google.com`.
+3. Запустить:
+   ```
+   gradle connectedDebugAndroidTest
+   ```
+
+Альтернатива — запустить из Android Studio: **Run → Run 'All Tests'** (зелёная иконка с подчёркнутым «T» над файлом в `androidTest/`), это то же самое, только через UI.
+
+---
+
+Использовать иконки категорий в отображении карточек на главном экране вместо иконок типа кода.
+
+## Изменения
+
+**[CardListItem.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/components/CardListItem.kt)**
+
+- В шапке карточки иконка теперь берётся из `getCategoryIconByName(card.iconName)` вместо выбора по типу формата (Phone/QR/CreditCard).
+- Добавлен импорт `getCategoryIconByName` из [IconPicker.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/addedit/components/IconPicker.kt).
+
+```diff
+- imageVector = when {
+-     isPhoneFormat -> Icons.Outlined.Phone
+-     card.barcodeFormat.contains("QR", ignoreCase = true) -> Icons.Outlined.QrCode
+-     else -> Icons.Outlined.CreditCard
+- },
++ imageVector = getCategoryIconByName(card.iconName),
+```
+
+Теперь на карточках на главном экране отображается иконка выбранной категории (корзина, аптека, ресторан, автозаправка и т.д.), а не иконка типа формата кода. Иконка в превью телефона (формат PHONE) при этом осталась как есть — она показывает именно телефон.
+
+---
+

@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.discountcards.R
 import com.example.discountcards.data.local.entity.DiscountCard
+import com.example.discountcards.ui.addedit.components.getCategoryIconByName
 import com.example.discountcards.ui.addedit.components.getFormatDisplayName
 import com.example.discountcards.util.BarcodeGenerator
 import kotlinx.coroutines.Dispatchers
@@ -134,11 +135,7 @@ fun CardListItem(
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Icon(
-                                    imageVector = when {
-                                        isPhoneFormat -> Icons.Outlined.Phone
-                                        card.barcodeFormat.contains("QR", ignoreCase = true) -> Icons.Outlined.QrCode
-                                        else -> Icons.Outlined.CreditCard
-                                    },
+                                    imageVector = getCategoryIconByName(card.iconName),
                                     contentDescription = null,
                                     tint = cardColor,
                                     modifier = Modifier.size(22.dp)
