@@ -214,10 +214,24 @@ class CardDetailViewModel(
         }
         viewModelScope.launch {
             try {
+                val paddedBitmap = withContext(ioDispatcher) {
+                    val padX = (bitmap.width * 0.08f).toInt().coerceAtLeast(1)
+                    val padY = (bitmap.height * 0.08f).toInt().coerceAtLeast(1)
+                    val newWidth = bitmap.width + padX * 2
+                    val newHeight = bitmap.height + padY * 2
+                    val result = android.graphics.Bitmap.createBitmap(newWidth, newHeight, android.graphics.Bitmap.Config.ARGB_8888)
+                    val canvas = android.graphics.Canvas(result)
+                    // White background
+                    canvas.drawColor(android.graphics.Color.WHITE)
+                    // Draw original barcode centered
+                    canvas.drawBitmap(bitmap, padX.toFloat(), padY.toFloat(), null)
+                    result
+                }
                 val file = java.io.File(context.cacheDir, "discount_cards_barcode.png")
                 java.io.FileOutputStream(file).use { fos ->
-                    bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, fos)
+                    paddedBitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, fos)
                 }
+                paddedBitmap.recycle()
                 val uri = androidx.core.content.FileProvider.getUriForFile(
                     context,
                     "${context.packageName}.fileprovider",
