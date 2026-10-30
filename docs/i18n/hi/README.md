@@ -19,11 +19,15 @@
 
 | मुख्य स्क्रीन | मुख्य स्क्रीन | कार्ड विवरण | जोड़ना / स्कैनर |
 | :---: | :---: |:---------------------------------------------------------------------------:| :---: |
-| <img src="../../screenshots/main_with_barcodes.jpg" width="220" alt="बारकोड के साथ मुख्य स्क्रीन"> | <img src="../../screenshots/main_compact.jpg" width="220" alt="संक्षिप्त मुख्य स्क्रीन"> | <img src="../../screenshots/card_detail.jpg" width="220" alt="कार्ड विवरण"> | <img src="../../screenshots/add_edit_card.jpg" width="220" alt="कार्ड जोड़ना"> |
+| <img src="../../screenshots/01_main_with_barcodes.jpg" width="220" alt="बारकोड के साथ मुख्य स्क्रीन"> | <img src="../../screenshots/02_main_compact.jpg" width="220" alt="संक्षिप्त मुख्य स्क्रीन"> | <img src="../../screenshots/03_card_detail.jpg" width="220" alt="कार्ड विवरण"> | <img src="../../screenshots/04_add_edit_card.jpg" width="220" alt="कार्ड जोड़ना"> |
 
 | सेटिंग्स | कार्ड निर्यात | कार्ड आयात | कार्ड क्रमबद्ध |
 | :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
-| <img src="../../screenshots/settings.jpg" width="220" alt="सेटिंग्स"> | <img src="../../screenshots/export_cards.jpg" width="220" alt="कार्ड निर्यात"> | <img src="../../screenshots/import_cards.jpg" width="220" alt="कार्ड आयात"> | <img src="../../screenshots/sort_cards_light_theme.jpg" width="220" alt="लाइट थीम के साथ कार्ड क्रमबद्ध"> |
+| <img src="../../screenshots/05_settings.jpg" width="220" alt="सेटिंग्स"> | <img src="../../screenshots/06_export_cards.jpg" width="220" alt="कार्ड निर्यात"> | <img src="../../screenshots/07_import_cards.jpg" width="220" alt="कार्ड आयात"> | <img src="../../screenshots/08_sort_cards_light_theme.jpg" width="220" alt="लाइट थीम के साथ कार्ड क्रमबद्ध"> |
+
+| मेनू | सेटिंग्स 2 | विजेट 1 | विजेट 2 |
+| :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
+| <img src="../../screenshots/09_menu.jpg" width="220" alt="मेनू"> | <img src="../../screenshots/10_settings2.jpg" width="220" alt="सेटिंग्स 2"> | <img src="../../screenshots/11_widget1.jpg" width="220" alt="विजेट 1"> | <img src="../../screenshots/12_widget2.jpg" width="220" alt="विजेट 2"> |
 
 ---
 

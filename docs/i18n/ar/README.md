@@ -19,11 +19,15 @@
 
 | الشاشة الرئيسية | الشاشة الرئيسية | تفاصيل البطاقة | إضافة / الماسح |
 | :---: | :---: |:---------------------------------------------------------------------------:| :---: |
-| <img src="../../screenshots/main_with_barcodes.jpg" width="220" alt="الشاشة الرئيسية مع الباركود"> | <img src="../../screenshots/main_compact.jpg" width="220" alt="الشاشة الرئيسية المدمجة"> | <img src="../../screenshots/card_detail.jpg" width="220" alt="تفاصيل البطاقة"> | <img src="../../screenshots/add_edit_card.jpg" width="220" alt="إضافة البطاقة"> |
+| <img src="../../screenshots/01_main_with_barcodes.jpg" width="220" alt="الشاشة الرئيسية مع الباركود"> | <img src="../../screenshots/02_main_compact.jpg" width="220" alt="الشاشة الرئيسية المدمجة"> | <img src="../../screenshots/03_card_detail.jpg" width="220" alt="تفاصيل البطاقة"> | <img src="../../screenshots/04_add_edit_card.jpg" width="220" alt="إضافة البطاقة"> |
 
 | الإعدادات | تصدير البطاقات | استيراد البطاقات | فرز البطاقات |
 | :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
-| <img src="../../screenshots/settings.jpg" width="220" alt="الإعدادات"> | <img src="../../screenshots/export_cards.jpg" width="220" alt="تصدير البطاقات"> | <img src="../../screenshots/import_cards.jpg" width="220" alt="استيراد البطاقات"> | <img src="../../screenshots/sort_cards_light_theme.jpg" width="220" alt="فرز البطاقات مع السمة الفاتحة"> |
+| <img src="../../screenshots/05_settings.jpg" width="220" alt="الإعدادات"> | <img src="../../screenshots/06_export_cards.jpg" width="220" alt="تصدير البطاقات"> | <img src="../../screenshots/07_import_cards.jpg" width="220" alt="استيراد البطاقات"> | <img src="../../screenshots/08_sort_cards_light_theme.jpg" width="220" alt="فرز البطاقات مع السمة الفاتحة"> |
+
+| القائمة | الإعدادات 2 | ويدجت 1 | ويدجت 2 |
+| :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
+| <img src="../../screenshots/09_menu.jpg" width="220" alt="القائمة"> | <img src="../../screenshots/10_settings2.jpg" width="220" alt="الإعدادات 2"> | <img src="../../screenshots/11_widget1.jpg" width="220" alt="ويدجت 1"> | <img src="../../screenshots/12_widget2.jpg" width="220" alt="ويدجت 2"> |
 
 ---
 

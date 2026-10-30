@@ -19,11 +19,15 @@
 
 | Главный экран | Главный экран |  Детали карты  | Добавление / Сканер |
 | :---: | :---: |:---------------------------------------------------------------------------:| :---: |
-| <img src="../../screenshots/main_with_barcodes.jpg" width="220" alt="Главный экран со штрихкодами"> | <img src="../../screenshots/main_compact.jpg" width="220" alt="Главный экран компактный"> | <img src="../../screenshots/card_detail.jpg" width="220" alt="Детали карты"> | <img src="../../screenshots/add_edit_card.jpg" width="220" alt="Добавление карты"> |
+| <img src="../../screenshots/01_main_with_barcodes.jpg" width="220" alt="Главный экран со штрихкодами"> | <img src="../../screenshots/02_main_compact.jpg" width="220" alt="Главный экран компактный"> | <img src="../../screenshots/03_card_detail.jpg" width="220" alt="Детали карты"> | <img src="../../screenshots/04_add_edit_card.jpg" width="220" alt="Добавление карты"> |
 
 | Настройки | Экспорт карт | Импорт карт | Сортировка карт |
 | :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
-| <img src="../../screenshots/settings.jpg" width="220" alt="Настройки"> | <img src="../../screenshots/export_cards.jpg" width="220" alt="Экспорт карт"> | <img src="../../screenshots/import_cards.jpg" width="220" alt="Импорт карт"> | <img src="../../screenshots/sort_cards_light_theme.jpg" width="220" alt="Сортировка карт со светлой темой"> |
+| <img src="../../screenshots/05_settings.jpg" width="220" alt="Настройки"> | <img src="../../screenshots/06_export_cards.jpg" width="220" alt="Экспорт карт"> | <img src="../../screenshots/07_import_cards.jpg" width="220" alt="Импорт карт"> | <img src="../../screenshots/08_sort_cards_light_theme.jpg" width="220" alt="Сортировка карт со светлой темой"> |
+
+| Меню | Настройки 2 | Виджет 1 | Виджет 2 |
+| :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
+| <img src="../../screenshots/09_menu.jpg" width="220" alt="Меню"> | <img src="../../screenshots/10_settings2.jpg" width="220" alt="Настройки 2"> | <img src="../../screenshots/11_widget1.jpg" width="220" alt="Виджет 1"> | <img src="../../screenshots/12_widget2.jpg" width="220" alt="Виджет 2"> |
 
 ---
 

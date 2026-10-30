@@ -19,11 +19,15 @@
 
 | 主屏幕 | 主屏幕 | 卡片详情 | 添加 / 扫描器 |
 | :---: | :---: |:---------------------------------------------------------------------------:| :---: |
-| <img src="../../screenshots/main_with_barcodes.jpg" width="220" alt="带条形码的主屏幕"> | <img src="../../screenshots/main_compact.jpg" width="220" alt="紧凑的主屏幕"> | <img src="../../screenshots/card_detail.jpg" width="220" alt="卡片详情"> | <img src="../../screenshots/add_edit_card.jpg" width="220" alt="添加卡片"> |
+| <img src="../../screenshots/01_main_with_barcodes.jpg" width="220" alt="带条形码的主屏幕"> | <img src="../../screenshots/02_main_compact.jpg" width="220" alt="紧凑的主屏幕"> | <img src="../../screenshots/03_card_detail.jpg" width="220" alt="卡片详情"> | <img src="../../screenshots/04_add_edit_card.jpg" width="220" alt="添加卡片"> |
 
 | 设置 | 导出卡片 | 导入卡片 | 卡片排序 |
 | :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
-| <img src="../../screenshots/settings.jpg" width="220" alt="设置"> | <img src="../../screenshots/export_cards.jpg" width="220" alt="导出卡片"> | <img src="../../screenshots/import_cards.jpg" width="220" alt="导入卡片"> | <img src="../../screenshots/sort_cards_light_theme.jpg" width="220" alt="使用浅色主题的卡片排序"> |
+| <img src="../../screenshots/05_settings.jpg" width="220" alt="设置"> | <img src="../../screenshots/06_export_cards.jpg" width="220" alt="导出卡片"> | <img src="../../screenshots/07_import_cards.jpg" width="220" alt="导入卡片"> | <img src="../../screenshots/08_sort_cards_light_theme.jpg" width="220" alt="使用浅色主题的卡片排序"> |
+
+| 菜单 | 设置 2 | 小组件 1 | 小组件 2 |
+| :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
+| <img src="../../screenshots/09_menu.jpg" width="220" alt="菜单"> | <img src="../../screenshots/10_settings2.jpg" width="220" alt="设置 2"> | <img src="../../screenshots/11_widget1.jpg" width="220" alt="小组件 1"> | <img src="../../screenshots/12_widget2.jpg" width="220" alt="小组件 2"> |
 
 ---
 
