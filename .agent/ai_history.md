@@ -2150,6 +2150,8 @@ Agent:
 
 ---
 
+Открытие штрихкода на весь экран
+
 ## Что было сделано
 
 **1. [CardDetailUiState.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailUiState.kt)** — добавлено поле `isBarcodeFullscreenVisible: Boolean = false`.
@@ -2181,3 +2183,22 @@ Agent:
 
 ---
 
+Кнопка Поделиться картинкой штрихкода в карточке штрихкода
+
+## Итоги изменений
+
+1. **[`CardDetailViewModel.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailViewModel.kt)** — добавлен метод `shareBarcodeImage(context)`:
+   - Сохраняет `barcodeBitmap` в PNG-файл в кэше
+   - Создаёт `FileProvider` URI
+   - Открывает системный шаринг-chooser с типом `image/png`
+
+2. **[`BarcodeDisplay.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/components/BarcodeDisplay.kt)** — добавлен параметр `onShareBarcode` и кнопка «Поделиться картинкой штрихкода» (иконка Share + текст) под номером карты внутри белого карточного контейнера. Кнопка отображается только когда есть реальный штрихкод (не PHONE формат).
+
+3. **[`CardDetailScreen.kt`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailScreen.kt)** — передаётся колбэк `onShareBarcode = { viewModel.shareBarcodeImage(context) }` при наличии bitmap.
+
+4. **[`strings.xml`](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/strings.xml)** (и все 10 локалей) — добавлена строка `share_barcode_button` с переводом на каждый язык.
+
+Сборка `app:compileDebugKotlin` прошла успешно.
+
+Agent:  
+Готово! Кнопка «Поделиться картинкой штрихкода» теперь расположена **после карточки** (штрихкода), а не внутри неё. Она отображается как отдельная строка под карточкой, кликабельная, с иконкой Share и текстом.

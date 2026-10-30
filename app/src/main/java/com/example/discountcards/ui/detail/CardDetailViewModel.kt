@@ -205,4 +205,35 @@ class CardDetailViewModel(
             }
         }
     }
+
+    fun shareBarcodeImage(context: android.content.Context) {
+        val bitmap = _uiState.value.barcodeBitmap
+        if (bitmap == null) {
+            _uiState.update { it.copy(error = "Barcode image not available") }
+            return
+        }
+        viewModelScope.launch {
+            try {
+                val file = java.io.File(context.cacheDir, "discount_cards_barcode.png")
+                java.io.FileOutputStream(file).use { fos ->
+                    bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, fos)
+                }
+                val uri = androidx.core.content.FileProvider.getUriForFile(
+                    context,
+                    "${context.packageName}.fileprovider",
+                    file
+                )
+                val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                    type = "image/png"
+                    putExtra(android.content.Intent.EXTRA_STREAM, uri)
+                    addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                context.startActivity(
+                    android.content.Intent.createChooser(shareIntent, null)
+                )
+            } catch (e: Exception) {
+                _uiState.update { it.copy(error = e.localizedMessage ?: "Error") }
+            }
+        }
+    }
 }

@@ -239,4 +239,7 @@
     <string name="duplicate_code_warning_message">Such code already exists. Add anyway?</string>
     <string name="duplicate_code_warning_yes">Add anyway</string>
     <string name="duplicate_code_warning_no">Cancel</string>
+
+    <!-- Share Barcode -->
+    <string name="share_barcode_button">Share barcode image</string>
 </resources>

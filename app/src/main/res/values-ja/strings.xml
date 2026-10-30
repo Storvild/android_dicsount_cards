@@ -234,4 +234,7 @@
     <string name="card_action_edit">編集</string>
     <string name="card_action_delete">削除</string>
     <string name="card_actions_title">カードのアクション</string>
+
+    <!-- Share Barcode -->
+    <string name="share_barcode_button">バーコード画像を共有</string>
 </resources>

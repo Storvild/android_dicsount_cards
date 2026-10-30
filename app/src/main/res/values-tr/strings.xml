@@ -234,4 +234,7 @@
     <string name="card_action_edit">Düzenle</string>
     <string name="card_action_delete">Sil</string>
     <string name="card_actions_title">Kart İşlemleri</string>
+
+    <!-- Share Barcode -->
+    <string name="share_barcode_button">Barkod görselini paylaş</string>
 </resources>

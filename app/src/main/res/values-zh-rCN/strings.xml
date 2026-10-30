@@ -234,4 +234,7 @@
     <string name="card_action_edit">编辑</string>
     <string name="card_action_delete">删除</string>
     <string name="card_actions_title">卡片操作</string>
+
+    <!-- Share Barcode -->
+    <string name="share_barcode_button">分享条形码图片</string>
 </resources>

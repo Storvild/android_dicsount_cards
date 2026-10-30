@@ -240,4 +240,7 @@
     <string name="duplicate_code_warning_message">Такой код уже существует. Все равно добавить?</string>
     <string name="duplicate_code_warning_yes">Все равно добавить</string>
     <string name="duplicate_code_warning_no">Отмена</string>
+
+    <!-- Share Barcode -->
+    <string name="share_barcode_button">Поделиться картинкой штрихкода</string>
 </resources>

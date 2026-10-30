@@ -234,4 +234,7 @@
     <string name="card_action_edit">تعديل</string>
     <string name="card_action_delete">حذف</string>
     <string name="card_actions_title">إجراءات البطاقة</string>
+
+    <!-- Share Barcode -->
+    <string name="share_barcode_button">مشاركة صورة الشريط</string>
 </resources>

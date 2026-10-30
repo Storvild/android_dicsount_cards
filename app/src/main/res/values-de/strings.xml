@@ -234,4 +234,7 @@
     <string name="card_action_edit">Bearbeiten</string>
     <string name="card_action_delete">Löschen</string>
     <string name="card_actions_title">Kartenaktionen</string>
+
+    <!-- Share Barcode -->
+    <string name="share_barcode_button">Barcode-Bild teilen</string>
 </resources>
