@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.discountcards.R
 import com.example.discountcards.ui.detail.components.BarcodeDisplay
+import com.example.discountcards.ui.detail.components.BarcodeFullscreenOverlay
 import com.example.discountcards.ui.detail.components.DeleteConfirmDialog
 import com.example.discountcards.ui.list.components.dialogs.ShareSelectionDialog
 import kotlin.math.roundToInt
@@ -233,7 +234,12 @@ fun CardDetailScreen(
                     BarcodeDisplay(
                         bitmap = uiState.barcodeBitmap,
                         cardNumber = card.cardNumber,
-                        barcodeFormat = card.barcodeFormat
+                        barcodeFormat = card.barcodeFormat,
+                        onBarcodeClick = {
+                            if (uiState.barcodeBitmap != null) {
+                                viewModel.toggleBarcodeFullscreen()
+                            }
+                        }
                     )
 
                     // CVC Code Toggle (only shown if CVC is not empty)
@@ -446,6 +452,17 @@ fun CardDetailScreen(
             onDismiss = viewModel::hideDeleteDialog,
             onConfirmDelete = viewModel::deleteCard
         )
+    }
+
+    // Fullscreen barcode overlay — shown on top of everything, tap to close.
+    if (uiState.isBarcodeFullscreenVisible) {
+        val fullscreenBitmap = uiState.barcodeBitmap
+        if (fullscreenBitmap != null) {
+            BarcodeFullscreenOverlay(
+                bitmap = fullscreenBitmap,
+                onClose = viewModel::toggleBarcodeFullscreen
+            )
+        }
     }
 
     if (uiState.showShareDialog && card != null) {

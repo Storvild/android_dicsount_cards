@@ -124,6 +124,10 @@ class CardDetailViewModel(
         _uiState.update { it.copy(isDeleteDialogVisible = false) }
     }
 
+    fun toggleBarcodeFullscreen() {
+        _uiState.update { it.copy(isBarcodeFullscreenVisible = !it.isBarcodeFullscreenVisible) }
+    }
+
     fun toggleCvcVisibility() {
         _uiState.update { it.copy(isCvcVisible = !it.isCvcVisible) }
     }

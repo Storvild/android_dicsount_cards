@@ -16,5 +16,6 @@ data class CardDetailUiState(
     val showShareDialog: Boolean = false,
     val shareIncludeCvc: Boolean = false,
     val shareIncludeUsageCount: Boolean = false,
-    val isArchivedMessage: String? = null
-)
+    val isArchivedMessage: String? = null,
+    val isBarcodeFullscreenVisible: Boolean = false
+) 

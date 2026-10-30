@@ -2147,3 +2147,37 @@ Agent:
 > Если захотите ещё более «чистый» подход без deprecated-веток, можно перейти на `Window.insetsController` (API 31+) — но текущее решение с `WindowInsetsControllerCompat` уже покрывает все API от 24 до 35+ и не требует разветвлений по SDK.
 
 Сборка успешна. Проверьте на реальном устройстве в обеих темах (Light/Dark/System) — иконки в статус-баре и нави-баре должны быть видны в обоих режимах.
+
+---
+
+## Что было сделано
+
+**1. [CardDetailUiState.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailUiState.kt)** — добавлено поле `isBarcodeFullscreenVisible: Boolean = false`.
+
+**2. [CardDetailViewModel.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailViewModel.kt)** — добавлен метод `toggleBarcodeFullscreen()`, который инвертирует флаг.
+
+**3. [BarcodeFullscreenOverlay.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/components/BarcodeFullscreenOverlay.kt)** (новый файл) — полноэкранное overlay:
+- Белый фон на весь экран, без названия магазина и без текста — только штрихкод.
+- Яркость окна принудительно ставится на 100% (`screenBrightness = 1.0f`) на время показа, а при закрытии возвращается в `BRIGHTNESS_OVERRIDE_NONE`, чтобы не влиять на настройки пользователя.
+- Штрихкод центрируется и растягивается на максимум с сохранением пропорций (`ContentScale.Fit` на `fillMaxSize`).
+- Если bitmap длинный 1D-штрихкод (шире своей высоты в 2+ раза и не похож на QR/Aztec), он поворачивается на 90° через `graphicsLayer { rotationZ = 90f }`, чтобы заполнить вертикальный экран.
+- Клик по любой точке overlay закрывает окно (`onClose` → `toggleBarcodeFullscreen`).
+
+**4. [BarcodeDisplay.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/components/BarcodeDisplay.kt)** — добавлен параметр `onBarcodeClick: () -> Unit = {}` и `clickable` на `ElevatedCard`.
+
+**5. [CardDetailScreen.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailScreen.kt)** — передаётся `onBarcodeClick = { if (uiState.barcodeBitmap != null) viewModel.toggleBarcodeFullscreen() }`, и при `uiState.isBarcodeFullscreenVisible` рендерится `BarcodeFullscreenOverlay` поверх всего.
+
+Сборка `app:assembleDebug` прошла успешно.
+
+1. Откройте любую карточку (экран detail).
+2. Нажмите на блок со штрихкодом (белая карточка с штрихкодом и номером).
+3. Откроется полноэкранное окно с яркостью 100%, без названия магазина и без текста — только штрихкод, растянутый на весь экран.
+4. Если штрихкод длинный (1D), он будет повёрнут на 90°, чтобы заполнить вертикальный экран.
+5. Кликните по любому месту в этом окне — оно закроется.
+
+
+Agent:  
+Готово. Теперь штрихкод окружён белой рамкой — 4% ширины экрана слева/справа и 4% высоты сверху/снизу. Штрихкод больше не сливается с краями экрана.
+
+---
+

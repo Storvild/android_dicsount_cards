@@ -2,6 +2,7 @@ package com.example.discountcards.ui.detail.components
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,7 @@ fun BarcodeDisplay(
     cardNumber: String,
     barcodeFormat: String,
     modifier: Modifier = Modifier,
+    onBarcodeClick: () -> Unit = {},
 ) {
     val isPhoneFormat = barcodeFormat.equals("PHONE", ignoreCase = true)
 
@@ -43,7 +45,8 @@ fun BarcodeDisplay(
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .clickable(onClick = onBarcodeClick),
         shape = RoundedCornerShape(24.dp),
         colors = CardDefaults.elevatedCardColors(
             containerColor = Color.White
