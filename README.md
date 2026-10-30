@@ -1,4 +1,6 @@
-# DiscountCards
+Translations 📚 · [EN](docs/i18n/en/README.md) · [FR](docs/i18n/fr/README.md) · [DE](docs/i18n/de/README.md) · [ES](docs/i18n/es/README.md) · [PT](docs/i18n/pt/README.md) · [IT](docs/i18n/it/README.md) · [PL](docs/i18n/pl/README.md) · [UK](docs/i18n/uk/README.md) · [JA](docs/i18n/ja/README.md) · [HI](docs/i18n/hi/README.md) · [AR](docs/i18n/ar/README.md) · [TR](docs/i18n/tr/README.md) · [ZH](docs/i18n/zh/README.md)
+
+# DiscountCards (Скидочные карты)
 
 **DiscountCards** — Android-приложение для удобного хранения, сканирования и использования карт лояльности и дисконтных карт. Приложение позволяет хранить все ваши скидочные карты в одном месте, быстро сканировать их на кассе с помощью генератора штрих-кодов и делать резервные копии данных.
 
