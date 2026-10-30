@@ -332,7 +332,8 @@ class CardListViewModel(
                 val json = repository.exportToJson(cardsToExport)
                 cancelShareSelection()
                 // Write to a temp file and share via ACTION_SEND
-                val file = java.io.File(context.cacheDir, "discount_cards_share.json")
+                context.cacheDir.listFiles()?.filter { it.name.startsWith("discount_cards_share") }?.forEach { it.delete() }
+                val file = java.io.File(context.cacheDir, "discount_cards_share_${System.currentTimeMillis()}.json")
                 file.writeText(json)
                 val uri = androidx.core.content.FileProvider.getUriForFile(
                     context,
@@ -342,6 +343,7 @@ class CardListViewModel(
                 val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
                     type = "application/json"
                     putExtra(android.content.Intent.EXTRA_STREAM, uri)
+                    clipData = android.content.ClipData.newRawUri("", uri)
                     addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
                 context.startActivity(

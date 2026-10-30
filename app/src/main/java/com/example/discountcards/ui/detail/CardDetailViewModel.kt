@@ -185,7 +185,8 @@ class CardDetailViewModel(
                 )
                 val json = repository.exportToJson(listOf(cardToExport))
                 cancelShare()
-                val file = java.io.File(context.cacheDir, "discount_cards_share.json")
+                context.cacheDir.listFiles()?.filter { it.name.startsWith("discount_cards_share") }?.forEach { it.delete() }
+                val file = java.io.File(context.cacheDir, "discount_cards_share_${System.currentTimeMillis()}.json")
                 file.writeText(json)
                 val uri = androidx.core.content.FileProvider.getUriForFile(
                     context,
@@ -195,6 +196,7 @@ class CardDetailViewModel(
                 val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
                     type = "application/json"
                     putExtra(android.content.Intent.EXTRA_STREAM, uri)
+                    clipData = android.content.ClipData.newRawUri("", uri)
                     addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
                 context.startActivity(
@@ -227,7 +229,8 @@ class CardDetailViewModel(
                     canvas.drawBitmap(bitmap, padX.toFloat(), padY.toFloat(), null)
                     result
                 }
-                val file = java.io.File(context.cacheDir, "discount_cards_barcode.png")
+                context.cacheDir.listFiles()?.filter { it.name.startsWith("discount_cards_barcode") }?.forEach { it.delete() }
+                val file = java.io.File(context.cacheDir, "discount_cards_barcode_${System.currentTimeMillis()}.png")
                 java.io.FileOutputStream(file).use { fos ->
                     paddedBitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, fos)
                 }
@@ -240,6 +243,7 @@ class CardDetailViewModel(
                 val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
                     type = "image/png"
                     putExtra(android.content.Intent.EXTRA_STREAM, uri)
+                    clipData = android.content.ClipData.newRawUri("", uri)
                     addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
                 context.startActivity(
