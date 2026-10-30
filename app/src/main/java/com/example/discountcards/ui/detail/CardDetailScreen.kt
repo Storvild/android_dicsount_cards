@@ -488,7 +488,8 @@ fun CardDetailScreen(
         if (fullscreenBitmap != null) {
             BarcodeFullscreenOverlay(
                 bitmap = fullscreenBitmap,
-                onClose = viewModel::toggleBarcodeFullscreen
+                onClose = viewModel::toggleBarcodeFullscreen,
+                previousBrightnessPercent = uiState.brightnessPercent
             )
         }
     }

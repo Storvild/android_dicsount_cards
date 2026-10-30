@@ -184,7 +184,9 @@ class MainActivity : ComponentActivity() {
             // Явно управляем цветом иконок в системных панелях (статус-бар/нави-бар),
             // чтобы они были видны на любом фоне (и в светлой, и в тёмной теме),
             // и не зависели от OEM-оболочек (MIUI / OneUI / Funtouch и т.п.).
-            applySystemBarsContentLight(!isDarkTheme)
+            androidx.compose.runtime.SideEffect {
+                applySystemBarsContentLight(!isDarkTheme)
+            }
 
             DiscountCardsTheme(darkTheme = isDarkTheme) {
                 Surface(

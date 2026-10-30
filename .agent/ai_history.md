@@ -2244,3 +2244,43 @@ Agent:
 
 4. **Аналогичное исправление для JSON-экспорта карточек:**
    Такое же формирование уникального имени применили к файлам экспорта JSON (`discount_cards_share_${System.currentTimeMillis()}.json`) в [CardDetailViewModel.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/CardDetailViewModel.kt) и [CardListViewModel.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/list/CardListViewModel.kt).
+
+---
+
+### 🔍 1. Проверка последних изменений кода и исправленные недочёты
+
+При анализе последних изменений были обнаружены и сразу исправлены следующие технические нюансы:
+
+1. **Восстановление яркости после закрытия полноэкранного штрихкода (`BarcodeFullscreenOverlay`)**:
+   - **Проблема**: При открытии оверлея яркость выставлялась на 100%, но при его закрытии вызывалось `BRIGHTNESS_OVERRIDE_NONE`. Если пользователь настраивал ползунок яркости на экране карты (например, 80%), при закрытии оверлея яркость сбрасывалась до системной по умолчанию.
+   - **Исправление**: В [BarcodeFullscreenOverlay.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/ui/detail/components/BarcodeFullscreenOverlay.kt) передан параметр `previousBrightnessPercent`, и при закрытии восстановление происходит до настроенного ранее уровня.
+
+2. **Оптимизация производительности и памяти при рекомпозиции оверлея**:
+   - **Проблема**: `rotate90Clockwise(bitmap)` вычислялся напрямую в теле Compose-функции оверлея, выдовая новый объект `Bitmap` при каждой рекомпозиции кадра.
+   - **Исправление**: Поворот `Bitmap` обоёрнут в `remember(bitmap, isPortrait)`, благодаря чему поверкартинка создаётся единовременно при изменении исходников.
+
+3. **Сайд-эффекты управления системными барами в `MainActivity`**:
+   - **Исправление**: Вызов `applySystemBarsContentLight(!isDarkTheme)` в [MainActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/MainActivity.kt) обёрнут в `SideEffect { ... }` для корректного выполнения в цикле рекомпозиции Compose.
+
+---
+
+### 📝 2. Дополнения в CHANGELOG.md
+
+Файл [CHANGELOG.md](file:///E:/virtualenvs/discount_cards/DiscountCards/CHANGELOG.md) дополнен новым разделом для версии **[1.1.6]**:
+- **Полноэкранный просмотр штрихкода**: детальное описание работы оверлея (100% яркость, автоматический поворот на 90° в портретной ориентации, отступы и белый фон).
+- **Поделиться картинкой штрихкода**: кнопка экспортa PNG с белыми полями.
+- **Управление цветом системных иконок**: тёмные/светлые иконки статус-бара и нави-бара через `WindowInsetsControllerCompat` для корректной видимости на всех OEM-оболочках (MIUI, OneUI и др.).
+- **Очистка временных файлов**: удаление устаревших файлов шеринга в кэше.
+
+---
+
+### 📚 3. Обновления в README.md
+
+В раздел «Основные возможности» файла [README.md](file:///E:/virtualenvs/discount_cards/DiscountCards/README.md) добавлены соответствующие пункты:
+- 🔍 **Полноэкранный режим штрихкода** (разворот по клику, автоповорот на 90°, 100% яркость, белый фон).
+- 🖼️ **Поделиться картинкой штрихкода** (отправка PNG с полями в мессенджеры и сторонние приложения).
+
+---
+
+### ✅ Статус сборки
+Проект успешно прошёл отладочную сборку (`./gradlew :app:assembleDebug`).
