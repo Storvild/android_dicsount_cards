@@ -19,11 +19,15 @@
 
 | Pantalla principal | Pantalla principal | Detalles de la tarjeta | Añadir / Escáner |
 | :---: | :---: |:---------------------------------------------------------------------------:| :---: |
-| <img src="../../screenshots/main_with_barcodes.jpg" width="220" alt="Pantalla principal con códigos de barras"> | <img src="../../screenshots/main_compact.jpg" width="220" alt="Pantalla principal compacta"> | <img src="../../screenshots/card_detail.jpg" width="220" alt="Detalles de la tarjeta"> | <img src="../../screenshots/add_edit_card.jpg" width="220" alt="Añadir tarjeta"> |
+| <img src="../../screenshots/01_main_with_barcodes.jpg" width="220" alt="Pantalla principal con códigos de barras"> | <img src="../../screenshots/02_main_compact.jpg" width="220" alt="Pantalla principal compacta"> | <img src="../../screenshots/03_card_detail.jpg" width="220" alt="Detalles de la tarjeta"> | <img src="../../screenshots/04_add_edit_card.jpg" width="220" alt="Añadir tarjeta"> |
 
 | Ajustes | Exportar tarjetas | Importar tarjetas | Ordenación de tarjetas |
 | :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
-| <img src="../../screenshots/settings.jpg" width="220" alt="Ajustes"> | <img src="../../screenshots/export_cards.jpg" width="220" alt="Exportar tarjetas"> | <img src="../../screenshots/import_cards.jpg" width="220" alt="Importar tarjetas"> | <img src="../../screenshots/sort_cards_light_theme.jpg" width="220" alt="Ordenación de tarjetas con tema claro"> |
+| <img src="../../screenshots/05_settings.jpg" width="220" alt="Ajustes"> | <img src="../../screenshots/06_export_cards.jpg" width="220" alt="Exportar tarjetas"> | <img src="../../screenshots/07_import_cards.jpg" width="220" alt="Importar tarjetas"> | <img src="../../screenshots/08_sort_cards_light_theme.jpg" width="220" alt="Ordenación de tarjetas con tema claro"> |
+
+| Menú | Ajustes 2 | Widget 1 | Widget 2 |
+| :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
+| <img src="../../screenshots/09_menu.jpg" width="220" alt="Menú"> | <img src="../../screenshots/10_settings2.jpg" width="220" alt="Ajustes 2"> | <img src="../../screenshots/11_widget1.jpg" width="220" alt="Widget 1"> | <img src="../../screenshots/12_widget2.jpg" width="220" alt="Widget 2"> |
 
 ---
 

@@ -21,11 +21,15 @@ Translations 📚 · [EN](docs/i18n/en/README.md) · [FR](docs/i18n/fr/README.md
 
 | Главный экран | Главный экран |  Детали карты  | Добавление / Сканер |
 | :---: | :---: |:---------------------------------------------------------------------------:| :---: |
-| <img src="docs/screenshots/main_with_barcodes.jpg" width="220" alt="Главный экран со штрихкодами"> | <img src="docs/screenshots/main_compact.jpg" width="220" alt="Главный экран компактный"> | <img src="docs/screenshots/card_detail.jpg" width="220" alt="Детали карты"> | <img src="docs/screenshots/add_edit_card.jpg" width="220" alt="Добавление карты"> |
+| <img src="docs/screenshots/01_main_with_barcodes.jpg" width="220" alt="Главный экран со штрихкодами"> | <img src="docs/screenshots/02_main_compact.jpg" width="220" alt="Главный экран компактный"> | <img src="docs/screenshots/03_card_detail.jpg" width="220" alt="Детали карты"> | <img src="docs/screenshots/04_add_edit_card.jpg" width="220" alt="Добавление карты"> |
 
 | Настройки | Экспорт карт | Импорт карт | Сортировка карт |
 | :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
-| <img src="docs/screenshots/settings.jpg" width="220" alt="Настройки"> | <img src="docs/screenshots/export_cards.jpg" width="220" alt="Экспорт карт"> | <img src="docs/screenshots/import_cards.jpg" width="220" alt="Импорт карт"> | <img src="docs/screenshots/sort_cards_light_theme.jpg" width="220" alt="Сортировка карт со светлой темой"> |
+| <img src="docs/screenshots/05_settings.jpg" width="220" alt="Настройки"> | <img src="docs/screenshots/06_export_cards.jpg" width="220" alt="Экспорт карт"> | <img src="docs/screenshots/07_import_cards.jpg" width="220" alt="Импорт карт"> | <img src="docs/screenshots/08_sort_cards_light_theme.jpg" width="220" alt="Сортировка карт со светлой темой"> |
+
+| Меню | Настройки 2 | Виджет 1 | Виджет 2 |
+| :---: | :---: | :---: |:----------------------------------------------------------------------------------------------------------:|
+| <img src="docs/screenshots/09_menu.jpg" width="220" alt="Меню"> | <img src="docs/screenshots/10_settings2.jpg" width="220" alt="Настройки 2"> | <img src="docs/screenshots/11_widget1.jpg" width="220" alt="Виджет 1"> | <img src="docs/screenshots/12_widget2.jpg" width="220" alt="Виджет 2"> |
 
 ---
 
