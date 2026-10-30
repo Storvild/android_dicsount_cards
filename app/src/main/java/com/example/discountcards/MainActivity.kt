@@ -3,11 +3,13 @@ package com.example.discountcards
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -113,6 +115,25 @@ class MainActivity : ComponentActivity() {
         get() = (applicationContext as DiscountCardsApp)
             .preferencesRepository.getAppLanguageSynchronously()
 
+    /**
+     * Явно задаёт цвет иконок в системных панелях (статус-бар и нави-бар).
+     * Без этого в светлой теме иконки могут оставаться белыми, а в тёмной
+     * — чёрными (на OEM-оболочках поведение разное), и их не видно.
+     *
+     * @param lightContent true — светлый контент приложения → тёмные иконки;
+     *                     false — тёмный контент → белые иконки.
+     */
+    private fun applySystemBarsContentLight(lightContent: Boolean) {
+        val window = window ?: return
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.isAppearanceLightStatusBars = lightContent
+        // windowLightNavigationBar доступен только с API 27+
+        // (на API 24-26 нави-бар прозрачный/отсутствует, флаг не нужен).
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            controller.isAppearanceLightNavigationBars = lightContent
+        }
+    }
+
     override fun attachBaseContext(newBase: Context) {
         val app = newBase.applicationContext as DiscountCardsApp
         val localizedContext = app.preferencesRepository.getLocalizedContext(newBase)
@@ -159,6 +180,11 @@ class MainActivity : ComponentActivity() {
                 ThemeMode.DARK -> true
                 ThemeMode.SYSTEM -> isSystemInDarkTheme()
             }
+
+            // Явно управляем цветом иконок в системных панелях (статус-бар/нави-бар),
+            // чтобы они были видны на любом фоне (и в светлой, и в тёмной теме),
+            // и не зависели от OEM-оболочек (MIUI / OneUI / Funtouch и т.п.).
+            applySystemBarsContentLight(!isDarkTheme)
 
             DiscountCardsTheme(darkTheme = isDarkTheme) {
                 Surface(

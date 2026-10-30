@@ -2122,3 +2122,28 @@ Agent:
 - **Экспорт**: пользователь выбирает один пункт «Экспорт в файл…» → в диалоге выбора карточек добавился сегмент-переключатель JSON/CSV → после нажатия «Экспортировать» открывается `CreateDocument` с MIME-типом выбранного формата и именем файла `.json` или `.csv`.
 
 Сборка `:app:assembleDebug` прошла успешно.
+
+---
+
+В светлой теме иконок не видно (системная тема - темная):
+
+## Что было
+
+В [themes.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/themes.xml) стояла тема `android:Theme.Material.Light.NoActionBar` **без** `windowLightStatusBar`. Из-за этого:
+- **Светлая тема** → иконки белые (по умолчанию) → не видны на белом фоне.
+- **Тёмная тема** → на многих OEM (MIUI, OneUI, Funtouch) система «помнит» `Light`-тему из манифеста и рисует иконки чёрными → не видны на тёмном фоне. На других телефонах (например, с Material You / Pixel) — белые, и там всё ок.
+
+## Что сделано
+
+1. **[values/themes.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values/themes.xml)** — добавлен `android:windowLightStatusBar=true` (дефолт: светлая тема → тёмные иконки; корректный первый кадр до первого `setContent`).
+2. **[values-v27/themes.xml](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/res/values-v27/themes.xml)** (новый файл) — `windowLightStatusBar` + `windowLightNavigationBar` для API 27+ (нави-бар доступен только с API 27, minSdk у вас 24, поэтому флаг вынесен в отдельный ресурс).
+3. **[MainActivity.kt](file:///E:/virtualenvs/discount_cards/DiscountCards/app/src/main/java/com/example/discountcards/MainActivity.kt)** — добавлен `applySystemBarsContentLight(lightContent)` через `WindowInsetsControllerCompat`. Вызывается в `setContent` после вычисления `isDarkTheme` — **явно переключает** цвет иконок при каждом изменении `themeMode` (LIGHT/DARK/SYSTEM). Это и есть главный фикс: теперь не важно, что «думает» OEM-оболочка — приложение само говорит системе, какой контент сейчас.
+
+## Почему это решает проблему
+
+`WindowInsetsControllerCompat.isAppearanceLightStatusBars / isAppearanceLightNavigationBars` — это **публичный API**, который Android 10+ понимает одинаково на всех OEM. Раньше Compose не управлял этими флагами, и OEM-оболочки принимали решения сами (и часто неправильно). Теперь приложение само управляет цветом, и иконки видны и в светлой, и в тёмной теме на всех устройствах.
+
+> [!TIP]
+> Если захотите ещё более «чистый» подход без deprecated-веток, можно перейти на `Window.insetsController` (API 31+) — но текущее решение с `WindowInsetsControllerCompat` уже покрывает все API от 24 до 35+ и не требует разветвлений по SDK.
+
+Сборка успешна. Проверьте на реальном устройстве в обеих темах (Light/Dark/System) — иконки в статус-баре и нави-баре должны быть видны в обоих режимах.

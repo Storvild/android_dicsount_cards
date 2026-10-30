@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      API 27+: добавляем windowLightNavigationBar (нужен только с API 27).
+      Дефолт: светлая тема → тёмные иконки в нави-баре.
+    -->
+    <style name="Theme.DiscountCards" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

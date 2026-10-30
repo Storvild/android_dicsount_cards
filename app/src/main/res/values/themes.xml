@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.DiscountCards" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.DiscountCards" parent="android:Theme.Material.Light.NoActionBar">
+        <!--
+          Дефолт: светлая тема → тёмные иконки в статус-баре.
+          В рантайме MainActivity переключает этот флаг через
+          WindowInsetsControllerCompat / window.insetsController
+          в зависимости от ThemeMode (LIGHT/DARK/SYSTEM).
+          windowLightNavigationBar вынесен в values-v27 (API 27+).
+        -->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 </resources>
